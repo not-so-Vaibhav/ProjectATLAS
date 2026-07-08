@@ -1,0 +1,99 @@
+/* ============================================================
+   ATLAS DESIGN TOKENS — v2.0
+   Source of truth for all visual decisions in Project Atlas.
+   ============================================================ */
+
+:root {
+  /* ── Core palette (RGB channels for Tailwind alpha) ─────── */
+  --atlas-black:  8 8 8;
+  --atlas-white:  247 247 244;
+  --atlas-ink:    224 224 218;
+  --atlas-muted:  151 151 143;
+  --atlas-line:   255 255 255;
+  --atlas-glass:  255 255 255;
+  --atlas-wood:   169 132 88;
+  --atlas-green:  126 148 125;
+  --atlas-gold:   199 169 102;
+  --atlas-surface: 18 18 17;
+
+  /* ── Semantic (resolved to RGB for use in var()) ─────────── */
+  --color-bg:         rgb(8 8 8);
+  --color-bg-raised:  rgb(14 14 13);
+  --color-bg-card:    rgb(18 18 17);
+  --color-text:       rgb(224 224 218);
+  --color-text-muted: rgb(151 151 143);
+  --color-border:     rgba(255 255 255 / 0.09);
+  --color-gold:       rgb(199 169 102);
+  --color-gold-dim:   rgba(199 169 102 / 0.18);
+  --color-green:      rgb(126 148 125);
+
+  /* ── Sidebar ─────────────────────────────────────────────── */
+  --sidebar-width: 160px;
+  --sidebar-width-collapsed: 56px;
+  --topbar-height: 52px;
+
+  /* ── Spacing (8-pt scale) ────────────────────────────────── */
+  --space-1: 0.25rem;
+  --space-2: 0.5rem;
+  --space-3: 1rem;
+  --space-4: 1.5rem;
+  --space-5: 2rem;
+  --space-6: 2.5rem;
+  --space-7: 3rem;
+  --space-8: 4rem;
+  --space-9: 5rem;
+  --space-10: 6rem;
+  --space-11: 8rem;
+
+  /* ── Radius ──────────────────────────────────────────────── */
+  --radius-small:  0.375rem;
+  --radius-medium: 0.5rem;
+  --radius-large:  0.75rem;
+  --radius-xl:     1rem;
+
+  /* ── Glass surfaces ──────────────────────────────────────── */
+  --glass-bg:     rgba(255 255 255 / 0.05);
+  --glass-border: rgba(255 255 255 / 0.09);
+  --shadow-glass: 0 24px 80px rgba(0 0 0 / 0.32);
+  --shadow-quiet: 0 8px 32px rgba(0 0 0 / 0.22);
+  --shadow-card:  0 2px 12px rgba(0 0 0 / 0.4), 0 0 0 1px rgba(255 255 255 / 0.06);
+
+  /* ── Motion ──────────────────────────────────────────────── */
+  --duration-micro:     160ms;
+  --duration-component: 280ms;
+  --duration-section:   420ms;
+  --duration-room:      620ms;
+  --ease-atlas: cubic-bezier(0.22, 1, 0.36, 1);
+
+  /* ── Typography ──────────────────────────────────────────── */
+  --font-interface: 'Inter', 'SF Pro Display', system-ui, -apple-system, sans-serif;
+  --font-mono:      'JetBrains Mono', 'Fira Code', monospace;
+  --font-display:   'Inter', system-ui, sans-serif;
+}
+
+/* ── Light Mode overrides ─────────────────────────────────── */
+[data-theme="light"] {
+  --atlas-black:   247 247 244;
+  --atlas-white:   8 8 8;
+  --atlas-ink:     24 24 22;
+  --atlas-muted:   100 100 95;
+  --atlas-line:    0 0 0;
+  --atlas-glass:   0 0 0;
+  --atlas-surface: 235 234 230;
+
+  --color-bg:         rgb(245 244 240);
+  --color-bg-raised:  rgb(238 237 233);
+  --color-bg-card:    rgb(232 231 227);
+  --color-text:       rgb(24 24 22);
+  --color-text-muted: rgb(100 100 95);
+  --color-border:     rgba(0 0 0 / 0.1);
+  --color-gold:       rgb(180 140 60);
+  --color-gold-dim:   rgba(180 140 60 / 0.15);
+  --color-green:      rgb(80 110 80);
+
+  --glass-bg:     rgba(0 0 0 / 0.04);
+  --glass-border: rgba(0 0 0 / 0.08);
+  --shadow-glass: 0 16px 60px rgba(0 0 0 / 0.10);
+  --shadow-quiet: 0 4px 20px rgba(0 0 0 / 0.08);
+  --shadow-card:  0 2px 8px rgba(0 0 0 / 0.1), 0 0 0 1px rgba(0 0 0 / 0.06);
+}
