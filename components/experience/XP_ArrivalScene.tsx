@@ -11,6 +11,7 @@ import { XP_AboutSection } from "@/components/experience/XP_AboutSection";
 import { XP_ExperienceScrollSection } from "@/components/experience/XP_ExperienceScrollSection";
 import { XP_MyWorkScrollSection } from "@/components/experience/XP_MyWorkScrollSection";
 import { XP_SkillsScrollSection } from "@/components/experience/XP_SkillsScrollSection";
+import { XP_ContactScrollSection } from "@/components/experience/XP_ContactScrollSection";
 
 /* ─────────────────────────────────────────────────────────
     status: "completed",
@@ -372,6 +373,7 @@ export function XP_ArrivalScene() {
         const isExperience = chapter.id === "engineering";
         const isMyWork     = chapter.id === "my-work";
         const isDesigner   = chapter.id === "designer";
+        const isContact    = chapter.id === "contact";
 
         if (isAbout) {
           return <XP_AboutSection key="about" scrollContainerRef={containerRef} />;
@@ -387,6 +389,10 @@ export function XP_ArrivalScene() {
 
         if (isDesigner) {
           return <XP_SkillsScrollSection key="designer" scrollContainerRef={containerRef} />;
+        }
+
+        if (isContact) {
+          return <XP_ContactScrollSection key="contact" scrollContainerRef={containerRef} />;
         }
 
         const bgImage     = roomImages[chapter.id] || "/room_workshop.png";
