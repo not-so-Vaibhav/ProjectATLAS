@@ -1,93 +1,236 @@
-import { XP_RoomPage } from "@/components/experience/XP_RoomPage";
-import { getIdentityChapter } from "@/data/identity-chapters";
-import Image from "next/image";
-import type { Metadata } from "next";
+"use client";
 
-export const metadata: Metadata = { title: "Photography — Perspective" };
-
-const collections = [
-  {
-    title: "Sacred Places",
-    description: "Capturing the serene quiet of morning mist rising around ancient temples and mountains.",
-    image: "/photography_mist.png",
-    meta: "Fuji XT-5 · 35mm · ISO 160",
-  },
-  {
-    title: "The Summit Silhouette",
-    description: "Golden hour over mountain paths, observing how light defines geometry.",
-    image: "/photography_mountain.png",
-    meta: "Fuji XT-5 · 50mm · ISO 100",
-  },
-  {
-    title: "Tokyo Reflection",
-    description: "Tokyo streets after midnight, rain washing the neon signs into wet pavement.",
-    image: "/photography_street.png",
-    meta: "Fuji XT-5 · 23mm · ISO 800",
-  },
-];
+import { useRef, useEffect } from "react";
+import { gsap } from "gsap";
 
 export default function PhotographyPage() {
-  const chapter = getIdentityChapter("photography");
-  if (!chapter) return null;
+  const pageRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const el = pageRef.current;
+    if (!el) return;
+
+    const ctx = gsap.context(() => {
+      /* Initial states */
+      gsap.set(".pg-glow",    { opacity: 0, scale: 0.6 });
+      gsap.set(".pg-kicker",  { opacity: 0, y: 20, letterSpacing: "0.5em" });
+      gsap.set(".pg-line1",   { opacity: 0, y: 48, skewY: 3 });
+      gsap.set(".pg-line2",   { opacity: 0, y: 48, skewY: 3 });
+      gsap.set(".pg-divider", { scaleX: 0, transformOrigin: "center center" });
+      gsap.set(".pg-sub",     { opacity: 0, y: 24 });
+      gsap.set(".pg-btn",     { opacity: 0, y: 24, scale: 0.95 });
+      gsap.set(".pg-url",     { opacity: 0 });
+      gsap.set(".pg-ring1",   { opacity: 0, scale: 0.3, rotate: -120 });
+      gsap.set(".pg-ring2",   { opacity: 0, scale: 0.3, rotate: -60 });
+      gsap.set(".pg-ring3",   { opacity: 0, scale: 0.3, rotate: -30 });
+
+      const tl = gsap.timeline({ defaults: { ease: "power3.out" } });
+
+      tl
+        /* Rings expand from center */
+        .to(".pg-ring1",   { opacity: 1, scale: 1, rotate: 0, duration: 1.4, ease: "power2.out" }, 0)
+        .to(".pg-ring2",   { opacity: 1, scale: 1, rotate: 0, duration: 1.6, ease: "power2.out" }, 0.1)
+        .to(".pg-ring3",   { opacity: 1, scale: 1, rotate: 0, duration: 1.8, ease: "power2.out" }, 0.2)
+
+        /* Gold glow blooms */
+        .to(".pg-glow",    { opacity: 1, scale: 1, duration: 1.6, ease: "power2.out" }, 0.1)
+
+        /* Kicker */
+        .to(".pg-kicker",  { opacity: 1, y: 0, letterSpacing: "0.28em", duration: 0.8 }, 0.55)
+
+        /* Headline lines */
+        .to(".pg-line1",   { opacity: 1, y: 0, skewY: 0, duration: 0.85, ease: "power4.out" }, 0.75)
+        .to(".pg-line2",   { opacity: 1, y: 0, skewY: 0, duration: 0.85, ease: "power4.out" }, 0.88)
+
+        /* Divider draws in */
+        .to(".pg-divider", { scaleX: 1, duration: 0.7, ease: "power3.out" }, 1.05)
+
+        /* Subtitle */
+        .to(".pg-sub",     { opacity: 1, y: 0, duration: 0.65 }, 1.18)
+
+        /* Button bounces in */
+        .to(".pg-btn",     { opacity: 1, y: 0, scale: 1, duration: 0.7, ease: "back.out(1.5)" }, 1.32)
+
+        /* URL */
+        .to(".pg-url",     { opacity: 1, duration: 0.5 }, 1.52);
+
+      /* Slow continuous ring rotation */
+      gsap.to(".pg-ring2", { rotate: 360, duration: 40, ease: "none", repeat: -1, delay: 1.2 });
+      gsap.to(".pg-ring3", { rotate: -360, duration: 55, ease: "none", repeat: -1, delay: 1.5 });
+
+    }, pageRef);
+
+    return () => ctx.revert();
+  }, []);
 
   return (
-    <XP_RoomPage chapter={chapter}>
-      {/* Gallery Section */}
-      <section className="px-6 py-10 lg:px-10" style={{ borderBottom: "1px solid var(--color-border)" }}>
-        <p className="atlas-kicker mb-2">Welcome Gallery</p>
-        <h2 className="text-xl font-semibold text-atlas-white mb-6">Observations captured with intention.</h2>
-        
-        <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-          {collections.map((c) => (
-            <div key={c.title} className="atlas-card overflow-hidden flex flex-col justify-between group">
-              <div className="relative aspect-[4/3] overflow-hidden">
-                <Image
-                  src={c.image}
-                  alt={c.title}
-                  fill
-                  className="object-cover transition-transform duration-500 group-hover:scale-105"
-                  sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-                />
-              </div>
-              <div className="p-4 flex-1 flex flex-col justify-between">
-                <div>
-                  <h3 className="text-sm font-semibold text-atlas-white">{c.title}</h3>
-                  <p className="text-xs text-atlas-ink/65 mt-1.5 leading-relaxed">{c.description}</p>
-                </div>
-                <div className="mt-4 pt-3 border-t flex justify-between items-center text-[10px] text-atlas-muted font-mono" style={{ borderColor: "var(--color-border)" }}>
-                  <span>{c.meta}</span>
-                  <span className="text-atlas-gold font-semibold uppercase tracking-wider">Perspective</span>
-                </div>
-              </div>
-            </div>
-          ))}
-        </div>
-      </section>
+    <div
+      ref={pageRef}
+      className="min-h-screen flex flex-col items-center justify-center text-center px-6 relative overflow-hidden"
+      style={{ background: "#080808" }}
+      id="main-content"
+    >
 
-      {/* Observation Notes */}
-      <section className="px-6 py-10 lg:px-10" style={{ borderBottom: "1px solid var(--color-border)" }}>
-        <div className="atlas-card p-6 max-w-4xl mx-auto">
-          <p className="atlas-kicker mb-2">Observation Notes</p>
-          <h3 className="text-lg font-semibold text-atlas-white mb-3">How visual attention shapes product thinking.</h3>
-          <p className="text-xs leading-relaxed text-atlas-ink/70 mb-4">
-            Photography is a school of attention. By forcing oneself to wait for the right light, to align a frame precisely, and to eliminate noise from a composition, one learns how to focus on what truly matters.
-          </p>
-          <div className="grid gap-4 sm:grid-cols-3 text-xs">
-            <div className="p-3 bg-atlas-black/20 rounded border border-atlas-line/5">
-              <p className="font-semibold text-atlas-gold mb-1">Focus</p>
-              <p className="text-atlas-muted text-[11px] leading-normal">Eliminate extraneous UI/UX details just as you crop distracting background elements.</p>
-            </div>
-            <div className="p-3 bg-atlas-black/20 rounded border border-atlas-line/5">
-              <p className="font-semibold text-atlas-gold mb-1">Light</p>
-              <p className="text-atlas-muted text-[11px] leading-normal">Guide the user&apos;s eyes using contrast, typography, and clean white space spacing.</p>
-            </div>
-            <div className="p-3 bg-atlas-black/20 rounded border border-atlas-line/5">
-              <p className="font-semibold text-atlas-gold mb-1">Patience</p>
-              <p className="text-atlas-muted text-[11px] leading-normal">Wait for the complete understanding of a human problem before proposing architectural code.</p>
-            </div>
-          </div>
+      {/* ── Decorative concentric rings ───────────────────── */}
+      <div className="pointer-events-none absolute inset-0 flex items-center justify-center">
+        {/* Outer ring */}
+        <div
+          className="pg-ring1 absolute rounded-full"
+          style={{
+            width: "min(680px, 90vw)",
+            height: "min(680px, 90vw)",
+            border: "1px solid rgba(199,169,102,0.07)",
+          }}
+        />
+        {/* Mid ring */}
+        <div
+          className="pg-ring2 absolute rounded-full"
+          style={{
+            width: "min(460px, 70vw)",
+            height: "min(460px, 70vw)",
+            border: "1px solid rgba(199,169,102,0.11)",
+          }}
+        />
+        {/* Inner ring */}
+        <div
+          className="pg-ring3 absolute rounded-full"
+          style={{
+            width: "min(280px, 50vw)",
+            height: "min(280px, 50vw)",
+            border: "1px solid rgba(199,169,102,0.16)",
+          }}
+        />
+      </div>
+
+      {/* ── Radial gold glow ──────────────────────────────── */}
+      <div
+        className="pg-glow pointer-events-none absolute inset-0"
+        style={{
+          background:
+            "radial-gradient(ellipse 55% 55% at 50% 50%, rgba(199,169,102,0.09) 0%, rgba(199,169,102,0.03) 45%, transparent 72%)",
+        }}
+      />
+
+      {/* ── Content ───────────────────────────────────────── */}
+      <div className="relative z-10 flex flex-col items-center">
+
+        {/* Kicker */}
+        <p
+          className="pg-kicker mb-7 text-[10px] font-bold uppercase"
+          style={{ color: "rgb(199,169,102)", letterSpacing: "0.28em" }}
+        >
+          Not-So-Graphy
+        </p>
+
+        {/* Headline — two lines */}
+        <div className="overflow-hidden mb-1" style={{ perspective: "600px" }}>
+          <h1
+            className="pg-line1 font-black tracking-tight leading-[0.95] text-white"
+            style={{ fontSize: "clamp(3rem, 8vw, 6rem)" }}
+          >
+            Photography
+          </h1>
         </div>
-      </section>
-    </XP_RoomPage>
+        <div className="overflow-hidden mb-7" style={{ perspective: "600px" }}>
+          <h1
+            className="pg-line2 font-black tracking-tight leading-[0.95]"
+            style={{
+              fontSize: "clamp(3rem, 8vw, 6rem)",
+              color: "rgb(199,169,102)",
+            }}
+          >
+            lives here.
+          </h1>
+        </div>
+
+        {/* Gold divider */}
+        <div
+          className="pg-divider mb-7 h-[2px] rounded-full"
+          style={{
+            width: 56,
+            background: "linear-gradient(to right, rgba(199,169,102,0.3), rgb(199,169,102), rgba(199,169,102,0.3))",
+          }}
+        />
+
+        {/* Subtitle */}
+        <p
+          className="pg-sub text-sm md:text-base leading-relaxed max-w-xs mb-10"
+          style={{ color: "rgba(224,224,218,0.52)" }}
+        >
+          Every frame, story, and observation from the Builder&apos;s lens.
+          Explore the full photography world at Not-So-Graphy.
+        </p>
+
+        {/* CTA Button */}
+        <div className="pg-btn">
+          <a
+            href="https://not-so-graphy.onrender.com/"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="group relative inline-flex items-center gap-3 overflow-hidden rounded-2xl px-8 py-4 text-sm font-bold tracking-wide transition-all duration-300 hover:scale-[1.04] active:scale-[0.98]"
+            style={{
+              border: "1.5px solid rgba(199,169,102,0.55)",
+              color: "rgb(199,169,102)",
+              background: "rgba(199,169,102,0.06)",
+              boxShadow: "0 0 40px rgba(199,169,102,0.08)",
+            }}
+            onMouseEnter={(e) => {
+              const el = e.currentTarget;
+              el.style.background = "rgb(199,169,102)";
+              el.style.color = "#080808";
+              el.style.boxShadow = "0 0 56px rgba(199,169,102,0.28)";
+            }}
+            onMouseLeave={(e) => {
+              const el = e.currentTarget;
+              el.style.background = "rgba(199,169,102,0.06)";
+              el.style.color = "rgb(199,169,102)";
+              el.style.boxShadow = "0 0 40px rgba(199,169,102,0.08)";
+            }}
+          >
+            {/* Shimmer sweep */}
+            <span
+              className="pointer-events-none absolute inset-0 -translate-x-full group-hover:translate-x-full transition-transform duration-700"
+              style={{ background: "linear-gradient(90deg, transparent, rgba(255,255,255,0.22), transparent)" }}
+            />
+            {/* Camera icon */}
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              className="relative w-4 h-4 transition-transform duration-300 group-hover:rotate-12"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="2"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+            >
+              <path d="M14.5 4h-5L7 7H4a2 2 0 0 0-2 2v9a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2h-3l-2.5-3z" />
+              <circle cx="12" cy="13" r="3" />
+            </svg>
+            <span className="relative">Visit Not-So-Graphy</span>
+            {/* Arrow */}
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              className="relative w-3.5 h-3.5 transition-transform duration-300 group-hover:translate-x-1"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="2.5"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+            >
+              <path d="M5 12h14M12 5l7 7-7 7" />
+            </svg>
+          </a>
+        </div>
+
+        {/* URL hint */}
+        <p
+          className="pg-url mt-5 text-[10px] tracking-widest uppercase"
+          style={{ color: "rgba(199,169,102,0.28)" }}
+        >
+          not-so-graphy.onrender.com
+        </p>
+      </div>
+    </div>
   );
 }

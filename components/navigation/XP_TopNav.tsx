@@ -10,14 +10,15 @@ import { useTheme } from "@/components/providers/ThemeProvider";
 
 // Maps nav label → { path for routing, sectionId for homepage scroll }
 const navItems = [
-  { label: "Home",              path: "/",          sectionId: "arrival"  },
-  { label: "About",             path: "/founder",   sectionId: "about"   },
-  { label: "Experience",        path: "/experience",sectionId: "experience" },
-  { label: "My Work",           path: "/projects",  sectionId: "my-work"  },
-  { label: "Skills",            path: "/designer",  sectionId: "designer" },
-  { label: "Builder's Journal", path: "/journal",   sectionId: "journal"  },
-  { label: "The Lab",           path: "/lab",       sectionId: "lab"      },
-  { label: "Let's Contact",     path: "/contact",   sectionId: "contact"  },
+  { label: "Home",              path: "/",            sectionId: "arrival"     },
+  { label: "About",             path: "/founder",     sectionId: "about"       },
+  { label: "Experience",        path: "/experience",  sectionId: "experience"  },
+  { label: "My Work",           path: "/projects",    sectionId: "my-work"     },
+  { label: "Skills",            path: "/designer",    sectionId: "designer"    },
+  { label: "Photography",       path: "/photography", sectionId: "photography" },
+  { label: "Builder's Journal", path: "/journal",     sectionId: "journal"     },
+  { label: "The Lab",           path: "/lab",         sectionId: "lab"         },
+  { label: "Let's Contact",     path: "/contact",     sectionId: "contact"     },
 ];
 
 export function XP_TopNav() {

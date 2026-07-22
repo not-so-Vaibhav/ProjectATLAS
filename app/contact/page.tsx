@@ -49,7 +49,9 @@ export default function ContactPage() {
             <div>
               <p className="text-[10px] font-mono tracking-widest uppercase text-atlas-muted mb-3">Resume Access</p>
               <a
-                href="#"
+                href="/resume.pdf"
+                target="_blank"
+                rel="noopener noreferrer"
                 className="inline-flex items-center gap-2 text-xs font-semibold text-atlas-gold hover:text-atlas-white transition mb-6"
               >
                 <FileText className="w-4 h-4" /> Download Resume (PDF)

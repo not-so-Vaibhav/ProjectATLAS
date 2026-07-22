@@ -11,6 +11,7 @@ import { XP_AboutSection } from "@/components/experience/XP_AboutSection";
 import { XP_ExperienceScrollSection } from "@/components/experience/XP_ExperienceScrollSection";
 import { XP_MyWorkScrollSection } from "@/components/experience/XP_MyWorkScrollSection";
 import { XP_SkillsScrollSection } from "@/components/experience/XP_SkillsScrollSection";
+import { XP_PhotographyScrollSection } from "@/components/experience/XP_PhotographyScrollSection";
 import { XP_ContactScrollSection } from "@/components/experience/XP_ContactScrollSection";
 
 /* ─────────────────────────────────────────────────────────
@@ -355,7 +356,7 @@ export function XP_ArrivalScene() {
   const scrollToNext = (id: string) => scrollToSection(id);
 
   /* ── Visible chapters ──────────────────────────────── */
-  const NAV_IDS = ["arrival", "founder", "engineering", "my-work", "designer", "journal", "lab", "contact"];
+  const NAV_IDS = ["arrival", "founder", "engineering", "my-work", "designer", "photography", "journal", "lab", "contact"];
   /* Map chapter id → DOM section id (allows renaming hash without touching data layer) */
   const CHAPTER_TO_SECTION: Record<string, string> = { founder: "about" };
   const visibleChapters = NAV_IDS
@@ -372,8 +373,9 @@ export function XP_ArrivalScene() {
         const isAbout      = chapter.id === "founder";
         const isExperience = chapter.id === "engineering";
         const isMyWork     = chapter.id === "my-work";
-        const isDesigner   = chapter.id === "designer";
-        const isContact    = chapter.id === "contact";
+        const isDesigner     = chapter.id === "designer";
+        const isPhotography   = chapter.id === "photography";
+        const isContact       = chapter.id === "contact";
 
         if (isAbout) {
           return <XP_AboutSection key="about" scrollContainerRef={containerRef} />;
@@ -389,6 +391,10 @@ export function XP_ArrivalScene() {
 
         if (isDesigner) {
           return <XP_SkillsScrollSection key="designer" scrollContainerRef={containerRef} />;
+        }
+
+        if (isPhotography) {
+          return <XP_PhotographyScrollSection key="photography" scrollContainerRef={containerRef} />;
         }
 
         if (isContact) {

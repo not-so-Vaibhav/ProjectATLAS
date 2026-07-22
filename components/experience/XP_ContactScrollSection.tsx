@@ -180,7 +180,9 @@ export function XP_ContactScrollSection({ scrollContainerRef: _ }: Props) {
               Enter Room <ArrowRight className="w-3 h-3 lg:w-3.5 lg:h-3.5" />
             </Link>
             <a
-              href="#"
+              href="/resume.pdf"
+              target="_blank"
+              rel="noopener noreferrer"
               className="inline-flex items-center gap-2 px-3.5 py-1.5 lg:px-5 lg:py-2.5 rounded-xl text-[10px] lg:text-xs font-semibold border transition-all hover:border-white/30 hover:text-white"
               style={{ border: "1px solid rgba(255,255,255,0.12)", color: "rgba(224,224,218,0.6)" }}
             >
