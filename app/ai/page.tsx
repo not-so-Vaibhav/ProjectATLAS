@@ -71,7 +71,7 @@ export default function AIPage() {
         <div className="flex flex-wrap gap-2">
           {["OpenAI", "LangChain", "Pinecone", "Supabase", "FastAPI", "Hugging Face", "Agents", "RAG", "Fine-tuning", "Embeddings", "Vector DBs", "NLP"].map((tech) => (
             <span key={tech} className="text-xs px-3 py-1.5 rounded-full border font-mono font-medium text-atlas-green"
-              style={{ borderColor: "rgba(126,148,125,0.3)", background: "rgba(126,148,125,0.06)" }}>
+              style={{ borderColor: "rgb(var(--atlas-green) / 0.3)", background: "rgb(var(--atlas-green) / 0.06)" }}>
               {tech}
             </span>
           ))}

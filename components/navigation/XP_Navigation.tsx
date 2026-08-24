@@ -17,7 +17,8 @@ const icons: Record<BuilderIdentity, typeof Home> = {
   journal: NotebookPen,
   lab: FlaskConical,
   future: Telescope,
-  contact: Mail
+  contact: Mail,
+  "my-work": Compass
 };
 
 export function XP_Navigation() {

@@ -67,7 +67,7 @@ export default function PhotographyPage() {
     <div
       ref={pageRef}
       className="min-h-screen flex flex-col items-center justify-center text-center px-6 relative overflow-hidden"
-      style={{ background: "#080808" }}
+      style={{ background: "var(--color-bg)" }}
       id="main-content"
     >
 
@@ -79,7 +79,7 @@ export default function PhotographyPage() {
           style={{
             width: "min(680px, 90vw)",
             height: "min(680px, 90vw)",
-            border: "1px solid rgba(199,169,102,0.07)",
+            border: "1px solid rgb(var(--atlas-gold) / 0.07)",
           }}
         />
         {/* Mid ring */}
@@ -88,7 +88,7 @@ export default function PhotographyPage() {
           style={{
             width: "min(460px, 70vw)",
             height: "min(460px, 70vw)",
-            border: "1px solid rgba(199,169,102,0.11)",
+            border: "1px solid rgb(var(--atlas-gold) / 0.11)",
           }}
         />
         {/* Inner ring */}
@@ -97,7 +97,7 @@ export default function PhotographyPage() {
           style={{
             width: "min(280px, 50vw)",
             height: "min(280px, 50vw)",
-            border: "1px solid rgba(199,169,102,0.16)",
+            border: "1px solid rgb(var(--atlas-gold) / 0.16)",
           }}
         />
       </div>
@@ -107,7 +107,7 @@ export default function PhotographyPage() {
         className="pg-glow pointer-events-none absolute inset-0"
         style={{
           background:
-            "radial-gradient(ellipse 55% 55% at 50% 50%, rgba(199,169,102,0.09) 0%, rgba(199,169,102,0.03) 45%, transparent 72%)",
+            "radial-gradient(ellipse 55% 55% at 50% 50%, rgb(var(--atlas-gold) / 0.09) 0%, rgb(var(--atlas-gold) / 0.03) 45%, transparent 72%)",
         }}
       />
 
@@ -117,7 +117,7 @@ export default function PhotographyPage() {
         {/* Kicker */}
         <p
           className="pg-kicker mb-7 text-[10px] font-bold uppercase"
-          style={{ color: "rgb(199,169,102)", letterSpacing: "0.28em" }}
+          style={{ color: "var(--color-gold)", letterSpacing: "0.28em" }}
         >
           Not-So-Graphy
         </p>
@@ -136,7 +136,7 @@ export default function PhotographyPage() {
             className="pg-line2 font-black tracking-tight leading-[0.95]"
             style={{
               fontSize: "clamp(3rem, 8vw, 6rem)",
-              color: "rgb(199,169,102)",
+              color: "var(--color-gold)",
             }}
           >
             lives here.
@@ -148,14 +148,14 @@ export default function PhotographyPage() {
           className="pg-divider mb-7 h-[2px] rounded-full"
           style={{
             width: 56,
-            background: "linear-gradient(to right, rgba(199,169,102,0.3), rgb(199,169,102), rgba(199,169,102,0.3))",
+            background: "linear-gradient(to right, rgb(var(--atlas-gold) / 0.3), var(--color-gold), rgb(var(--atlas-gold) / 0.3))",
           }}
         />
 
         {/* Subtitle */}
         <p
           className="pg-sub text-sm md:text-base leading-relaxed max-w-xs mb-10"
-          style={{ color: "rgba(224,224,218,0.52)" }}
+          style={{ color: "rgb(var(--atlas-ink) / 0.52)" }}
         >
           Every frame, story, and observation from the Builder&apos;s lens.
           Explore the full photography world at Not-So-Graphy.
@@ -169,28 +169,28 @@ export default function PhotographyPage() {
             rel="noopener noreferrer"
             className="group relative inline-flex items-center gap-3 overflow-hidden rounded-2xl px-8 py-4 text-sm font-bold tracking-wide transition-all duration-300 hover:scale-[1.04] active:scale-[0.98]"
             style={{
-              border: "1.5px solid rgba(199,169,102,0.55)",
-              color: "rgb(199,169,102)",
-              background: "rgba(199,169,102,0.06)",
-              boxShadow: "0 0 40px rgba(199,169,102,0.08)",
+              border: "1.5px solid rgb(var(--atlas-gold) / 0.55)",
+              color: "var(--color-gold)",
+              background: "rgb(var(--atlas-gold) / 0.06)",
+              boxShadow: "0 0 40px rgb(var(--atlas-gold) / 0.08)",
             }}
             onMouseEnter={(e) => {
               const el = e.currentTarget;
-              el.style.background = "rgb(199,169,102)";
-              el.style.color = "#080808";
-              el.style.boxShadow = "0 0 56px rgba(199,169,102,0.28)";
+              el.style.background = "var(--color-gold)";
+              el.style.color = "var(--color-bg)";
+              el.style.boxShadow = "0 0 56px rgb(var(--atlas-gold) / 0.28)";
             }}
             onMouseLeave={(e) => {
               const el = e.currentTarget;
-              el.style.background = "rgba(199,169,102,0.06)";
-              el.style.color = "rgb(199,169,102)";
-              el.style.boxShadow = "0 0 40px rgba(199,169,102,0.08)";
+              el.style.background = "rgb(var(--atlas-gold) / 0.06)";
+              el.style.color = "var(--color-gold)";
+              el.style.boxShadow = "0 0 40px rgb(var(--atlas-gold) / 0.08)";
             }}
           >
             {/* Shimmer sweep */}
             <span
               className="pointer-events-none absolute inset-0 -translate-x-full group-hover:translate-x-full transition-transform duration-700"
-              style={{ background: "linear-gradient(90deg, transparent, rgba(255,255,255,0.22), transparent)" }}
+              style={{ background: "linear-gradient(90deg, transparent, rgb(var(--atlas-line) / 0.22), transparent)" }}
             />
             {/* Camera icon */}
             <svg
@@ -226,7 +226,7 @@ export default function PhotographyPage() {
         {/* URL hint */}
         <p
           className="pg-url mt-5 text-[10px] tracking-widest uppercase"
-          style={{ color: "rgba(199,169,102,0.28)" }}
+          style={{ color: "rgb(var(--atlas-gold) / 0.28)" }}
         >
           not-so-graphy.onrender.com
         </p>

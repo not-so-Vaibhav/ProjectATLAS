@@ -125,15 +125,15 @@ export function XP_AboutSection({ scrollContainerRef }: XP_AboutSectionProps) {
       aria-label="About"
     >
       <div
-        className="sticky top-0 h-[100dvh] w-full overflow-hidden bg-[#080808]"
+        className="sticky top-0 h-[100dvh] w-full overflow-hidden bg-[var(--color-bg)]"
       >
         {/* Center title — visible on entry, fades as quadrants fill */}
         <div
           ref={aboutTitleRef}
           className="absolute inset-0 z-30 flex items-center justify-center pointer-events-none"
         >
-          <h2 className="text-5xl md:text-7xl lg:text-[5.5rem] font-bold text-white tracking-tight text-center px-6">
-            About<span style={{ color: "rgb(199,169,102)" }}>.</span>
+          <h2 className="text-5xl md:text-7xl lg:text-[5.5rem] font-bold text-[var(--color-text)] tracking-tight text-center px-6">
+            About<span style={{ color: "var(--color-gold)" }}>.</span>
           </h2>
         </div>
 
@@ -150,7 +150,7 @@ export function XP_AboutSection({ scrollContainerRef }: XP_AboutSectionProps) {
               <div
                 key={panel.id}
                 ref={(el) => { panelRefs.current[i] = el; }}
-                className="about-panel relative overflow-hidden rounded-lg md:rounded-xl border border-white/10 will-change-transform"
+                className="about-panel relative overflow-hidden rounded-lg md:rounded-xl border border-[rgb(var(--atlas-line)_/_0.1)] will-change-transform"
               >
                 <Image
                   src={panel.image}
@@ -164,7 +164,7 @@ export function XP_AboutSection({ scrollContainerRef }: XP_AboutSectionProps) {
                 <div className="absolute bottom-0 left-0 right-0 p-3 md:p-5 lg:p-6">
                   <p
                     className="text-[9px] md:text-[10px] font-bold tracking-[0.2em] uppercase mb-1 md:mb-2"
-                    style={{ color: "rgb(199,169,102)" }}
+                    style={{ color: "var(--color-gold)" }}
                   >
                     {chapter.label}
                   </p>
@@ -188,8 +188,8 @@ export function XP_AboutSection({ scrollContainerRef }: XP_AboutSectionProps) {
 
         {/* Subtle crosshair when all panels are in place */}
         <div className="absolute inset-0 z-20 pointer-events-none opacity-20">
-          <div className="absolute top-1/2 left-[10%] right-[10%] h-px bg-white/30 -translate-y-1/2" />
-          <div className="absolute left-1/2 top-[calc(var(--topbar-height)+1rem)] bottom-[1rem] w-px bg-white/30 -translate-x-1/2" />
+          <div className="absolute top-1/2 left-[10%] right-[10%] h-px bg-[rgb(var(--atlas-line)_/_0.3)] -translate-y-1/2" />
+          <div className="absolute left-1/2 top-[calc(var(--topbar-height)+1rem)] bottom-[1rem] w-px bg-[rgb(var(--atlas-line)_/_0.3)] -translate-x-1/2" />
         </div>
       </div>
     </section>

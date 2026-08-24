@@ -10,7 +10,8 @@ export type BuilderIdentity =
   | "journal"
   | "lab"
   | "future"
-  | "contact";
+  | "contact"
+  | "my-work";
 
 export type IdentityChapter = {
   id: BuilderIdentity;
@@ -24,7 +25,7 @@ export type IdentityChapter = {
   builderEquipment: string[];
   builderBehavior: string;
   atmosphere: string;
-  accent: "wood" | "green" | "gold" | "glass";
+  accent: "wood" | "green" | "gold" | "glass" | "blue";
   visibleInPrimaryNavigation: boolean;
   nextId?: BuilderIdentity;
   zones: Array<{

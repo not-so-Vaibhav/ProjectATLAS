@@ -239,7 +239,7 @@ export const identityChapters: IdentityChapter[] = [
     atmosphere: "Peaceful, personal, honest and reflective.",
     accent: "wood",
     visibleInPrimaryNavigation: true,
-    nextId: "lab",
+    nextId: "contact",
     zones: [
       {
         title: "Writing Desk",

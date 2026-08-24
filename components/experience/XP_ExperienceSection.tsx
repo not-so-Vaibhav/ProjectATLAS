@@ -16,7 +16,7 @@ const experiences = [
     company: "Solace",
     type: "Startup",
     location: "Remote",
-    period: "2024 — Present",
+    period: "2026 — Present",
     status: "active",
     tagline: "Building empathy-driven tools for founders.",
     description:
@@ -30,21 +30,21 @@ const experiences = [
     stack: ["Next.js", "Node.js", "OpenAI", "PostgreSQL", "Tailwind"],
     icon: Zap,
     color: "gold",
-    glowColor: "rgba(199,169,102,0.18)",
-    borderGlow: "rgba(199,169,102,0.4)",
-    dotColor: "#C7A966",
+    glowColor: "rgb(var(--atlas-gold) / 0.18)",
+    borderGlow: "rgb(var(--atlas-gold) / 0.4)",
+    dotColor: "var(--color-gold)",
   },
   {
     id: "mit",
-    role: "Full Stack Developer & Lead",
+    role: "Software and AI Engineer & Lead",
     company: "MIT Institute of Design",
     type: "Internship · Candidate Experience Pod",
     location: "Pune, India",
-    period: "2023",
+    period: "2026",
     status: "completed",
     tagline: "Led the end-to-end candidate experience at scale.",
     description:
-      "Interned as Full Stack Developer and Pod Lead for the Candidate Experience team at MIT Institute of Design. Built internal tools that improved admissions workflow and designed the digital onboarding journey for prospective students.",
+      "Interned as Software and AI Engineer and Team Lead for the Candidate Experience team at MIT Institute of Design. Built internal tools that improved admissions workflow and designed the digital onboarding journey for prospective students.",
     highlights: [
       "Led a cross-functional team of 6 across design and engineering",
       "Shipped an applicant portal used by 1,200+ candidates",
@@ -54,9 +54,9 @@ const experiences = [
     stack: ["React", "Node.js", "MongoDB", "Express", "Figma"],
     icon: Code2,
     color: "green",
-    glowColor: "rgba(126,148,125,0.14)",
-    borderGlow: "rgba(126,148,125,0.45)",
-    dotColor: "#7E947D",
+    glowColor: "rgb(var(--atlas-green) / 0.14)",
+    borderGlow: "rgb(var(--atlas-green) / 0.45)",
+    dotColor: "var(--color-green)",
   },
 ];
 
@@ -173,7 +173,7 @@ export function XP_ExperienceSection() {
           <div
             className="absolute inset-0 pointer-events-none"
             style={{
-              background: "radial-gradient(ellipse 70% 55% at 35% 50%, rgba(199,169,102,0.06) 0%, transparent 70%)",
+              background: "radial-gradient(ellipse 70% 55% at 35% 50%, rgb(var(--atlas-gold) / 0.06) 0%, transparent 70%)",
             }}
           />
 
@@ -216,7 +216,7 @@ export function XP_ExperienceSection() {
           {/* Subtitle */}
           <p
             className="xp-subtitle text-base md:text-lg leading-relaxed max-w-sm"
-            style={{ opacity: 0, color: "rgba(224,224,218,0.65)" }}
+            style={{ opacity: 0, color: "rgb(var(--atlas-ink) / 0.65)" }}
           >
             Two chapters of building something real —
             one as a founder, one as a developer.
@@ -227,18 +227,18 @@ export function XP_ExperienceSection() {
             style={{ borderColor: "var(--color-border)" }}>
             <div
               className="xp-scroll-ticker flex whitespace-nowrap gap-6 text-[10px] font-bold tracking-[0.22em] uppercase"
-              style={{ color: "rgba(199,169,102,0.4)", width: "200%" }}
+              style={{ color: "rgb(var(--atlas-gold) / 0.4)", width: "200%" }}
             >
               {Array.from({ length: 8 }).map((_, i) => (
                 <span key={i} className="flex items-center gap-6 flex-shrink-0">
                   <span>Founder</span>
-                  <span style={{ color: "rgba(199,169,102,0.2)" }}>·</span>
+                  <span style={{ color: "rgb(var(--atlas-gold) / 0.2)" }}>·</span>
                   <span>Engineer</span>
-                  <span style={{ color: "rgba(199,169,102,0.2)" }}>·</span>
+                  <span style={{ color: "rgb(var(--atlas-gold) / 0.2)" }}>·</span>
                   <span>Builder</span>
-                  <span style={{ color: "rgba(199,169,102,0.2)" }}>·</span>
+                  <span style={{ color: "rgb(var(--atlas-gold) / 0.2)" }}>·</span>
                   <span>Leader</span>
-                  <span style={{ color: "rgba(199,169,102,0.2)" }}>·</span>
+                  <span style={{ color: "rgb(var(--atlas-gold) / 0.2)" }}>·</span>
                 </span>
               ))}
             </div>
@@ -249,7 +249,7 @@ export function XP_ExperienceSection() {
         <div
           ref={rightRef}
           className="flex flex-col justify-center gap-5 px-8 py-16 lg:px-12 lg:py-20"
-          style={{ background: "rgb(10,10,9)" }}
+          style={{ background: "var(--color-bg-raised)" }}
         >
           {experiences.map((exp, idx) => {
             const Icon = exp.icon;
@@ -263,21 +263,21 @@ export function XP_ExperienceSection() {
                 className="xp-exp-card relative rounded-2xl overflow-hidden group"
                 style={{
                   opacity: 0,
-                  background: "rgb(14,14,13)",
-                  border: `1px solid ${exp.color === "gold" ? "rgba(199,169,102,0.15)" : "rgba(126,148,125,0.15)"}`,
+                  background: "var(--color-bg-card)",
+                  border: `1px solid ${exp.color === "gold" ? "rgb(var(--atlas-gold) / 0.15)" : "rgb(var(--atlas-green) / 0.15)"}`,
                   transition: "border-color 0.35s ease, box-shadow 0.35s ease, transform 0.3s ease",
-                  boxShadow: `0 0 0 0 ${exp.glowColor}, 0 2px 12px rgba(0,0,0,0.4)`,
+                  boxShadow: `0 0 0 0 ${exp.glowColor}, 0 2px 12px rgb(var(--atlas-black) / 0.4)`,
                 }}
                 onMouseEnter={(e) => {
                   const el = e.currentTarget;
                   el.style.borderColor = exp.borderGlow;
-                  el.style.boxShadow = `0 0 32px 4px ${exp.glowColor}, 0 0 64px 8px ${exp.glowColor}, 0 8px 32px rgba(0,0,0,0.5)`;
+                  el.style.boxShadow = `0 0 32px 4px ${exp.glowColor}, 0 0 64px 8px ${exp.glowColor}, 0 8px 32px rgb(var(--atlas-black) / 0.5)`;
                   el.style.transform = "translateY(-3px)";
                 }}
                 onMouseLeave={(e) => {
                   const el = e.currentTarget;
-                  el.style.borderColor = exp.color === "gold" ? "rgba(199,169,102,0.15)" : "rgba(126,148,125,0.15)";
-                  el.style.boxShadow = `0 0 0 0 ${exp.glowColor}, 0 2px 12px rgba(0,0,0,0.4)`;
+                  el.style.borderColor = exp.color === "gold" ? "rgb(var(--atlas-gold) / 0.15)" : "rgb(var(--atlas-green) / 0.15)";
+                  el.style.boxShadow = `0 0 0 0 ${exp.glowColor}, 0 2px 12px rgb(var(--atlas-black) / 0.4)`;
                   el.style.transform = "translateY(0)";
                 }}
               >
@@ -304,9 +304,9 @@ export function XP_ExperienceSection() {
                         className="flex-shrink-0 w-10 h-10 rounded-xl flex items-center justify-center"
                         style={{
                           background: exp.color === "gold"
-                            ? "rgba(199,169,102,0.1)"
-                            : "rgba(126,148,125,0.1)",
-                          border: `1px solid ${exp.color === "gold" ? "rgba(199,169,102,0.25)" : "rgba(126,148,125,0.25)"}`,
+                            ? "rgb(var(--atlas-gold) / 0.1)"
+                            : "rgb(var(--atlas-green) / 0.1)",
+                          border: `1px solid ${exp.color === "gold" ? "rgb(var(--atlas-gold) / 0.25)" : "rgb(var(--atlas-green) / 0.25)"}`,
                         }}
                       >
                         <Icon
@@ -330,9 +330,9 @@ export function XP_ExperienceSection() {
                       className="flex-shrink-0 text-[9px] font-bold tracking-wider uppercase px-2.5 py-1 rounded-full"
                       style={{
                         background: exp.status === "active"
-                          ? "rgba(199,169,102,0.12)"
-                          : "rgba(126,148,125,0.1)",
-                        border: `1px solid ${exp.status === "active" ? "rgba(199,169,102,0.3)" : "rgba(126,148,125,0.25)"}`,
+                          ? "rgb(var(--atlas-gold) / 0.12)"
+                          : "rgb(var(--atlas-green) / 0.1)",
+                        border: `1px solid ${exp.status === "active" ? "rgb(var(--atlas-gold) / 0.3)" : "rgb(var(--atlas-green) / 0.25)"}`,
                         color: exp.dotColor,
                       }}
                     >
@@ -351,17 +351,17 @@ export function XP_ExperienceSection() {
                   {/* Meta row */}
                   <div className="flex flex-wrap items-center gap-3 mb-4">
                     <span className="flex items-center gap-1 text-[11px]"
-                      style={{ color: "rgba(224,224,218,0.45)" }}>
+                      style={{ color: "rgb(var(--atlas-ink) / 0.45)" }}>
                       <Briefcase className="w-3 h-3" />
                       {exp.type}
                     </span>
                     <span className="flex items-center gap-1 text-[11px]"
-                      style={{ color: "rgba(224,224,218,0.45)" }}>
+                      style={{ color: "rgb(var(--atlas-ink) / 0.45)" }}>
                       <MapPin className="w-3 h-3" />
                       {exp.location}
                     </span>
                     <span className="flex items-center gap-1 text-[11px]"
-                      style={{ color: "rgba(224,224,218,0.45)" }}>
+                      style={{ color: "rgb(var(--atlas-ink) / 0.45)" }}>
                       <Calendar className="w-3 h-3" />
                       {exp.period}
                     </span>
@@ -370,7 +370,7 @@ export function XP_ExperienceSection() {
                   {/* Tagline */}
                   <p
                     className="text-sm font-medium mb-3 leading-snug"
-                    style={{ color: "rgb(224,224,218)" }}
+                    style={{ color: "var(--color-text)" }}
                   >
                     {exp.tagline}
                   </p>
@@ -378,7 +378,7 @@ export function XP_ExperienceSection() {
                   {/* Description */}
                   <p
                     className="text-xs leading-relaxed mb-4"
-                    style={{ color: "rgba(224,224,218,0.55)" }}
+                    style={{ color: "rgb(var(--atlas-ink) / 0.55)" }}
                   >
                     {exp.description}
                   </p>
@@ -389,7 +389,7 @@ export function XP_ExperienceSection() {
                       <li
                         key={h}
                         className="flex items-start gap-2 text-xs"
-                        style={{ color: "rgba(224,224,218,0.65)" }}
+                        style={{ color: "rgb(var(--atlas-ink) / 0.65)" }}
                       >
                         <span
                           className="mt-1.5 w-1.5 h-1.5 rounded-full flex-shrink-0"
@@ -407,9 +407,9 @@ export function XP_ExperienceSection() {
                         key={s}
                         className="text-[9px] px-2 py-0.5 rounded font-mono font-medium"
                         style={{
-                          background: "rgba(255,255,255,0.04)",
-                          border: "1px solid rgba(255,255,255,0.09)",
-                          color: "rgba(224,224,218,0.55)",
+                          background: "rgb(var(--atlas-line) / 0.04)",
+                          border: "1px solid rgb(var(--atlas-line) / 0.09)",
+                          color: "rgb(var(--atlas-ink) / 0.55)",
                         }}
                       >
                         {s}

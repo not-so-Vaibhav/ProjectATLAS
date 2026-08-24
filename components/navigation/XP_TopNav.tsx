@@ -17,7 +17,6 @@ const navItems = [
   { label: "Skills",            path: "/designer",    sectionId: "designer"    },
   { label: "Photography",       path: "/photography", sectionId: "photography" },
   { label: "Builder's Journal", path: "/journal",     sectionId: "journal"     },
-  { label: "The Lab",           path: "/lab",         sectionId: "lab"         },
   { label: "Let's Contact",     path: "/contact",     sectionId: "contact"     },
 ];
 
@@ -87,17 +86,40 @@ export function XP_TopNav() {
     setMobileOpen(true);
     requestAnimationFrame(() => {
       if (!drawerRef.current || !backdropRef.current) return;
-      gsap.fromTo(drawerRef.current, { x: "-100%" }, { x: "0%", duration: 0.42, ease: "power3.out" });
-      gsap.fromTo(backdropRef.current, { opacity: 0 }, { opacity: 1, duration: 0.3, ease: "none" });
+      
+      gsap.fromTo(backdropRef.current, { opacity: 0 }, { opacity: 1, duration: 0.4, ease: "power2.out" });
+      gsap.fromTo(drawerRef.current, { x: "-100%" }, { x: "0%", duration: 0.6, ease: "expo.out" });
+      
+      const items = drawerRef.current.querySelectorAll('.mobile-nav-item');
+      if (items.length) {
+        gsap.fromTo(items, 
+          { opacity: 0, x: -20 }, 
+          { opacity: 1, x: 0, duration: 0.5, stagger: 0.05, ease: "power3.out", delay: 0.15 }
+        );
+      }
+      
+      const headerElements = drawerRef.current.querySelectorAll('.mobile-header-element');
+      if (headerElements.length) {
+        gsap.fromTo(headerElements,
+          { opacity: 0 },
+          { opacity: 1, duration: 0.4, ease: "power2.out", delay: 0.2 }
+        );
+      }
     });
   };
 
   /* Animate mobile drawer close */
   const closeDrawer = () => {
     if (!drawerRef.current || !backdropRef.current) return;
-    gsap.to(drawerRef.current, { x: "-100%", duration: 0.35, ease: "power3.in" });
+    
+    const contents = drawerRef.current.querySelectorAll('.mobile-nav-item, .mobile-header-element');
+    if (contents.length) {
+      gsap.to(contents, { opacity: 0, x: -10, duration: 0.2, ease: "power2.in" });
+    }
+
+    gsap.to(drawerRef.current, { x: "-100%", duration: 0.4, ease: "power3.inOut", delay: 0.1 });
     gsap.to(backdropRef.current, {
-      opacity: 0, duration: 0.3, ease: "none",
+      opacity: 0, duration: 0.4, ease: "power2.in", delay: 0.1,
       onComplete: () => setMobileOpen(false),
     });
   };
@@ -110,10 +132,10 @@ export function XP_TopNav() {
         className="fixed top-0 left-0 right-0 z-50 hidden lg:flex items-center justify-between px-8"
         style={{
           height: "var(--topbar-height)",
-          background: "rgba(8,8,8,0.72)",
-          backdropFilter: "blur(20px)",
-          WebkitBackdropFilter: "blur(20px)",
-          borderBottom: "1px solid rgba(255,255,255,0.07)",
+          background: "rgb(var(--atlas-black) / 0.45)",
+          backdropFilter: "blur(24px)",
+          WebkitBackdropFilter: "blur(24px)",
+          borderBottom: "none",
           opacity: 0,
         }}
       >
@@ -135,7 +157,7 @@ export function XP_TopNav() {
               onClick={(e) => handleNavClick(e, item.path, item.sectionId)}
               className="relative px-3 py-1.5 text-[13px] font-medium transition-colors duration-200 whitespace-nowrap"
               style={{
-                color: isActive(item.path, item.sectionId) ? "rgb(247,247,244)" : "rgba(224,224,218,0.55)",
+                color: isActive(item.path, item.sectionId) ? "var(--color-text)" : "rgb(var(--atlas-ink) / 0.55)",
               }}
             >
               {item.label}
@@ -163,9 +185,9 @@ export function XP_TopNav() {
       <button
         className="fixed top-4 left-4 z-50 lg:hidden p-2 rounded-lg"
         style={{
-          background: "rgba(8,8,8,0.8)",
+          background: "rgb(var(--atlas-black) / 0.8)",
           backdropFilter: "blur(12px)",
-          border: "1px solid rgba(255,255,255,0.1)",
+          border: "1px solid rgb(var(--atlas-line) / 0.1)",
         }}
         onClick={openDrawer}
         aria-label="Open navigation"
@@ -186,41 +208,50 @@ export function XP_TopNav() {
             ref={drawerRef}
             className="fixed top-0 left-0 bottom-0 z-[60] w-72 lg:hidden flex flex-col"
             style={{
-              background: "rgb(10,10,9)",
-              borderRight: "1px solid rgba(255,255,255,0.08)",
+              background: "var(--color-bg-raised)",
+              borderRight: "1px solid rgb(var(--atlas-line) / 0.08)",
               transform: "translateX(-100%)",
             }}
           >
-            <div className="flex items-center justify-between px-6 py-5 border-b border-white/5">
-              <span className="text-[11px] font-bold tracking-[0.22em] uppercase text-atlas-gold">ATLAS</span>
-              <button
-                onClick={closeDrawer}
-                className="p-1.5 text-atlas-muted hover:text-atlas-ink transition-colors"
-                aria-label="Close navigation"
-              >
-                <X className="w-4 h-4" />
-              </button>
-            </div>
-            <div className="flex-1 overflow-y-auto py-4">
-              {navItems.map((item) => (
-                <Link
-                  key={item.path}
-                  href={getHref(item.path, item.sectionId)}
-                  onClick={(e) => handleNavClick(e, item.path, item.sectionId)}
-                  className="flex items-center gap-3 px-6 py-3.5 text-sm transition-colors"
-                  style={{
-                    color: isActive(item.path, item.sectionId) ? "rgb(247,247,244)" : "rgba(224,224,218,0.55)",
-                    background: isActive(item.path, item.sectionId) ? "rgba(199,169,102,0.06)" : "transparent",
-                    borderLeft: isActive(item.path, item.sectionId) ? "2px solid rgb(199,169,102)" : "2px solid transparent",
-                  }}
+            <div className="flex items-center justify-between px-6 py-5 border-b border-atlas-line/10">
+              <span className="text-[11px] font-bold tracking-[0.22em] uppercase text-atlas-gold mobile-header-element">ATLAS</span>
+              <div className="flex items-center gap-1">
+                <button
+                  onClick={toggleTheme}
+                  className="p-1.5 rounded-lg text-atlas-muted hover:text-atlas-ink hover:bg-atlas-ink/5 transition-colors mobile-header-element"
+                  aria-label={`Switch to ${theme === "dark" ? "light" : "dark"} mode`}
                 >
-                  {item.label}
-                </Link>
-              ))}
+                  {theme === "dark" ? <Sun className="w-4 h-4" /> : <Moon className="w-4 h-4" />}
+                </button>
+                <button
+                  onClick={closeDrawer}
+                  className="p-1.5 rounded-lg text-atlas-muted hover:text-atlas-ink hover:bg-atlas-ink/5 transition-colors mobile-header-element"
+                  aria-label="Close navigation"
+                >
+                  <X className="w-4 h-4" />
+                </button>
+              </div>
             </div>
-            <div className="px-6 py-4 border-t border-white/5">
-              <p className="text-[10px] text-atlas-muted">© 2025 Atlas by Vaibhav Bariyar</p>
-            </div>
+
+            <nav className="flex-grow overflow-y-auto px-6 py-6" aria-label="Mobile navigation">
+              <div className="flex flex-col gap-2">
+                {navItems.map((item) => (
+                  <Link
+                    key={item.path}
+                    href={getHref(item.path, item.sectionId)}
+                    onClick={(e) => handleNavClick(e, item.path, item.sectionId)}
+                    className="block px-4 py-3 rounded-xl text-base font-semibold border transition-all mobile-nav-item"
+                    style={{
+                      color: isActive(item.path, item.sectionId) ? "var(--color-text)" : "rgb(var(--atlas-ink) / 0.55)",
+                      background: isActive(item.path, item.sectionId) ? "rgb(var(--atlas-gold) / 0.06)" : "transparent",
+                      borderColor: isActive(item.path, item.sectionId) ? "rgb(var(--atlas-gold) / 0.18)" : "transparent",
+                    }}
+                  >
+                    {item.label}
+                  </Link>
+                ))}
+              </div>
+            </nav>
           </div>
         </>
       )}

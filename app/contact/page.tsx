@@ -3,12 +3,20 @@
 import { XP_RoomPage } from "@/components/experience/XP_RoomPage";
 import { getIdentityChapter } from "@/data/identity-chapters";
 import { useState } from "react";
-import { Github, Linkedin, Instagram, Twitter, Mail, FileText, Send } from "lucide-react";
+import { Github, Linkedin, Instagram, Mail, FileText, Send, Gamepad2 } from "lucide-react";
+import { XP_GameModal } from "@/components/game/XP_GameModal";
+
+const XIcon = (props: React.ComponentProps<"svg">) => (
+  <svg viewBox="0 0 24 24" fill="currentColor" stroke="none" {...props}>
+    <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z" />
+  </svg>
+);
 
 export default function ContactPage() {
   const chapter = getIdentityChapter("contact");
   const [form, setForm] = useState({ name: "", email: "", message: "" });
   const [sent, setSent] = useState(false);
+  const [isGameModalOpen, setIsGameModalOpen] = useState(false);
 
   if (!chapter) return null;
 
@@ -45,26 +53,41 @@ export default function ContactPage() {
               </span>
             </div>
 
-            {/* Resume / Connect */}
+            {/* Resume & Games */}
             <div>
-              <p className="text-[10px] font-mono tracking-widest uppercase text-atlas-muted mb-3">Resume Access</p>
-              <a
-                href="/resume.pdf"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-flex items-center gap-2 text-xs font-semibold text-atlas-gold hover:text-atlas-white transition mb-6"
-              >
-                <FileText className="w-4 h-4" /> Download Resume (PDF)
-              </a>
+              <p className="text-[10px] font-mono tracking-widest uppercase text-atlas-muted mb-3">Resume & Games</p>
+              <div className="flex flex-wrap items-center gap-4 mb-6">
+                <a
+                  href="/resume.pdf"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-2 text-xs font-semibold text-atlas-gold hover:text-atlas-white transition"
+                >
+                  <FileText className="w-4 h-4" /> Download Resume (PDF)
+                </a>
+
+                <button
+                  onClick={() => setIsGameModalOpen(true)}
+                  className="inline-flex items-center gap-2 px-3 py-1.5 rounded-lg text-xs font-semibold border border-[rgb(var(--atlas-gold) / 0.4)] bg-[rgb(var(--atlas-gold) / 0.08)] hover:bg-[rgb(var(--atlas-gold) / 0.18)] hover:border-[var(--color-gold)] text-[var(--color-gold)] transition cursor-pointer"
+                >
+                  <Gamepad2 className="w-4 h-4 text-[var(--color-gold)] animate-pulse" />
+                  <span>Let&apos;s Have a Game</span>
+                </button>
+              </div>
+
+              <XP_GameModal
+                isOpen={isGameModalOpen}
+                onClose={() => setIsGameModalOpen(false)}
+              />
 
               <p className="text-[10px] font-mono tracking-widest uppercase text-atlas-muted mb-3">Or find me elsewhere</p>
               <div className="flex items-center gap-4">
                 {[
-                  { icon: Github, label: "GitHub", href: "https://github.com" },
-                  { icon: Linkedin, label: "LinkedIn", href: "https://linkedin.com" },
-                  { icon: Instagram, label: "Instagram", href: "https://instagram.com" },
-                  { icon: Twitter, label: "Twitter", href: "https://twitter.com" },
-                  { icon: Mail, label: "Email", href: "mailto:hello@vaibhavbariyar.com" },
+                  { icon: Github, label: "GitHub", href: "https://github.com/not-so-Vaibhav" },
+                  { icon: Linkedin, label: "LinkedIn", href: "https://www.linkedin.com/in/vaibhav-bariyar/" },
+                  { icon: Instagram, label: "Instagram", href: "https://www.instagram.com/vaibhavbariyar" },
+                  { icon: XIcon, label: "Twitter", href: "https://x.com/vaibhavbariyar" },
+                  { icon: Mail, label: "Email", href: "mailto:bariyarvaibhav@gmail.com" },
                 ].map(({ icon: Icon, label, href }) => (
                   <a
                     key={label}
@@ -72,9 +95,9 @@ export default function ContactPage() {
                     target="_blank"
                     rel="noopener noreferrer"
                     aria-label={label}
-                    className="text-atlas-muted hover:text-atlas-gold transition flex items-center gap-1.5 text-xs"
+                    className="group text-[var(--color-text-muted)] hover:text-[var(--color-text)] transition-colors duration-200"
                   >
-                    <Icon className="w-4 h-4" />
+                    <Icon className="w-5 h-5 group-hover:text-atlas-gold transition-colors duration-200" />
                   </a>
                 ))}
               </div>

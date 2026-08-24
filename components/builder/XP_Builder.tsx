@@ -5,7 +5,8 @@ const accentClasses: Record<IdentityChapter["accent"], string> = {
   wood: "from-atlas-wood/28",
   green: "from-atlas-green/26",
   gold: "from-atlas-gold/28",
-  glass: "from-atlas-glass/18"
+  glass: "from-atlas-glass/18",
+  blue: "from-blue-500/28"
 };
 
 export function XP_Builder({ chapter }: { chapter: IdentityChapter }) {

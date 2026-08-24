@@ -2,6 +2,7 @@ import type { Metadata, Viewport } from "next";
 import "@/styles/globals.css";
 import { ThemeProvider } from "@/components/providers/ThemeProvider";
 import { XP_TopNav } from "@/components/navigation/XP_TopNav";
+import { XP_AtlasAI } from "@/components/chat/XP_AtlasAI";
 
 export const metadata: Metadata = {
   title: {
@@ -39,6 +40,7 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
           <main id="main-content">
             {children}
           </main>
+          <XP_AtlasAI />
         </ThemeProvider>
       </body>
     </html>

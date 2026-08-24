@@ -130,7 +130,7 @@ export function XP_RoomPage({ chapter, children }: RoomPageProps) {
                 <Link
                   href={nextChapter.path}
                   className="inline-flex items-center gap-2 px-4 py-2.5 rounded-lg text-sm font-semibold transition"
-                  style={{ background: "var(--color-gold)", color: "#080808" }}
+                  style={{ background: "var(--color-gold)", color: "var(--color-bg)" }}
                 >
                   {nextChapter.label} <ArrowRight className="w-3.5 h-3.5" />
                 </Link>
@@ -232,7 +232,7 @@ export function XP_RoomPage({ chapter, children }: RoomPageProps) {
             <Link
               href={nextChapter.path}
               className="inline-flex items-center gap-2 px-5 py-2.5 rounded-lg text-sm font-semibold whitespace-nowrap transition hover:opacity-90 flex-shrink-0"
-              style={{ background: "var(--color-gold)", color: "#080808" }}
+              style={{ background: "var(--color-gold)", color: "var(--color-bg)" }}
             >
               Enter {nextChapter.label} <ArrowRight className="w-3.5 h-3.5" />
             </Link>

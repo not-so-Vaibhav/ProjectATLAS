@@ -79,11 +79,12 @@
   --atlas-muted:   100 100 95;
   --atlas-line:    0 0 0;
   --atlas-glass:   0 0 0;
+  --atlas-gold:    180 140 60;
   --atlas-surface: 235 234 230;
 
   --color-bg:         rgb(245 244 240);
   --color-bg-raised:  rgb(238 237 233);
-  --color-bg-card:    rgb(232 231 227);
+  --color-bg-card:    rgb(252 251 247);
   --color-text:       rgb(24 24 22);
   --color-text-muted: rgb(100 100 95);
   --color-border:     rgba(0 0 0 / 0.1);
@@ -96,4 +97,7 @@
   --shadow-glass: 0 16px 60px rgba(0 0 0 / 0.10);
   --shadow-quiet: 0 4px 20px rgba(0 0 0 / 0.08);
   --shadow-card:  0 2px 8px rgba(0 0 0 / 0.1), 0 0 0 1px rgba(0 0 0 / 0.06);
+
+  /* ── Component-specific overrides ───────────────────────── */
+  --sk-icon-filter: brightness(0.85) saturate(0.8);
 }

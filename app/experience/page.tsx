@@ -18,7 +18,7 @@ const experiences = [
     company: "Solace",
     type: "Startup · Full-time",
     location: "Remote",
-    period: "2024 — Present",
+    period: "2026 — Present",
     status: "active",
     tagline: "Building empathy-driven tools for founders.",
     description:
@@ -32,20 +32,20 @@ const experiences = [
     stack: ["Next.js", "Node.js", "OpenAI", "PostgreSQL", "Tailwind"],
     Icon: Zap,
     accentRgb: "199,169,102",
-    dotColor: "#C7A966",
+    dotColor: "var(--color-gold)",
     statusLabel: "Active",
   },
   {
     id: "mit",
-    role: "Full Stack Developer & Lead",
+    role: "Software and AI Engineer & Lead",
     company: "MIT Institute of Design",
     type: "Internship · Candidate Experience Pod",
     location: "Pune, India",
-    period: "2023",
+    period: "2026",
     status: "completed",
     tagline: "Led the end-to-end candidate experience at scale.",
     description:
-      "Interned as Full Stack Developer and Pod Lead for the Candidate Experience team. Built internal tooling that improved the admissions workflow and designed the digital onboarding journey for prospective students.",
+      "Interned as Software and AI Engineer and Team Lead for the Candidate Experience team. Built internal tooling that improved the admissions workflow and designed the digital onboarding journey for prospective students.",
     highlights: [
       "Led a cross-functional team of 6 across design & engineering",
       "Shipped an applicant portal used by 1,200+ candidates",
@@ -55,7 +55,7 @@ const experiences = [
     stack: ["React", "Node.js", "MongoDB", "Express", "Figma"],
     Icon: Code2,
     accentRgb: "126,148,125",
-    dotColor: "#7E947D",
+    dotColor: "var(--color-green)",
     statusLabel: "Completed",
   },
 ];
@@ -115,15 +115,15 @@ export default function ExperiencePage() {
   return (
     <div
       ref={pageRef}
-      className="min-h-screen bg-[#080808] text-[rgb(224,224,218)] flex flex-col"
+      className="min-h-screen bg-[var(--color-bg)] text-[var(--color-text)] flex flex-col"
       id="main-content"
     >
       {/* ── Breadcrumb ─────────────────────────────────── */}
       <div className="flex items-center gap-2 px-8 pt-6 text-[10px] font-mono tracking-widest"
-        style={{ color: "rgba(255,255,255,0.25)", paddingTop: "calc(var(--topbar-height) + 1.25rem)" }}>
-        <Link href="/" className="hover:text-[rgb(199,169,102)] transition-colors duration-200">Atlas</Link>
+        style={{ color: "rgb(var(--atlas-line) / 0.25)", paddingTop: "calc(var(--topbar-height) + 1.25rem)" }}>
+        <Link href="/" className="hover:text-[var(--color-gold)] transition-colors duration-200">Atlas</Link>
         <span>/</span>
-        <span style={{ color: "rgba(255,255,255,0.5)" }}>Experience</span>
+        <span style={{ color: "rgb(var(--atlas-line) / 0.5)" }}>Experience</span>
       </div>
 
       {/* ══════════════════════════════════════════════════
@@ -135,15 +135,15 @@ export default function ExperiencePage() {
         <div
           ref={leftRef}
           className="relative flex flex-col justify-center px-8 py-12 lg:px-14 lg:py-16 overflow-hidden"
-          style={{ borderRight: "1px solid rgba(255,255,255,0.07)" }}
+          style={{ borderRight: "1px solid rgb(var(--atlas-line) / 0.07)" }}
         >
           {/* Ambient radial glow */}
           <div className="absolute inset-0 pointer-events-none"
-            style={{ background: "radial-gradient(ellipse 70% 55% at 28% 48%, rgba(199,169,102,0.065) 0%, transparent 68%)" }} />
+            style={{ background: "radial-gradient(ellipse 70% 55% at 28% 48%, rgb(var(--atlas-gold) / 0.065) 0%, transparent 68%)" }} />
 
           {/* Kicker */}
           <p className="lp-kicker text-[10px] font-bold tracking-[0.24em] uppercase mb-6"
-            style={{ opacity: 0, color: "rgb(199,169,102)" }}>
+            style={{ opacity: 0, color: "var(--color-gold)" }}>
             03 / Career
           </p>
 
@@ -163,7 +163,7 @@ export default function ExperiencePage() {
                     opacity: 0,
                     fontSize: "clamp(3rem, 7.5vw, 5.75rem)",
                     lineHeight: 0.88,
-                    color: "rgb(247,247,244)",
+                    color: "var(--color-text)",
                     willChange: "transform,opacity,filter",
                   }}
                 >{char}</span>
@@ -173,11 +173,11 @@ export default function ExperiencePage() {
 
           {/* Gold divider */}
           <div className="lp-divider mb-6 h-[2px] w-14 rounded-full"
-            style={{ opacity: 0, background: "rgb(199,169,102)" }} />
+            style={{ opacity: 0, background: "var(--color-gold)" }} />
 
           {/* Subtitle */}
           <p className="lp-sub text-base md:text-lg leading-relaxed max-w-[300px]"
-            style={{ opacity: 0, color: "rgba(224,224,218,0.55)" }}>
+            style={{ opacity: 0, color: "rgb(var(--atlas-ink) / 0.55)" }}>
             Two chapters of building something real — one as a founder,
             one as a developer leading a team.
           </p>
@@ -192,7 +192,7 @@ export default function ExperiencePage() {
             ].map(s => (
               <div key={s.label} className="lp-stat" style={{ opacity: 0 }}>
                 <p className="text-3xl font-black text-white leading-none mb-0.5">{s.value}</p>
-                <p className="text-[10px] tracking-wide" style={{ color: "rgba(224,224,218,0.32)" }}>{s.label}</p>
+                <p className="text-[10px] tracking-wide" style={{ color: "rgb(var(--atlas-ink) / 0.32)" }}>{s.label}</p>
               </div>
             ))}
           </div>
@@ -201,31 +201,31 @@ export default function ExperiencePage() {
           <div className="mt-10 flex items-center gap-3">
             <Link href="/"
               className="lp-stat inline-flex items-center gap-2 px-4 py-2 rounded-lg text-xs font-medium border transition-all hover:border-white/25 hover:text-white"
-              style={{ opacity: 0, borderColor: "rgba(255,255,255,0.1)", color: "rgba(224,224,218,0.45)" }}>
+              style={{ opacity: 0, borderColor: "rgb(var(--atlas-line) / 0.1)", color: "rgb(var(--atlas-ink) / 0.45)" }}>
               <ArrowLeft className="w-3 h-3" /> Back to Atlas
             </Link>
             <Link href="/designer"
               className="lp-stat inline-flex items-center gap-2 px-4 py-2 rounded-lg text-xs font-semibold transition-all hover:opacity-90"
-              style={{ opacity: 0, background: "rgba(199,169,102,0.12)", border: "1px solid rgba(199,169,102,0.25)", color: "rgb(199,169,102)" }}>
+              style={{ opacity: 0, background: "rgb(var(--atlas-gold) / 0.12)", border: "1px solid rgb(var(--atlas-gold) / 0.25)", color: "var(--color-gold)" }}>
               Skills Room <ArrowRight className="w-3 h-3" />
             </Link>
           </div>
 
           {/* Ticker tape */}
           <div className="absolute bottom-0 left-0 right-0 overflow-hidden py-2.5"
-            style={{ borderTop: "1px solid rgba(255,255,255,0.06)" }}>
+            style={{ borderTop: "1px solid rgb(var(--atlas-line) / 0.06)" }}>
             <div className="ticker-track flex whitespace-nowrap gap-8"
-              style={{ width: "200%", color: "rgba(199,169,102,0.32)" }}>
+              style={{ width: "200%", color: "rgb(var(--atlas-gold) / 0.32)" }}>
               {Array.from({ length: 10 }).map((_, i) => (
                 <span key={i} className="flex items-center gap-8 flex-shrink-0 text-[9px] font-bold tracking-[0.22em] uppercase">
                   <span>Founder</span>
-                  <span style={{ color: "rgba(199,169,102,0.15)" }}>·</span>
+                  <span style={{ color: "rgb(var(--atlas-gold) / 0.15)" }}>·</span>
                   <span>Engineer</span>
-                  <span style={{ color: "rgba(199,169,102,0.15)" }}>·</span>
+                  <span style={{ color: "rgb(var(--atlas-gold) / 0.15)" }}>·</span>
                   <span>Builder</span>
-                  <span style={{ color: "rgba(199,169,102,0.15)" }}>·</span>
+                  <span style={{ color: "rgb(var(--atlas-gold) / 0.15)" }}>·</span>
                   <span>Leader</span>
-                  <span style={{ color: "rgba(199,169,102,0.15)" }}>·</span>
+                  <span style={{ color: "rgb(var(--atlas-gold) / 0.15)" }}>·</span>
                 </span>
               ))}
             </div>
@@ -236,7 +236,7 @@ export default function ExperiencePage() {
         <div
           ref={rightRef}
           className="flex flex-col justify-center gap-5 px-8 py-12 lg:px-12 lg:py-16 overflow-y-auto"
-          style={{ background: "rgb(10,10,9)" }}
+          style={{ background: "var(--color-bg-raised)" }}
         >
           {experiences.map((exp, idx) => {
             const cardRef  = idx === 0 ? card1Ref : card2Ref;
@@ -248,21 +248,21 @@ export default function ExperiencePage() {
                 className="relative rounded-2xl overflow-hidden"
                 style={{
                   opacity: 0,
-                  background: "rgb(14,14,13)",
+                  background: "var(--color-bg-card)",
                   border: `1px solid rgba(${exp.accentRgb},0.12)`,
                   transition: "border-color 0.38s ease, box-shadow 0.38s ease, transform 0.3s ease",
-                  boxShadow: "0 2px 16px rgba(0,0,0,0.5)",
+                  boxShadow: "0 2px 16px rgb(var(--atlas-black) / 0.5)",
                 }}
                 onMouseEnter={e => {
                   const el = e.currentTarget;
                   el.style.borderColor = `rgba(${exp.accentRgb},0.48)`;
-                  el.style.boxShadow   = `0 0 36px 8px rgba(${exp.accentRgb},0.2), 0 0 80px 20px rgba(${exp.accentRgb},0.08), 0 8px 32px rgba(0,0,0,0.6)`;
+                  el.style.boxShadow   = `0 0 36px 8px rgba(${exp.accentRgb},0.2), 0 0 80px 20px rgba(${exp.accentRgb},0.08), 0 8px 32px rgb(var(--atlas-black) / 0.6)`;
                   el.style.transform   = "translateY(-4px)";
                 }}
                 onMouseLeave={e => {
                   const el = e.currentTarget;
                   el.style.borderColor = `rgba(${exp.accentRgb},0.12)`;
-                  el.style.boxShadow   = "0 2px 16px rgba(0,0,0,0.5)";
+                  el.style.boxShadow   = "0 2px 16px rgb(var(--atlas-black) / 0.5)";
                   el.style.transform   = "translateY(0)";
                 }}
               >
@@ -327,7 +327,7 @@ export default function ExperiencePage() {
                       { I: Calendar,  t: exp.period },
                     ].map(({ I, t }) => (
                       <span key={t} className="flex items-center gap-1.5 text-[11px]"
-                        style={{ color: "rgba(224,224,218,0.35)" }}>
+                        style={{ color: "rgb(var(--atlas-ink) / 0.35)" }}>
                         <I className="w-3 h-3 flex-shrink-0" />{t}
                       </span>
                     ))}
@@ -338,7 +338,7 @@ export default function ExperiencePage() {
 
                   {/* Description */}
                   <p className="text-[12px] leading-relaxed mb-4"
-                    style={{ color: "rgba(224,224,218,0.48)" }}>
+                    style={{ color: "rgb(var(--atlas-ink) / 0.48)" }}>
                     {exp.description}
                   </p>
 
@@ -346,7 +346,7 @@ export default function ExperiencePage() {
                   <ul className="space-y-1.5 mb-5">
                     {exp.highlights.map(h => (
                       <li key={h} className="flex items-start gap-2.5 text-[12px]"
-                        style={{ color: "rgba(224,224,218,0.66)" }}>
+                        style={{ color: "rgb(var(--atlas-ink) / 0.66)" }}>
                         <span className="mt-[5px] w-1.5 h-1.5 rounded-full flex-shrink-0"
                           style={{ background: exp.dotColor }} />
                         {h}
@@ -360,9 +360,9 @@ export default function ExperiencePage() {
                       <span key={s}
                         className="text-[9px] px-2.5 py-1 rounded-md font-mono font-medium"
                         style={{
-                          background: "rgba(255,255,255,0.04)",
-                          border: "1px solid rgba(255,255,255,0.08)",
-                          color: "rgba(224,224,218,0.45)",
+                          background: "rgb(var(--atlas-line) / 0.04)",
+                          border: "1px solid rgb(var(--atlas-line) / 0.08)",
+                          color: "rgb(var(--atlas-ink) / 0.45)",
                         }}>
                         {s}
                       </span>

@@ -17,7 +17,7 @@ const experiences = [
     company: "Solace",
     type: "Startup · Full-time",
     location: "Remote",
-    period: "2024 — Present",
+    period: "2026 — Present",
     status: "active",
     tagline: "Building empathy-driven tools for founders.",
     description:
@@ -31,20 +31,20 @@ const experiences = [
     stack: ["Next.js", "Node.js", "OpenAI", "PostgreSQL", "Tailwind"],
     Icon: Zap,
     accentRgb: "199,169,102",
-    dotColor: "#C7A966",
+    dotColor: "var(--color-gold)",
     statusLabel: "Active",
   },
   {
     id: "mit",
-    role: "Full Stack Developer & Lead",
+    role: "Software and AI Engineer & Lead",
     company: "MIT Institute of Design",
     type: "Internship · Candidate Experience Pod",
     location: "Pune, India",
-    period: "2023",
+    period: "2026",
     status: "completed",
     tagline: "Led the end-to-end candidate experience at scale.",
     description:
-      "Interned as Full Stack Developer and Pod Lead for the Candidate Experience team. Built internal tooling that improved the admissions workflow and designed the digital onboarding journey for prospective students.",
+      "Interned as Software and AI Engineer and Team Lead for the Candidate Experience team. Built internal tooling that improved the admissions workflow and designed the digital onboarding journey for prospective students.",
     highlights: [
       "Led a cross-functional team of 6 across design & engineering",
       "Shipped an applicant portal used by 1,200+ candidates",
@@ -54,7 +54,7 @@ const experiences = [
     stack: ["React", "Node.js", "MongoDB", "Express", "Figma"],
     Icon: Code2,
     accentRgb: "126,148,125",
-    dotColor: "#7E947D",
+    dotColor: "var(--color-green)",
     statusLabel: "Completed",
   },
 ];
@@ -145,25 +145,25 @@ export function XP_ExperienceScrollSection({ scrollContainerRef }: Props) {
       className="experience-scroll-section"
       aria-label="Experience"
     >
-      <div className="h-[100dvh] w-full overflow-hidden bg-[#080808] flex flex-col">
+      <div className="h-[100dvh] w-full overflow-hidden bg-[var(--color-bg)] flex flex-col">
         {/* ── SPLIT LAYOUT ─────────────────────────────── */}
         <div
-          className="flex-1 flex flex-col lg:grid overflow-hidden lg:grid-cols-[1fr_1.15fr]"
+          className="flex-1 flex flex-col lg:grid overflow-y-auto lg:overflow-hidden lg:grid-cols-[1fr_1.15fr]"
           style={{ paddingTop: "var(--topbar-height)" }}
         >
           {/* ── LEFT PANEL ─────────────────────── */}
           <div
             ref={leftRef}
             className="relative flex flex-col justify-center px-6 py-5 md:py-8 lg:px-14 lg:py-12 overflow-hidden shrink-0"
-            style={{ borderRight: "1px solid rgba(255,255,255,0.07)", borderBottom: "1px solid rgba(255,255,255,0.07)" }}
+            style={{ borderRight: "1px solid var(--color-border)", borderBottom: "1px solid var(--color-border)" }}
           >
             {/* Ambient glow */}
             <div className="absolute inset-0 pointer-events-none"
-              style={{ background: "radial-gradient(ellipse 70% 55% at 28% 48%, rgba(199,169,102,0.065) 0%, transparent 68%)" }} />
+              style={{ background: "radial-gradient(ellipse 70% 55% at 28% 48%, rgb(var(--atlas-gold) / 0.065) 0%, transparent 68%)" }} />
 
             {/* Kicker */}
             <p className="xps-kicker text-[9px] lg:text-[10px] font-bold tracking-[0.24em] uppercase mb-2 lg:mb-6"
-              style={{ opacity: 0, color: "rgb(199,169,102)" }}>
+              style={{ opacity: 0, color: "var(--color-gold)" }}>
               03 / Career
             </p>
 
@@ -183,7 +183,7 @@ export function XP_ExperienceScrollSection({ scrollContainerRef }: Props) {
                       opacity: 0,
                       fontSize: "clamp(2.5rem, 11vw, 5.75rem)",
                       lineHeight: 0.88,
-                      color: "rgb(247,247,244)",
+                      color: "var(--color-text)",
                       willChange: "transform,opacity,filter",
                     }}
                   >{char}</span>
@@ -193,11 +193,11 @@ export function XP_ExperienceScrollSection({ scrollContainerRef }: Props) {
 
             {/* Gold divider */}
             <div className="xps-divider mb-3 lg:mb-6 h-[2px] w-10 lg:w-14 rounded-full"
-              style={{ opacity: 0, background: "rgb(199,169,102)" }} />
+              style={{ opacity: 0, background: "var(--color-gold)" }} />
 
             {/* Subtitle */}
             <p className="xps-sub text-xs md:text-sm lg:text-lg leading-relaxed max-w-[280px] lg:max-w-[300px] mb-4 lg:mb-10"
-              style={{ opacity: 0, color: "rgba(224,224,218,0.55)" }}>
+              style={{ opacity: 0, color: "var(--color-text-muted)" }}>
               Two chapters of building something real — one as a founder,
               one as a developer leading a team.
             </p>
@@ -211,8 +211,8 @@ export function XP_ExperienceScrollSection({ scrollContainerRef }: Props) {
                 { value: "6wk",   label: "Zero → v1 Solace" },
               ].map(s => (
                 <div key={s.label} className="xps-stat" style={{ opacity: 0 }}>
-                  <p className="text-3xl font-black text-white leading-none mb-0.5">{s.value}</p>
-                  <p className="text-[10px] tracking-wide" style={{ color: "rgba(224,224,218,0.32)" }}>{s.label}</p>
+                  <p className="text-3xl font-black text-[var(--color-text)] leading-none mb-0.5">{s.value}</p>
+                  <p className="text-[10px] tracking-wide" style={{ color: "var(--color-text-muted)" }}>{s.label}</p>
                 </div>
               ))}
             </div>
@@ -220,21 +220,21 @@ export function XP_ExperienceScrollSection({ scrollContainerRef }: Props) {
             {/* CTA */}
             <Link href="/experience"
               className="xps-stat inline-flex items-center gap-2 px-3 py-1.5 lg:px-4 lg:py-2 rounded-xl text-[10px] lg:text-xs font-semibold self-start transition-all hover:opacity-90"
-              style={{ opacity: 0, background: "rgba(199,169,102,0.12)", border: "1px solid rgba(199,169,102,0.3)", color: "rgb(199,169,102)" }}>
+              style={{ opacity: 0, background: "rgb(var(--atlas-gold) / 0.12)", border: "1px solid rgb(var(--atlas-gold) / 0.3)", color: "var(--color-gold)" }}>
               View Full Experience <ArrowRight className="w-2.5 h-2.5 lg:w-3 lg:h-3" />
             </Link>
 
             {/* Ticker tape */}
             <div className="hidden lg:block absolute bottom-0 left-0 right-0 overflow-hidden py-2.5"
-              style={{ borderTop: "1px solid rgba(255,255,255,0.06)" }}>
+              style={{ borderTop: "1px solid var(--color-border)" }}>
               <div className="xps-ticker flex whitespace-nowrap gap-8"
-                style={{ width: "200%", color: "rgba(199,169,102,0.32)" }}>
+                style={{ width: "200%", color: "var(--color-text-muted)" }}>
                 {Array.from({ length: 10 }).map((_, i) => (
                   <span key={i} className="flex items-center gap-8 flex-shrink-0 text-[9px] font-bold tracking-[0.22em] uppercase">
-                    <span>Founder</span><span style={{ color: "rgba(199,169,102,0.15)" }}>·</span>
-                    <span>Engineer</span><span style={{ color: "rgba(199,169,102,0.15)" }}>·</span>
-                    <span>Builder</span><span style={{ color: "rgba(199,169,102,0.15)" }}>·</span>
-                    <span>Leader</span><span style={{ color: "rgba(199,169,102,0.15)" }}>·</span>
+                    <span>Founder</span><span style={{ color: "var(--color-gold)" }}>·</span>
+                    <span>Engineer</span><span style={{ color: "var(--color-gold)" }}>·</span>
+                    <span>Builder</span><span style={{ color: "var(--color-gold)" }}>·</span>
+                    <span>Leader</span><span style={{ color: "var(--color-gold)" }}>·</span>
                   </span>
                 ))}
               </div>
@@ -244,7 +244,7 @@ export function XP_ExperienceScrollSection({ scrollContainerRef }: Props) {
           {/* ── RIGHT PANEL ────────────────────── */}
           <div
             className="flex-1 flex flex-col gap-4 lg:justify-center lg:gap-5 px-5 py-6 lg:px-12 lg:py-12 overflow-y-auto"
-            style={{ background: "rgb(10,10,9)" }}
+            style={{ background: "var(--color-bg-raised)" }}
           >
             {experiences.map((exp, idx) => {
               const cardRef   = idx === 0 ? card1Ref : card2Ref;
@@ -257,21 +257,21 @@ export function XP_ExperienceScrollSection({ scrollContainerRef }: Props) {
                   className="relative rounded-2xl overflow-hidden"
                   style={{
                     opacity: 0,
-                    background: "rgb(14,14,13)",
-                    border: `1px solid rgba(${exp.accentRgb},0.12)`,
+                    background: "var(--color-bg-card)",
+                    border: `1px solid rgba(${exp.accentRgb},0.28)`,
                     transition: "border-color 0.38s ease, box-shadow 0.38s ease, transform 0.3s ease",
-                    boxShadow: "0 2px 16px rgba(0,0,0,0.5)",
+                    boxShadow: "var(--shadow-card)",
                   }}
                   onMouseEnter={e => {
                     const el = e.currentTarget;
-                    el.style.borderColor = `rgba(${exp.accentRgb},0.48)`;
-                    el.style.boxShadow   = `0 0 36px 8px rgba(${exp.accentRgb},0.2), 0 0 80px 20px rgba(${exp.accentRgb},0.08), 0 8px 32px rgba(0,0,0,0.6)`;
+                    el.style.borderColor = `rgba(${exp.accentRgb},0.65)`;
+                    el.style.boxShadow   = `0 0 36px 8px rgba(${exp.accentRgb},0.22), var(--shadow-glass)`;
                     el.style.transform   = "translateY(-4px)";
                   }}
                   onMouseLeave={e => {
                     const el = e.currentTarget;
-                    el.style.borderColor = `rgba(${exp.accentRgb},0.12)`;
-                    el.style.boxShadow   = "0 2px 16px rgba(0,0,0,0.5)";
+                    el.style.borderColor = `rgba(${exp.accentRgb},0.28)`;
+                    el.style.boxShadow   = "var(--shadow-card)";
                     el.style.transform   = "translateY(0)";
                   }}
                 >
@@ -305,7 +305,7 @@ export function XP_ExperienceScrollSection({ scrollContainerRef }: Props) {
                           <exp.Icon style={{ color: exp.dotColor, width: 18, height: 18 }} />
                         </div>
                         <div>
-                          <h2 className="text-[15px] font-bold text-white leading-tight">{exp.role}</h2>
+                          <h2 className="text-[15px] font-bold text-[var(--color-text)] leading-tight">{exp.role}</h2>
                           <p className="text-xs font-semibold mt-0.5" style={{ color: exp.dotColor }}>{exp.company}</p>
                         </div>
                       </div>
@@ -330,18 +330,18 @@ export function XP_ExperienceScrollSection({ scrollContainerRef }: Props) {
                         { I: Calendar,  t: exp.period },
                       ].map(({ I, t }) => (
                         <span key={t} className="flex items-center gap-1.5 text-[11px]"
-                          style={{ color: "rgba(224,224,218,0.35)" }}>
-                          <I className="w-3 h-3 flex-shrink-0" />{t}
+                          style={{ color: "var(--color-text-muted)" }}>
+                          <I className="w-3 h-3 flex-shrink-0" style={{ color: exp.dotColor }} />{t}
                         </span>
                       ))}
                     </div>
 
                     {/* Tagline */}
-                    <p className="text-sm font-semibold text-white mb-2 leading-snug">{exp.tagline}</p>
+                    <p className="text-sm font-semibold text-[var(--color-text)] mb-2 leading-snug">{exp.tagline}</p>
 
                     {/* Description */}
                     <p className="text-[12px] leading-relaxed mb-4"
-                      style={{ color: "rgba(224,224,218,0.48)" }}>
+                      style={{ color: "var(--color-text-muted)" }}>
                       {exp.description}
                     </p>
 
@@ -349,7 +349,7 @@ export function XP_ExperienceScrollSection({ scrollContainerRef }: Props) {
                     <ul className="space-y-1.5 mb-5">
                       {exp.highlights.map(h => (
                         <li key={h} className="flex items-start gap-2.5 text-[12px]"
-                          style={{ color: "rgba(224,224,218,0.66)" }}>
+                          style={{ color: "var(--color-text)" }}>
                           <span className="mt-[5px] w-1.5 h-1.5 rounded-full flex-shrink-0" style={{ background: exp.dotColor }} />
                           {h}
                         </li>
@@ -361,9 +361,9 @@ export function XP_ExperienceScrollSection({ scrollContainerRef }: Props) {
                       {exp.stack.map(s => (
                         <span key={s} className="text-[9px] px-2.5 py-1 rounded-md font-mono font-medium"
                           style={{
-                            background: "rgba(255,255,255,0.04)",
-                            border: "1px solid rgba(255,255,255,0.08)",
-                            color: "rgba(224,224,218,0.45)",
+                            background: "var(--glass-bg)",
+                            border: "1px solid var(--glass-border)",
+                            color: "var(--color-text)",
                           }}>
                           {s}
                         </span>

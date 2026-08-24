@@ -62,6 +62,15 @@ export function XP_SkillsScrollSection({ scrollContainerRef }: Props) {
     const ctx = canvas.getContext("2d");
     if (!ctx) return;
 
+    // Helper: read CSS variable background color for the hole
+    const getBgColor = () => {
+      const style = getComputedStyle(document.documentElement);
+      const raw = style.getPropertyValue("--atlas-black").trim();
+      if (!raw) return "8, 8, 8";
+      // tokens.css format: "R G B" (space-separated)
+      return raw.split(" ").filter(Boolean).join(", ");
+    };
+
     let animId: number;
     let frame = 0;
 
@@ -163,20 +172,29 @@ export function XP_SkillsScrollSection({ scrollContainerRef }: Props) {
       ctx.save();
       ctx.translate(cx, cy);
       
-      const numRings = 28;
+      const isLight = document.documentElement.getAttribute("data-theme") === "light";
+      
+      // Dynamic grid color and contrast per theme
+      // Light mode: Rich dark golden / antique bronze (150, 115, 45) for high-clarity golden matrix lines
+      // Dark mode: Radiant gold (199, 169, 102) with balanced opacity
+      const gridColor     = isLight ? "150, 115, 45" : "199, 169, 102";
+      const ringAlphaMult = isLight ? 0.65 : 0.40;
+      const spokeAlpha    = isLight ? 0.38 : 0.22;
+      const gridLineWidth = isLight ? 1.3 : 1.15;
+      
+      const numRings = 32;
       const maxRadius = W * 1.5;
-      const gridColor = "199, 169, 102"; 
       const tilt = 0.35;
       const flowPhase = (frame * 0.002) % 1;
       
-      ctx.lineWidth = 1;
+      ctx.lineWidth = gridLineWidth;
       for(let i=0; i<numRings; i++) {
          const p = (i + flowPhase) / numRings; 
          const r = maxRadius * Math.pow(p, 2.2);
          const dip = holeDepth * Math.pow(1 - p, 3);
          
          ctx.beginPath();
-         const alpha = Math.min(1, p * 4) * Math.max(0, 1 - p*0.2) * 0.25;
+         const alpha = Math.min(1, p * 4) * Math.max(0, 1 - p*0.2) * ringAlphaMult;
          ctx.strokeStyle = `rgba(${gridColor}, ${alpha})`;
          ctx.ellipse(0, dip, Math.max(0.1, r), Math.max(0.1, r * tilt), 0, 0, Math.PI * 2);
          ctx.stroke();
@@ -184,7 +202,7 @@ export function XP_SkillsScrollSection({ scrollContainerRef }: Props) {
 
       const numSpokes = 36;
       ctx.beginPath();
-      ctx.strokeStyle = `rgba(${gridColor}, 0.15)`;
+      ctx.strokeStyle = `rgba(${gridColor}, ${spokeAlpha})`;
       for(let i=0; i<numSpokes; i++) {
          const angle = (i / numSpokes) * Math.PI * 2 + (frame * 0.0008);
          for(let step=0; step<=25; step++) {
@@ -204,14 +222,15 @@ export function XP_SkillsScrollSection({ scrollContainerRef }: Props) {
       ctx.restore();
 
       // 4. ── Event Horizon (Dark Hole) ──
-      // Placed over the exact center to cleanly swallow the sinking orb
+      // Uses the actual page background color so it blends seamlessly in both themes
+      const bgColor = getBgColor();
       const holeR = Math.max(30, W * 0.05);
       const holeDip = cy + holeDepth;
       const hGrad = ctx.createRadialGradient(cx, holeDip, 0, cx, holeDip, holeR * 3);
-      hGrad.addColorStop(0,    "rgba(8, 8, 8, 1)"); // Pitch black center
-      hGrad.addColorStop(0.3,  "rgba(8, 8, 8, 0.95)");
-      hGrad.addColorStop(0.7,  "rgba(8, 8, 8, 0.4)");
-      hGrad.addColorStop(1,    "rgba(8, 8, 8, 0)");
+      hGrad.addColorStop(0,    `rgba(${bgColor}, 1)`);
+      hGrad.addColorStop(0.3,  `rgba(${bgColor}, 0.95)`);
+      hGrad.addColorStop(0.7,  `rgba(${bgColor}, 0.4)`);
+      hGrad.addColorStop(1,    `rgba(${bgColor}, 0)`);
       ctx.fillStyle = hGrad;
       ctx.beginPath();
       ctx.arc(cx, holeDip, holeR * 3, 0, Math.PI * 2);
@@ -280,7 +299,7 @@ export function XP_SkillsScrollSection({ scrollContainerRef }: Props) {
       ref={sectionRef}
       className="snap-slide relative w-full overflow-hidden flex flex-col items-center"
       aria-label="Skills Room"
-      style={{ background: "#080808" }}
+      style={{ background: "var(--color-bg)" }}
     >
       {/* Canvas — black hole vortex */}
       <canvas
@@ -321,7 +340,7 @@ export function XP_SkillsScrollSection({ scrollContainerRef }: Props) {
                   opacity: 0,
                   fontSize: "clamp(2.5rem, 8vw, 5.5rem)",
                   lineHeight: 0.9,
-                  color: "rgb(247,247,244)",
+                  color: "var(--color-text)",
                   willChange: "transform,opacity,filter",
                 }}
               >{char === " " ? "\u00A0" : char}</span>
@@ -331,11 +350,11 @@ export function XP_SkillsScrollSection({ scrollContainerRef }: Props) {
 
         {/* Gold divider */}
         <div className="sk-divider mx-auto mb-3 h-[2px] w-10 rounded-full"
-          style={{ background: "rgb(160,100,255)", opacity: 0 }} />
+          style={{ background: "var(--color-gold)", opacity: 0 }} />
 
         {/* Subtitle */}
         <p className="sk-sub text-[11px] md:text-xs text-center max-w-xs mx-auto leading-relaxed mb-4 md:mb-5"
-          style={{ color: "rgba(224,224,218,0.42)", opacity: 0 }}>
+          style={{ color: "var(--color-text-muted)", opacity: 0 }}>
           The full stack powering every product I build.
         </p>
 
@@ -383,9 +402,9 @@ function SkillCard({ skill }: { skill: (typeof SKILLS)[0] }) {
     if (glowRef.current) {
       gsap.to(glowRef.current, { opacity: 0, scale: 1, duration: 0.3, ease: "power2.out" });
     }
-    el.style.borderColor = "rgba(255,255,255,0.08)";
+    el.style.borderColor = "rgb(var(--atlas-glass) / 0.1)";
     el.style.boxShadow   = "none";
-    el.style.background  = "rgba(255,255,255,0.03)";
+    el.style.background  = "rgb(var(--atlas-glass) / 0.05)";
   };
 
   return (
@@ -396,8 +415,8 @@ function SkillCard({ skill }: { skill: (typeof SKILLS)[0] }) {
         opacity: 0,
         width: "clamp(58px, 9vw, 78px)",
         height: "clamp(68px, 10.5vw, 88px)",
-        background: "rgba(255,255,255,0.03)",
-        border: "1px solid rgba(255,255,255,0.08)",
+        background: "rgb(var(--atlas-glass) / 0.05)",
+        border: "1px solid rgb(var(--atlas-glass) / 0.1)",
         backdropFilter: "blur(6px)",
         WebkitBackdropFilter: "blur(6px)",
         willChange: "transform",
@@ -427,7 +446,7 @@ function SkillCard({ skill }: { skill: (typeof SKILLS)[0] }) {
         style={{
           width: "clamp(22px, 3.5vw, 30px)",
           height: "clamp(22px, 3.5vw, 30px)",
-          filter: "brightness(0.78) saturate(0.65)",
+          filter: "var(--sk-icon-filter, brightness(0.78) saturate(0.65))",
           transition: "filter 0.25s ease",
         }}
         onError={(e) => {
@@ -438,7 +457,7 @@ function SkillCard({ skill }: { skill: (typeof SKILLS)[0] }) {
           (e.target as HTMLImageElement).style.filter = "brightness(1) saturate(1.2)";
         }}
         onMouseLeave={(e) => {
-          (e.target as HTMLImageElement).style.filter = "brightness(0.78) saturate(0.65)";
+          (e.target as HTMLImageElement).style.filter = "var(--sk-icon-filter, brightness(0.78) saturate(0.65))";
         }}
       />
 
@@ -447,7 +466,7 @@ function SkillCard({ skill }: { skill: (typeof SKILLS)[0] }) {
         className="font-semibold text-center leading-tight px-1"
         style={{
           fontSize: "clamp(7px, 1.1vw, 10px)",
-          color: "rgba(224,224,218,0.55)",
+          color: "var(--color-text-muted)",
           maxWidth: "100%",
           overflow: "hidden",
           textOverflow: "ellipsis",
