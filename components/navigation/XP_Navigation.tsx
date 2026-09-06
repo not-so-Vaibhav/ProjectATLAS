@@ -11,6 +11,7 @@ const icons: Record<BuilderIdentity, typeof Home> = {
   arrival: Home,
   engineering: Code2,
   founder: BriefcaseBusiness,
+  skills: Code2,
   designer: PenTool,
   ai: Brain,
   photography: Camera,

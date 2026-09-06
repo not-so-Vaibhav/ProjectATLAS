@@ -120,10 +120,10 @@ export default function ExperiencePage() {
     >
       {/* ── Breadcrumb ─────────────────────────────────── */}
       <div className="flex items-center gap-2 px-8 pt-6 text-[10px] font-mono tracking-widest"
-        style={{ color: "rgb(var(--atlas-line) / 0.25)", paddingTop: "calc(var(--topbar-height) + 1.25rem)" }}>
+        style={{ color: "var(--color-text-muted)", paddingTop: "calc(var(--topbar-height) + 1.25rem)" }}>
         <Link href="/" className="hover:text-[var(--color-gold)] transition-colors duration-200">Atlas</Link>
         <span>/</span>
-        <span style={{ color: "rgb(var(--atlas-line) / 0.5)" }}>Experience</span>
+        <span style={{ color: "var(--color-gold)" }}>Experience</span>
       </div>
 
       {/* ══════════════════════════════════════════════════
@@ -135,11 +135,11 @@ export default function ExperiencePage() {
         <div
           ref={leftRef}
           className="relative flex flex-col justify-center px-8 py-12 lg:px-14 lg:py-16 overflow-hidden"
-          style={{ borderRight: "1px solid rgb(var(--atlas-line) / 0.07)" }}
+          style={{ borderRight: "1px solid var(--color-border)" }}
         >
           {/* Ambient radial glow */}
           <div className="absolute inset-0 pointer-events-none"
-            style={{ background: "radial-gradient(ellipse 70% 55% at 28% 48%, rgb(var(--atlas-gold) / 0.065) 0%, transparent 68%)" }} />
+            style={{ background: "radial-gradient(ellipse 70% 55% at 28% 48%, rgb(var(--atlas-gold) / 0.08) 0%, transparent 68%)" }} />
 
           {/* Kicker */}
           <p className="lp-kicker text-[10px] font-bold tracking-[0.24em] uppercase mb-6"
@@ -177,7 +177,7 @@ export default function ExperiencePage() {
 
           {/* Subtitle */}
           <p className="lp-sub text-base md:text-lg leading-relaxed max-w-[300px]"
-            style={{ opacity: 0, color: "rgb(var(--atlas-ink) / 0.55)" }}>
+            style={{ opacity: 0, color: "var(--color-text-muted)" }}>
             Two chapters of building something real — one as a founder,
             one as a developer leading a team.
           </p>
@@ -191,8 +191,8 @@ export default function ExperiencePage() {
               { value: "6wk",   label: "Zero → v1 Solace" },
             ].map(s => (
               <div key={s.label} className="lp-stat" style={{ opacity: 0 }}>
-                <p className="text-3xl font-black text-white leading-none mb-0.5">{s.value}</p>
-                <p className="text-[10px] tracking-wide" style={{ color: "rgb(var(--atlas-ink) / 0.32)" }}>{s.label}</p>
+                <p className="text-3xl font-black text-[var(--color-text)] leading-none mb-0.5">{s.value}</p>
+                <p className="text-[10px] tracking-wide" style={{ color: "var(--color-text-muted)" }}>{s.label}</p>
               </div>
             ))}
           </div>
@@ -200,11 +200,11 @@ export default function ExperiencePage() {
           {/* Nav links */}
           <div className="mt-10 flex items-center gap-3">
             <Link href="/"
-              className="lp-stat inline-flex items-center gap-2 px-4 py-2 rounded-lg text-xs font-medium border transition-all hover:border-white/25 hover:text-white"
-              style={{ opacity: 0, borderColor: "rgb(var(--atlas-line) / 0.1)", color: "rgb(var(--atlas-ink) / 0.45)" }}>
+              className="lp-stat inline-flex items-center gap-2 px-4 py-2 rounded-lg text-xs font-medium border transition-all hover:border-[var(--color-gold)] hover:text-[var(--color-text)]"
+              style={{ opacity: 0, borderColor: "var(--color-border)", color: "var(--color-text-muted)" }}>
               <ArrowLeft className="w-3 h-3" /> Back to Atlas
             </Link>
-            <Link href="/designer"
+            <Link href="/skills"
               className="lp-stat inline-flex items-center gap-2 px-4 py-2 rounded-lg text-xs font-semibold transition-all hover:opacity-90"
               style={{ opacity: 0, background: "rgb(var(--atlas-gold) / 0.12)", border: "1px solid rgb(var(--atlas-gold) / 0.25)", color: "var(--color-gold)" }}>
               Skills Room <ArrowRight className="w-3 h-3" />
@@ -213,19 +213,19 @@ export default function ExperiencePage() {
 
           {/* Ticker tape */}
           <div className="absolute bottom-0 left-0 right-0 overflow-hidden py-2.5"
-            style={{ borderTop: "1px solid rgb(var(--atlas-line) / 0.06)" }}>
+            style={{ borderTop: "1px solid var(--color-border)" }}>
             <div className="ticker-track flex whitespace-nowrap gap-8"
-              style={{ width: "200%", color: "rgb(var(--atlas-gold) / 0.32)" }}>
+              style={{ width: "200%", color: "var(--color-gold)" }}>
               {Array.from({ length: 10 }).map((_, i) => (
-                <span key={i} className="flex items-center gap-8 flex-shrink-0 text-[9px] font-bold tracking-[0.22em] uppercase">
+                <span key={i} className="flex items-center gap-8 flex-shrink-0 text-[9px] font-bold tracking-[0.22em] uppercase opacity-75">
                   <span>Founder</span>
-                  <span style={{ color: "rgb(var(--atlas-gold) / 0.15)" }}>·</span>
+                  <span className="opacity-40">·</span>
                   <span>Engineer</span>
-                  <span style={{ color: "rgb(var(--atlas-gold) / 0.15)" }}>·</span>
+                  <span className="opacity-40">·</span>
                   <span>Builder</span>
-                  <span style={{ color: "rgb(var(--atlas-gold) / 0.15)" }}>·</span>
+                  <span className="opacity-40">·</span>
                   <span>Leader</span>
-                  <span style={{ color: "rgb(var(--atlas-gold) / 0.15)" }}>·</span>
+                  <span className="opacity-40">·</span>
                 </span>
               ))}
             </div>
@@ -249,20 +249,20 @@ export default function ExperiencePage() {
                 style={{
                   opacity: 0,
                   background: "var(--color-bg-card)",
-                  border: `1px solid rgba(${exp.accentRgb},0.12)`,
+                  border: `1px solid var(--color-border)`,
                   transition: "border-color 0.38s ease, box-shadow 0.38s ease, transform 0.3s ease",
-                  boxShadow: "0 2px 16px rgb(var(--atlas-black) / 0.5)",
+                  boxShadow: "var(--shadow-card)",
                 }}
                 onMouseEnter={e => {
                   const el = e.currentTarget;
-                  el.style.borderColor = `rgba(${exp.accentRgb},0.48)`;
-                  el.style.boxShadow   = `0 0 36px 8px rgba(${exp.accentRgb},0.2), 0 0 80px 20px rgba(${exp.accentRgb},0.08), 0 8px 32px rgb(var(--atlas-black) / 0.6)`;
+                  el.style.borderColor = `rgba(${exp.accentRgb},0.55)`;
+                  el.style.boxShadow   = `0 0 36px 8px rgba(${exp.accentRgb},0.2), 0 8px 32px rgba(0,0,0,0.12)`;
                   el.style.transform   = "translateY(-4px)";
                 }}
                 onMouseLeave={e => {
                   const el = e.currentTarget;
-                  el.style.borderColor = `rgba(${exp.accentRgb},0.12)`;
-                  el.style.boxShadow   = "0 2px 16px rgb(var(--atlas-black) / 0.5)";
+                  el.style.borderColor = `var(--color-border)`;
+                  el.style.boxShadow   = "var(--shadow-card)";
                   el.style.transform   = "translateY(0)";
                 }}
               >
@@ -292,14 +292,14 @@ export default function ExperiencePage() {
                       {/* Icon badge */}
                       <div className="flex-shrink-0 w-11 h-11 rounded-xl flex items-center justify-center"
                         style={{
-                          background: `rgba(${exp.accentRgb},0.09)`,
-                          border: `1px solid rgba(${exp.accentRgb},0.22)`,
+                          background: `rgba(${exp.accentRgb},0.12)`,
+                          border: `1px solid rgba(${exp.accentRgb},0.28)`,
                           boxShadow: `0 0 18px rgba(${exp.accentRgb},0.14)`,
                         }}>
                         <exp.Icon style={{ color: exp.dotColor, width: 18, height: 18 }} />
                       </div>
                       <div>
-                        <h2 className="text-[15px] font-bold text-white leading-tight">{exp.role}</h2>
+                        <h2 className="text-[15px] font-bold text-[var(--color-text)] leading-tight">{exp.role}</h2>
                         <p className="text-xs font-semibold mt-0.5" style={{ color: exp.dotColor }}>{exp.company}</p>
                       </div>
                     </div>
@@ -307,7 +307,7 @@ export default function ExperiencePage() {
                     {/* Status badge */}
                     <span className="flex-shrink-0 flex items-center gap-1.5 text-[9px] font-bold tracking-widest uppercase px-2.5 py-1.5 rounded-full"
                       style={{
-                        background: `rgba(${exp.accentRgb},0.09)`,
+                        background: `rgba(${exp.accentRgb},0.12)`,
                         border: `1px solid rgba(${exp.accentRgb},0.28)`,
                         color: exp.dotColor,
                       }}>
@@ -327,18 +327,18 @@ export default function ExperiencePage() {
                       { I: Calendar,  t: exp.period },
                     ].map(({ I, t }) => (
                       <span key={t} className="flex items-center gap-1.5 text-[11px]"
-                        style={{ color: "rgb(var(--atlas-ink) / 0.35)" }}>
+                        style={{ color: "var(--color-text-muted)" }}>
                         <I className="w-3 h-3 flex-shrink-0" />{t}
                       </span>
                     ))}
                   </div>
 
                   {/* Tagline */}
-                  <p className="text-sm font-semibold text-white mb-2 leading-snug">{exp.tagline}</p>
+                  <p className="text-sm font-semibold text-[var(--color-text)] mb-2 leading-snug">{exp.tagline}</p>
 
                   {/* Description */}
                   <p className="text-[12px] leading-relaxed mb-4"
-                    style={{ color: "rgb(var(--atlas-ink) / 0.48)" }}>
+                    style={{ color: "var(--color-text-muted)" }}>
                     {exp.description}
                   </p>
 
@@ -346,7 +346,7 @@ export default function ExperiencePage() {
                   <ul className="space-y-1.5 mb-5">
                     {exp.highlights.map(h => (
                       <li key={h} className="flex items-start gap-2.5 text-[12px]"
-                        style={{ color: "rgb(var(--atlas-ink) / 0.66)" }}>
+                        style={{ color: "var(--color-text)" }}>
                         <span className="mt-[5px] w-1.5 h-1.5 rounded-full flex-shrink-0"
                           style={{ background: exp.dotColor }} />
                         {h}
@@ -360,9 +360,9 @@ export default function ExperiencePage() {
                       <span key={s}
                         className="text-[9px] px-2.5 py-1 rounded-md font-mono font-medium"
                         style={{
-                          background: "rgb(var(--atlas-line) / 0.04)",
-                          border: "1px solid rgb(var(--atlas-line) / 0.08)",
-                          color: "rgb(var(--atlas-ink) / 0.45)",
+                          background: "var(--color-bg-raised)",
+                          border: "1px solid var(--color-border)",
+                          color: "var(--color-text-muted)",
                         }}>
                         {s}
                       </span>

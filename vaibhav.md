@@ -757,14 +757,16 @@ He is not simply interested in learning technology theoretically; he repeatedly 
 
 | Project             | Area                    | Main Technologies                       |
 | ------------------- | ----------------------- | --------------------------------------- |
+| Folio Space         | AI / Recruitment Intel  | Next.js, React, TypeScript, Firebase    |
+| Stress2Health       | AI/ML / NLP / Health    | Flask, Python, TensorFlow, Supabase     |
+| Solace              | Peer Support / Startup  | Supabase, JavaScript, PostgreSQL, Jitsi |
+| Jarvis AI           | AI Voice & Automation   | Python, JavaScript, OpenAI API, Flask   |
+| not_so_graphy       | Photography / Portfolio | HTML, CSS, Tailwind CSS, JavaScript     |
 | MIT-Learn LMS       | Education / Full Stack  | Node, Express, MongoDB, Supabase        |
-| not_so_graphy       | Photography / Portfolio | Express, JS, GSAP                       |
 | Indian Finance Game | EdTech / Finance        | Next.js, Tailwind, Firebase             |
-| Stress2Health       | AI/ML / NLP             | Flask, TensorFlow, sklearn, NLTK, spaCy |
 | AI Voice Detection  | AI / Audio              | FastAPI, React, librosa                 |
 | GoodFor             | Product / AI            | Product scanning, scoring, UI           |
 | SwapStyle           | Sustainable Fashion     | Web / Product design                    |
-| Solace              | Peer Support / Startup  | Supabase, Jitsi, payments               |
 
 ---
 

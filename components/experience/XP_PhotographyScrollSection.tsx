@@ -102,31 +102,33 @@ export function XP_PhotographyScrollSection({ scrollContainerRef }: Props) {
           src="/NotSoGraphyBGLight.png"
           alt="Photography room background light"
           fill
-          className="object-cover object-[70%_center] sm:object-center pointer-events-none select-none dark:hidden block"
+          className="object-cover object-[48%_center] sm:object-center pointer-events-none select-none dark:hidden block"
           sizes="100vw"
+          priority
         />
         <Image
           src="/NotSoGraphyBGDark.png"
           alt="Photography room background dark"
           fill
-          className="object-cover object-[70%_center] sm:object-center pointer-events-none select-none hidden dark:block"
+          className="object-cover object-[48%_center] sm:object-center pointer-events-none select-none hidden dark:block"
           sizes="100vw"
+          priority
         />
       </div>
 
       {/* Gradient overlays */}
       <div className="absolute inset-0 z-[2] pointer-events-none sm:hidden"
-        style={{ background: "rgb(var(--atlas-black) / 0.78)" }} />
+        style={{ background: "linear-gradient(to right, rgb(var(--atlas-black) / 0.94) 0%, rgb(var(--atlas-black) / 0.72) 48%, rgb(var(--atlas-black) / 0.15) 100%)" }} />
       <div className="hidden sm:block absolute inset-0 z-[2] pointer-events-none"
         style={{ background: "linear-gradient(110deg, rgb(var(--atlas-black) / 0.96) 0%, rgb(var(--atlas-black) / 0.75) 45%, rgb(var(--atlas-black) / 0.18) 100%)" }} />
       <div className="absolute inset-0 z-[2] pointer-events-none"
-        style={{ background: "linear-gradient(to top, rgb(var(--atlas-black) / 0.95) 0%, transparent 40%)" }} />
+        style={{ background: "linear-gradient(to top, rgb(var(--atlas-black) / 0.95) 0%, transparent 35%)" }} />
       <div className="absolute inset-0 z-[2] pointer-events-none"
-        style={{ background: "linear-gradient(to bottom, rgb(var(--atlas-black) / 0.75) 0%, transparent 30%)" }} />
+        style={{ background: "linear-gradient(to bottom, rgb(var(--atlas-black) / 0.8) 0%, transparent 28%)" }} />
 
       {/* Gold light leak */}
       <div className="absolute inset-0 z-[2] pointer-events-none"
-        style={{ background: "radial-gradient(ellipse 45% 65% at 73% 50%, rgb(var(--atlas-gold) / 0.12) 0%, transparent 65%)" }} />
+        style={{ background: "radial-gradient(ellipse 45% 65% at 80% 50%, rgb(var(--atlas-gold) / 0.14) 0%, transparent 65%)" }} />
 
       {/* Shutter panels */}
       <div className="phx-shutter-l absolute inset-y-0 left-0 w-1/2 z-[10] pointer-events-none"
@@ -134,10 +136,10 @@ export function XP_PhotographyScrollSection({ scrollContainerRef }: Props) {
       <div className="phx-shutter-r absolute inset-y-0 right-0 w-1/2 z-[10] pointer-events-none"
         style={{ background: "var(--color-bg)" }} />
 
-      {/* Frame corners */}
-      <div className="phx-frame absolute top-16 sm:top-[88px] left-4 sm:left-8 z-[5] pointer-events-none"
+      {/* Frame corners — hidden on mobile to prevent navbar and watermark collisions */}
+      <div className="phx-frame hidden sm:block absolute top-[88px] left-8 z-[5] pointer-events-none"
         style={{ width: 36, height: 36, borderTop: "1.5px solid rgb(var(--atlas-gold) / 0.5)", borderLeft: "1.5px solid rgb(var(--atlas-gold) / 0.5)" }} />
-      <div className="phx-frame absolute bottom-14 sm:bottom-16 right-4 sm:right-8 z-[5] pointer-events-none"
+      <div className="phx-frame hidden sm:block absolute bottom-16 right-8 z-[5] pointer-events-none"
         style={{ width: 36, height: 36, borderBottom: "1.5px solid rgb(var(--atlas-gold) / 0.5)", borderRight: "1.5px solid rgb(var(--atlas-gold) / 0.5)" }} />
 
       {/* Vertical side text */}
@@ -151,7 +153,7 @@ export function XP_PhotographyScrollSection({ scrollContainerRef }: Props) {
       </div>
 
       {/* Main content */}
-      <div className="relative z-[6] w-full h-full min-h-screen flex flex-col justify-center items-start px-5 sm:px-12 md:px-16 xl:px-24 pb-16 pt-24">
+      <div className="relative z-[6] w-full h-full min-h-screen flex flex-col justify-center items-start px-5 sm:px-12 md:px-16 xl:px-24 pb-16 pt-24 max-w-md sm:max-w-none">
 
         {/* Aperture + kicker row */}
         <div className="flex items-center gap-3 sm:gap-4 mb-5 sm:mb-7">

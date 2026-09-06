@@ -1,11 +1,12 @@
 "use client";
 
-import { useRef } from "react";
+import { useRef, useState } from "react";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { useGSAP } from "@gsap/react";
-import { BrainCircuit, LineChart, Activity, ShieldAlert, Camera, ArrowLeft, ArrowRight, Layout, Calendar, Code2 } from "lucide-react";
+import { BrainCircuit, Activity, HeartHandshake, Bot, Camera, ArrowLeft, ArrowRight, Layout, Calendar, Code2, Maximize2 } from "lucide-react";
 import Link from "next/link";
+import { XP_VideoPreviewModal, VideoProjectData } from "@/components/experience/XP_VideoPreviewModal";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -29,31 +30,10 @@ const projectsData = [
     ],
     stack: ["Next.js", "React", "TypeScript", "Tailwind CSS", "Firebase"],
     Icon: BrainCircuit,
-    accentRgb: "126,148,125",
-    dotColor: "var(--color-green)",
-    statusLabel: "Active",
-  },
-  {
-    id: "fintech-edu",
-    role: "Personal Finance Simulation",
-    company: "Fintech Education Platform",
-    type: "Web Platform",
-    location: "Frontend & Firebase",
-    period: "2025 — Present",
-    status: "active",
-    tagline: "Interactive learning for complex financial concepts.",
-    description:
-      "Built a student-focused fintech education platform featuring budgeting, SIP, credit, and emergency financial simulations with interactive learning modules.",
-    highlights: [
-      "Integrated Firebase authentication with protected routes",
-      "Designed modular user flows to simplify complex financial concepts",
-      "Managed user profiles and state across simulations",
-    ],
-    stack: ["Next.js", "Firebase", "Tailwind CSS"],
-    Icon: LineChart,
     accentRgb: "199,169,102",
     dotColor: "var(--color-gold)",
     statusLabel: "Active",
+    videoSrc: "/videos/folio-space.mp4",
   },
   {
     id: "stress2health",
@@ -76,28 +56,55 @@ const projectsData = [
     accentRgb: "102,153,199",
     dotColor: "var(--color-text)",
     statusLabel: "Completed",
+    videoSrc: "/videos/stress2health.mp4",
   },
   {
-    id: "emergency-response",
-    role: "Emergency Response System",
-    company: "Incident Management",
+    id: "solace",
+    role: "Solace",
+    company: "Peer Support Platform",
     type: "Web Application",
-    location: "Frontend",
-    period: "2024",
-    status: "completed",
-    tagline: "Coordinating operations and centralizing information.",
+    location: "Full Stack",
+    period: "2025 — Present",
+    status: "active",
+    tagline: "Peer support, not therapy — safe wellness conversations.",
     description:
-      "Built a web-based platform to coordinate emergency response operations and centralize incident information management.",
+      "Built an emotionally safe peer-support web platform connecting students with trained listeners for non-judgmental wellness conversations.",
     highlights: [
-      "Designed a structured data architecture for emergency workflows",
-      "Built real-time status updates and reporting features",
-      "Created an intuitive dashboard for rapid response",
+      "Architected confidential chat schema and session management",
+      "Engineered secure reflection workflows and listener profiles",
+      "Integrated PostgreSQL and Supabase for robust data persistence",
     ],
-    stack: ["HTML", "CSS", "JavaScript"],
-    Icon: ShieldAlert,
-    accentRgb: "199,102,102",
-    dotColor: "var(--color-text)",
+    stack: ["JavaScript", "HTML", "CSS", "PostgreSQL", "Supabase"],
+    Icon: HeartHandshake,
+    accentRgb: "214,142,105",
+    dotColor: "var(--color-gold)",
+    statusLabel: "Active",
+    videoSrc: "/videos/solace.mp4",
+  },
+  {
+    id: "jarvis-ai",
+    role: "Jarvis AI",
+    company: "AI Voice & Task Assistant",
+    type: "Voice & Automation",
+    location: "Full Stack",
+    period: "2025",
+    status: "completed",
+    tagline: "Voice-driven automation and intelligent conversational agent.",
+    description:
+      "Developed an intelligent voice-activated AI assistant capable of speech recognition, automated system tasks, and contextual conversational responses.",
+    highlights: [
+      "Integrated OpenAI API workflows for contextual language reasoning",
+      "Built speech recognition and real-time voice response pipelines",
+      "Developed a Python backend with responsive interactive UI controls",
+    ],
+    stack: ["Python", "JavaScript", "OpenAI API", "HTML", "CSS"],
+    Icon: Bot,
+    accentRgb: "102,199,180",
+    dotColor: "var(--color-green)",
     statusLabel: "Completed",
+    githubUrl: "https://github.com/not-so-Vaibhav/jarvis-ai",
+    liveUrl: "https://jarvis-my-ai.netlify.app/",
+    videoSrc: "/videos/jarvis-ai.mp4",
   },
   {
     id: "notsography",
@@ -120,6 +127,7 @@ const projectsData = [
     accentRgb: "150,102,199",
     dotColor: "var(--color-text)",
     statusLabel: "Completed",
+    videoSrc: "/videos/notsography.mp4",
   }
 ];
 
@@ -131,6 +139,9 @@ export default function ProjectsPage() {
   const rightRef   = useRef<HTMLDivElement>(null);
   const charRefs   = useRef<(HTMLSpanElement | null)[]>([]);
   const cardRefs   = useRef<(HTMLDivElement | null)[]>([]);
+
+  // Video preview modal state
+  const [activeVideoProject, setActiveVideoProject] = useState<VideoProjectData | null>(null);
 
   useGSAP(() => {
     if (!pageRef.current) return;
@@ -255,8 +266,8 @@ export default function ProjectsPage() {
               { value: "2026",  label: "Focus on AI" },
             ].map(s => (
               <div key={s.label} className="lp-stat" style={{ opacity: 0 }}>
-                <p className="text-2xl lg:text-3xl font-black text-white leading-none mb-0.5">{s.value}</p>
-                <p className="text-[10px] tracking-wide" style={{ color: "rgb(var(--atlas-ink) / 0.32)" }}>{s.label}</p>
+                <p className="text-2xl lg:text-3xl font-black text-[var(--color-text)] leading-none mb-0.5">{s.value}</p>
+                <p className="text-[10px] tracking-wide" style={{ color: "var(--color-text-muted)" }}>{s.label}</p>
               </div>
             ))}
           </div>
@@ -264,8 +275,8 @@ export default function ProjectsPage() {
           {/* Nav links */}
           <div className="mt-8 lg:mt-10 flex flex-wrap items-center gap-3">
             <Link href="/"
-              className="lp-stat inline-flex items-center gap-2 px-4 py-2 rounded-lg text-xs font-medium border transition-all hover:border-white/25 hover:text-white"
-              style={{ opacity: 0, borderColor: "rgb(var(--atlas-line) / 0.1)", color: "rgb(var(--atlas-ink) / 0.45)" }}>
+              className="lp-stat inline-flex items-center gap-2 px-4 py-2 rounded-lg text-xs font-medium border transition-all hover:border-[var(--color-gold)] hover:text-[var(--color-text)]"
+              style={{ opacity: 0, borderColor: "var(--color-border)", color: "var(--color-text-muted)" }}>
               <ArrowLeft className="w-3 h-3" /> Back to Atlas
             </Link>
             <Link href="/founder"
@@ -277,19 +288,19 @@ export default function ProjectsPage() {
 
           {/* Ticker tape */}
           <div className="hidden lg:block absolute bottom-0 left-0 right-0 overflow-hidden py-2.5"
-            style={{ borderTop: "1px solid rgb(var(--atlas-line) / 0.06)" }}>
+            style={{ borderTop: "1px solid var(--color-border)" }}>
             <div className="ticker-track flex whitespace-nowrap gap-8"
-              style={{ width: "200%", color: "rgb(var(--atlas-green) / 0.32)" }}>
+              style={{ width: "200%", color: "var(--color-green)" }}>
               {Array.from({ length: 10 }).map((_, i) => (
-                <span key={i} className="flex items-center gap-8 flex-shrink-0 text-[9px] font-bold tracking-[0.22em] uppercase">
+                <span key={i} className="flex items-center gap-8 flex-shrink-0 text-[9px] font-bold tracking-[0.22em] uppercase opacity-75">
                   <span>Frontend</span>
-                  <span style={{ color: "rgb(var(--atlas-green) / 0.15)" }}>·</span>
+                  <span className="opacity-40">·</span>
                   <span>Backend</span>
-                  <span style={{ color: "rgb(var(--atlas-green) / 0.15)" }}>·</span>
+                  <span className="opacity-40">·</span>
                   <span>Architecture</span>
-                  <span style={{ color: "rgb(var(--atlas-green) / 0.15)" }}>·</span>
+                  <span className="opacity-40">·</span>
                   <span>Systems</span>
-                  <span style={{ color: "rgb(var(--atlas-green) / 0.15)" }}>·</span>
+                  <span className="opacity-40">·</span>
                 </span>
               ))}
             </div>
@@ -312,20 +323,20 @@ export default function ProjectsPage() {
                 style={{
                   opacity: 0,
                   background: "var(--color-bg-card)",
-                  border: `1px solid rgba(${project.accentRgb},0.12)`,
+                  border: `1px solid var(--color-border)`,
                   transition: "border-color 0.38s ease, box-shadow 0.38s ease, transform 0.3s ease",
-                  boxShadow: "0 2px 16px rgb(var(--atlas-black) / 0.5)",
+                  boxShadow: "var(--shadow-card)",
                 }}
                 onMouseEnter={e => {
                   const el = e.currentTarget;
-                  el.style.borderColor = `rgba(${project.accentRgb},0.48)`;
-                  el.style.boxShadow   = `0 0 36px 8px rgba(${project.accentRgb},0.2), 0 0 80px 20px rgba(${project.accentRgb},0.08), 0 8px 32px rgb(var(--atlas-black) / 0.6)`;
+                  el.style.borderColor = `rgba(${project.accentRgb},0.55)`;
+                  el.style.boxShadow   = `0 0 36px 8px rgba(${project.accentRgb},0.2), 0 8px 32px rgba(0,0,0,0.12)`;
                   el.style.transform   = "translateY(-4px)";
                 }}
                 onMouseLeave={e => {
                   const el = e.currentTarget;
-                  el.style.borderColor = `rgba(${project.accentRgb},0.12)`;
-                  el.style.boxShadow   = "0 2px 16px rgb(var(--atlas-black) / 0.5)";
+                  el.style.borderColor = `var(--color-border)`;
+                  el.style.boxShadow   = "var(--shadow-card)";
                   el.style.transform   = "translateY(0)";
                 }}
               >
@@ -355,14 +366,14 @@ export default function ProjectsPage() {
                       {/* Icon badge */}
                       <div className="flex-shrink-0 w-11 h-11 rounded-xl flex items-center justify-center"
                         style={{
-                          background: `rgba(${project.accentRgb},0.09)`,
-                          border: `1px solid rgba(${project.accentRgb},0.22)`,
+                          background: `rgba(${project.accentRgb},0.12)`,
+                          border: `1px solid rgba(${project.accentRgb},0.28)`,
                           boxShadow: `0 0 18px rgba(${project.accentRgb},0.14)`,
                         }}>
                         <project.Icon style={{ color: project.dotColor, width: 18, height: 18 }} />
                       </div>
                       <div>
-                        <h2 className="text-[15px] font-bold text-white leading-tight">{project.role}</h2>
+                        <h2 className="text-[15px] font-bold text-[var(--color-text)] leading-tight">{project.role}</h2>
                         <p className="text-xs font-semibold mt-0.5" style={{ color: project.dotColor }}>{project.company}</p>
                       </div>
                     </div>
@@ -370,7 +381,7 @@ export default function ProjectsPage() {
                     {/* Status badge */}
                     <span className="flex-shrink-0 flex items-center gap-1.5 text-[9px] font-bold tracking-widest uppercase px-2.5 py-1.5 rounded-full"
                       style={{
-                        background: `rgba(${project.accentRgb},0.09)`,
+                        background: `rgba(${project.accentRgb},0.12)`,
                         border: `1px solid rgba(${project.accentRgb},0.28)`,
                         color: project.dotColor,
                       }}>
@@ -390,18 +401,18 @@ export default function ProjectsPage() {
                       { I: Calendar,  t: project.period },
                     ].map(({ I, t }) => (
                       <span key={t} className="flex items-center gap-1.5 text-[11px]"
-                        style={{ color: "rgb(var(--atlas-ink) / 0.35)" }}>
+                        style={{ color: "var(--color-text-muted)" }}>
                         <I className="w-3 h-3 flex-shrink-0" />{t}
                       </span>
                     ))}
                   </div>
 
                   {/* Tagline */}
-                  <p className="text-sm font-semibold text-white mb-2 leading-snug">{project.tagline}</p>
+                  <p className="text-sm font-semibold text-[var(--color-text)] mb-2 leading-snug">{project.tagline}</p>
 
                   {/* Description */}
                   <p className="text-[12px] leading-relaxed mb-4"
-                    style={{ color: "rgb(var(--atlas-ink) / 0.48)" }}>
+                    style={{ color: "var(--color-text-muted)" }}>
                     {project.description}
                   </p>
 
@@ -409,13 +420,51 @@ export default function ProjectsPage() {
                   <ul className="space-y-1.5 mb-5">
                     {project.highlights.map(h => (
                       <li key={h} className="flex items-start gap-2.5 text-[12px]"
-                        style={{ color: "rgb(var(--atlas-ink) / 0.66)" }}>
+                        style={{ color: "var(--color-text)" }}>
                         <span className="mt-[5px] w-1.5 h-1.5 rounded-full flex-shrink-0"
                           style={{ background: project.dotColor }} />
                         {h}
                       </li>
                     ))}
                   </ul>
+
+                  {/* Video preview */}
+                  {"videoSrc" in project && project.videoSrc && (
+                    <div
+                      onClick={() => setActiveVideoProject(project as any)}
+                      className="mb-5 rounded-xl overflow-hidden aspect-video w-full border border-[rgba(199,169,102,0.25)] bg-black shadow-md relative cursor-pointer group/preview"
+                      title="Click to open full video preview"
+                    >
+                      <video
+                        autoPlay
+                        loop
+                        muted
+                        playsInline
+                        preload="auto"
+                        className="w-full h-full object-cover select-none pointer-events-none transition-transform duration-500 group-hover/preview:scale-105"
+                      >
+                        <source src={project.videoSrc} type="video/mp4" />
+                        <source src={project.videoSrc.replace(".mp4", ".webm")} type="video/webm" />
+                      </video>
+                      <div
+                        className="absolute inset-0 pointer-events-none"
+                        style={{
+                          boxShadow: `inset 0 0 25px rgba(${project.accentRgb}, 0.25)`,
+                          background: `linear-gradient(180deg, transparent 65%, rgba(0,0,0,0.6) 100%)`,
+                        }}
+                      />
+                      {/* Hover overlay */}
+                      <div className="absolute inset-0 bg-black/40 opacity-0 group-hover/preview:opacity-100 transition-opacity duration-200 flex items-center justify-center pointer-events-none z-10">
+                        <div
+                          className="flex items-center gap-1.5 px-3 py-1.5 rounded-full backdrop-blur-md shadow-lg scale-90 group-hover/preview:scale-100 transition-transform duration-200"
+                          style={{ background: "rgba(0,0,0,0.75)", border: `1px solid rgba(${project.accentRgb}, 0.5)` }}
+                        >
+                          <Maximize2 className="w-3.5 h-3.5" style={{ color: project.dotColor }} />
+                          <span className="text-[10px] font-bold tracking-wider uppercase text-white">Full Preview</span>
+                        </div>
+                      </div>
+                    </div>
+                  )}
 
                   {/* Stack chips */}
                   <div className="flex flex-wrap gap-1.5">
@@ -438,6 +487,13 @@ export default function ProjectsPage() {
         </div>
 
       </div>
+
+      {/* Video Preview Modal */}
+      <XP_VideoPreviewModal
+        isOpen={!!activeVideoProject}
+        onClose={() => setActiveVideoProject(null)}
+        project={activeVideoProject}
+      />
     </div>
   );
 }

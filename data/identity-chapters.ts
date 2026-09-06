@@ -16,7 +16,7 @@ export const identityChapters: IdentityChapter[] = [
     atmosphere: "Curious, calm, welcoming and handcrafted.",
     accent: "wood",
     visibleInPrimaryNavigation: true,
-    nextId: "engineering",
+    nextId: "founder",
     zones: [
       {
         title: "Central Table",
@@ -26,14 +26,48 @@ export const identityChapters: IdentityChapter[] = [
       {
         title: "Room Hints",
         purpose: "Show that Atlas is a connected journey through identities.",
-        details: ["Engineering", "Founder", "Designer", "AI", "Photography"]
+        details: ["Founder", "Experience", "My Work", "Skills", "Photography"]
+      }
+    ]
+  },
+  {
+    id: "founder",
+    label: "Founder",
+    path: "/founder",
+    question: "Why should this product exist?",
+    headline: "Founder thinking begins with people, not features.",
+    summary:
+      "This identity captures entrepreneurship, Solace, validation, leadership and the responsibility of choosing problems worth solving.",
+    environment: "Startup environment with research walls, journey maps, sticky notes, meeting table and warm light.",
+    builderOutfit: "Professional casual shirt with rolled sleeves, simple watch and notebook.",
+    builderEquipment: ["Notebook", "Whiteboard marker", "Research cards", "Coffee mug"],
+    builderBehavior: "Reviewing notes, writing strategy, studying user problems and thinking quietly.",
+    atmosphere: "Human, hopeful, empathetic and purposeful.",
+    accent: "gold",
+    visibleInPrimaryNavigation: true,
+    nextId: "engineering",
+    zones: [
+      {
+        title: "Mission Wall",
+        purpose: "Explain why the Builder chooses difficult human problems.",
+        details: ["Curiosity", "Empathy", "Ownership", "Continuous learning"]
+      },
+      {
+        title: "Solace Table",
+        purpose: "Position Solace as the emotional center of the current chapter.",
+        details: ["Problem", "Motivation", "Research", "Lessons"]
+      },
+      {
+        title: "Vision Timeline",
+        purpose: "Communicate growth toward building meaningful startups.",
+        details: ["Engineer", "Founder", "Problem Solver", "Builder"]
       }
     ]
   },
   {
     id: "engineering",
-    label: "Engineering",
-    path: "/projects",
+    label: "Experience",
+    path: "/experience",
     question: "How do ideas become reliable software?",
     headline: "Engineering is where curiosity becomes architecture.",
     summary:
@@ -55,7 +89,7 @@ export const identityChapters: IdentityChapter[] = [
       {
         title: "Builder's Collection",
         purpose: "Present engineering work as stories of problem solving.",
-        details: ["Solace", "AI Healthcare Project", "MIT-Learn", "Future engineering projects"]
+        details: ["Solace", "AI Healthcare Project", "MIT-Learn", "Engineering systems"]
       },
       {
         title: "Architecture Wall",
@@ -79,114 +113,46 @@ export const identityChapters: IdentityChapter[] = [
     atmosphere: "Innovative, structured, and expansive.",
     accent: "blue",
     visibleInPrimaryNavigation: true,
-    nextId: "founder",
+    nextId: "skills",
     zones: [
       {
         title: "Project Showcase",
         purpose: "Display completed engineering work.",
-        details: ["Folio Space", "Fintech Edu", "Stress2Health"]
+        details: ["Folio Space", "Stress2Health", "Solace", "Jarvis AI", "NotSoGraphy"]
       }
     ]
   },
   {
-    id: "founder",
-    label: "Founder",
-    path: "/founder",
-    question: "Why should this product exist?",
-    headline: "Founder thinking begins with people, not features.",
+    id: "skills",
+    label: "Skills",
+    path: "/skills",
+    question: "What tools and technologies power the craft?",
+    headline: "Modern tools mastered to build reliable systems.",
     summary:
-      "This identity captures entrepreneurship, Solace, validation, leadership and the responsibility of choosing problems worth solving.",
-    environment: "Startup environment with research walls, journey maps, sticky notes, meeting table and warm light.",
-    builderOutfit: "Professional casual shirt with rolled sleeves, simple watch and notebook.",
-    builderEquipment: ["Notebook", "Whiteboard marker", "Research cards", "Coffee mug"],
-    builderBehavior: "Reviewing notes, writing strategy, studying user problems and thinking quietly.",
-    atmosphere: "Human, hopeful, empathetic and purposeful.",
-    accent: "gold",
-    visibleInPrimaryNavigation: true,
-    nextId: "designer",
-    zones: [
-      {
-        title: "Mission Wall",
-        purpose: "Explain why the Builder chooses difficult human problems.",
-        details: ["Curiosity", "Empathy", "Ownership", "Continuous learning"]
-      },
-      {
-        title: "Solace Table",
-        purpose: "Position Solace as the emotional center of the current chapter.",
-        details: ["Problem", "Motivation", "Research", "Lessons"]
-      },
-      {
-        title: "Vision Timeline",
-        purpose: "Communicate growth toward building meaningful startups.",
-        details: ["Engineer", "Founder", "Problem Solver", "Builder"]
-      }
-    ]
-  },
-  {
-    id: "designer",
-    label: "Designer",
-    path: "/designer",
-    question: "How should people experience this?",
-    headline: "Design is the discipline of making care visible.",
-    summary:
-      "This identity presents product design, systems, interaction thinking and the process behind clear, humane interfaces.",
-    environment: "Minimal creative workspace with sketchbook, tablet, wireframe wall, typography studies and prototypes.",
-    builderOutfit: "Minimal overshirt in neutral colors with sketchbook, tablet and comfortable sneakers.",
-    builderEquipment: ["Sketchbook", "Tablet", "Typography sheets", "Wireframes"],
-    builderBehavior: "Sketching interfaces, reviewing wireframes, arranging sticky notes and studying user journeys.",
-    atmosphere: "Calm, precise, intentional and creative.",
-    accent: "wood",
-    visibleInPrimaryNavigation: true,
-    nextId: "ai",
-    zones: [
-      {
-        title: "Creative Workspace",
-        purpose: "Show that every interface begins as an exploration.",
-        details: ["Sketchbook", "Tablet", "Sticky notes", "Reference books"]
-      },
-      {
-        title: "Design System",
-        purpose: "Demonstrate consistency through tokens and reusable components.",
-        details: ["Typography", "Spacing", "Buttons", "Cards", "Inputs"]
-      },
-      {
-        title: "Prototype Corner",
-        purpose: "Capture interaction ideas without letting effects become the story.",
-        details: ["Micro-interactions", "Transitions", "Navigation concepts"]
-      }
-    ]
-  },
-  {
-    id: "ai",
-    label: "AI",
-    path: "/ai",
-    question: "How can technology become more useful?",
-    headline: "AI is useful when it helps people solve real problems.",
-    summary:
-      "This identity is dedicated to practical AI, automation, research, experiments and thoughtful application of future technology.",
-    environment: "Futuristic research workspace with floating interfaces, model diagrams and research boards.",
-    builderOutfit: "Modern jacket with subtle futuristic details and minimal design.",
-    builderEquipment: ["Research papers", "Model diagrams", "Experiment logs", "Data visualizations"],
-    builderBehavior: "Studying research, observing data, writing hypotheses and thinking through usefulness.",
-    atmosphere: "Curious, experimental, elegant and forward-looking.",
-    accent: "green",
+      "From frontend frameworks and backend runtimes to machine learning pipelines, cloud infrastructure and interactive systems.",
+    environment: "Digital workbench surrounded by active terminals, code editors, design tools and system architecture notes.",
+    builderOutfit: "Focused builder attire with mechanical pencil, notepad and headphones.",
+    builderEquipment: ["Terminals", "Code editor", "Design tools", "Documentation"],
+    builderBehavior: "Testing components, reviewing architectures, writing algorithms and refining craft.",
+    atmosphere: "Dynamic, technical, structured and hands-on.",
+    accent: "glass",
     visibleInPrimaryNavigation: true,
     nextId: "photography",
     zones: [
       {
-        title: "Research Desk",
-        purpose: "Frame AI as investigation rather than spectacle.",
-        details: ["Research papers", "Hypotheses", "Experiment logs"]
+        title: "Core Technologies",
+        purpose: "Languages and runtimes that form the foundation of software architecture.",
+        details: ["Python", "TypeScript", "JavaScript", "C / C++", "HTML / CSS"]
       },
       {
-        title: "Automation Board",
-        purpose: "Show where AI reduces friction in meaningful workflows.",
-        details: ["LLMs", "NLP", "Computer vision", "Automation"]
+        title: "Frameworks & Systems",
+        purpose: "Modern development ecosystems for building responsive, scalable applications.",
+        details: ["React", "Next.js", "Node.js", "Express", "Tailwind CSS"]
       },
       {
-        title: "Useful Technology",
-        purpose: "Connect AI work back to human problems.",
-        details: ["Healthcare", "Education", "Productivity", "Accessibility"]
+        title: "AI, Data & Infrastructure",
+        purpose: "Machine learning libraries, database systems and deployment pipelines.",
+        details: ["PyTorch", "FastAPI", "PostgreSQL", "Docker", "Git"]
       }
     ]
   },
@@ -249,12 +215,108 @@ export const identityChapters: IdentityChapter[] = [
       {
         title: "Journal Library",
         purpose: "Organize reflections by growth, not algorithms.",
-        details: ["Build", "Founder Notes", "Design Notes", "AI Notes", "Life Notes"]
+        details: ["Build", "Founder Notes", "Engineering Notes", "Life Notes"]
       },
       {
         title: "Reflection Wall",
         purpose: "Preserve memorable lessons and questions.",
         details: ["Notes", "Sketches", "Diagrams", "Milestones"]
+      }
+    ]
+  },
+  {
+    id: "contact",
+    label: "Let's Contact",
+    path: "/contact",
+    question: "What can we build together?",
+    headline: "Contact should feel like the beginning of a conversation.",
+    summary:
+      "This identity invites collaboration, opportunities, resume access and meaningful conversations without becoming transactional.",
+    environment: "Quiet conversation space connected back to the Entrance Hall.",
+    builderOutfit: "Professional, approachable clothing with notebook and backpack.",
+    builderEquipment: ["Notebook", "Resume", "Contact cards"],
+    builderBehavior: "Closing a notebook, preparing to continue the conversation and returning to work.",
+    atmosphere: "Warm, clear, respectful and open.",
+    accent: "glass",
+    visibleInPrimaryNavigation: true,
+    zones: [
+      {
+        title: "Conversation",
+        purpose: "Invite collaboration without sales language.",
+        details: ["Opportunities", "Collaboration", "Hiring", "Building together"]
+      },
+      {
+        title: "Resume Access",
+        purpose: "Provide practical next steps while preserving the Atlas tone.",
+        details: ["Resume", "Email", "Social links"]
+      }
+    ]
+  },
+  {
+    id: "designer",
+    label: "Designer",
+    path: "/designer",
+    question: "How should people experience this?",
+    headline: "Design is the discipline of making care visible.",
+    summary:
+      "This identity presents product design, systems, interaction thinking and the process behind clear, humane interfaces.",
+    environment: "Minimal creative workspace with sketchbook, tablet, wireframe wall, typography studies and prototypes.",
+    builderOutfit: "Minimal overshirt in neutral colors with sketchbook, tablet and comfortable sneakers.",
+    builderEquipment: ["Sketchbook", "Tablet", "Typography sheets", "Wireframes"],
+    builderBehavior: "Sketching interfaces, reviewing wireframes, arranging sticky notes and studying user journeys.",
+    atmosphere: "Calm, precise, intentional and creative.",
+    accent: "wood",
+    visibleInPrimaryNavigation: false,
+    nextId: "photography",
+    zones: [
+      {
+        title: "Creative Workspace",
+        purpose: "Show that every interface begins as an exploration.",
+        details: ["Sketchbook", "Tablet", "Sticky notes", "Reference books"]
+      },
+      {
+        title: "Design System",
+        purpose: "Demonstrate consistency through tokens and reusable components.",
+        details: ["Typography", "Spacing", "Buttons", "Cards", "Inputs"]
+      },
+      {
+        title: "Prototype Corner",
+        purpose: "Capture interaction ideas without letting effects become the story.",
+        details: ["Micro-interactions", "Transitions", "Navigation concepts"]
+      }
+    ]
+  },
+  {
+    id: "ai",
+    label: "AI",
+    path: "/ai",
+    question: "How can technology become more useful?",
+    headline: "AI is useful when it helps people solve real problems.",
+    summary:
+      "This identity is dedicated to practical AI, automation, research, experiments and thoughtful application of future technology.",
+    environment: "Futuristic research workspace with floating interfaces, model diagrams and research boards.",
+    builderOutfit: "Modern jacket with subtle futuristic details and minimal design.",
+    builderEquipment: ["Research papers", "Model diagrams", "Experiment logs", "Data visualizations"],
+    builderBehavior: "Studying research, observing data, writing hypotheses and thinking through usefulness.",
+    atmosphere: "Curious, experimental, elegant and forward-looking.",
+    accent: "green",
+    visibleInPrimaryNavigation: false,
+    nextId: "photography",
+    zones: [
+      {
+        title: "Research Desk",
+        purpose: "Frame AI as investigation rather than spectacle.",
+        details: ["Research papers", "Hypotheses", "Experiment logs"]
+      },
+      {
+        title: "Automation Board",
+        purpose: "Show where AI reduces friction in meaningful workflows.",
+        details: ["LLMs", "NLP", "Computer vision", "Automation"]
+      },
+      {
+        title: "Useful Technology",
+        purpose: "Connect AI work back to human problems.",
+        details: ["Healthcare", "Education", "Productivity", "Accessibility"]
       }
     ]
   },
@@ -306,7 +368,7 @@ export const identityChapters: IdentityChapter[] = [
     builderBehavior: "Reading future notes, observing the horizon, writing ideas and continuing to plan.",
     atmosphere: "Hopeful, spacious, reflective and optimistic.",
     accent: "gold",
-    visibleInPrimaryNavigation: true,
+    visibleInPrimaryNavigation: false,
     nextId: "contact",
     zones: [
       {
@@ -323,34 +385,6 @@ export const identityChapters: IdentityChapter[] = [
         title: "The Horizon",
         purpose: "Leave visitors with optimism rather than completion.",
         details: ["Possibility", "Direction", "Unfinished work"]
-      }
-    ]
-  },
-  {
-    id: "contact",
-    label: "Contact",
-    path: "/contact",
-    question: "What can we build together?",
-    headline: "Contact should feel like the beginning of a conversation.",
-    summary:
-      "This identity invites collaboration, opportunities, resume access and meaningful conversations without becoming transactional.",
-    environment: "Quiet conversation space connected back to the Entrance Hall.",
-    builderOutfit: "Professional, approachable clothing with notebook and backpack.",
-    builderEquipment: ["Notebook", "Resume", "Contact cards"],
-    builderBehavior: "Closing a notebook, preparing to continue the conversation and returning to work.",
-    atmosphere: "Warm, clear, respectful and open.",
-    accent: "glass",
-    visibleInPrimaryNavigation: true,
-    zones: [
-      {
-        title: "Conversation",
-        purpose: "Invite collaboration without sales language.",
-        details: ["Opportunities", "Collaboration", "Hiring", "Building together"]
-      },
-      {
-        title: "Resume Access",
-        purpose: "Provide practical next steps while preserving the Atlas tone.",
-        details: ["Resume", "Email", "Social links"]
       }
     ]
   }

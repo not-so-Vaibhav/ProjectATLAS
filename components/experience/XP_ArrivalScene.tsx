@@ -185,9 +185,9 @@ export function XP_ArrivalScene() {
   const scrollToNext = (id: string) => scrollToSection(id);
 
   /* ── Visible chapters ──────────────────────────────── */
-  const NAV_IDS = ["arrival", "founder", "engineering", "my-work", "designer", "photography", "journal", "contact"];
+  const NAV_IDS = ["arrival", "founder", "engineering", "my-work", "skills", "photography", "journal", "contact"];
   /* Map chapter id → DOM section id (allows renaming hash without touching data layer) */
-  const CHAPTER_TO_SECTION: Record<string, string> = { founder: "about" };
+  const CHAPTER_TO_SECTION: Record<string, string> = { founder: "about", skills: "skills", designer: "skills" };
   const visibleChapters = NAV_IDS
     .map((id) => identityChapters.find((c) => c.id === id))
     .filter(Boolean) as typeof identityChapters;
@@ -202,7 +202,7 @@ export function XP_ArrivalScene() {
         const isAbout      = chapter.id === "founder";
         const isExperience = chapter.id === "engineering";
         const isMyWork     = chapter.id === "my-work";
-        const isDesigner     = chapter.id === "designer";
+        const isSkills     = chapter.id === "skills" || chapter.id === "designer";
         const isPhotography   = chapter.id === "photography";
         const isJournal       = chapter.id === "journal";
         const isContact       = chapter.id === "contact";
@@ -219,8 +219,8 @@ export function XP_ArrivalScene() {
           return <XP_MyWorkScrollSection key="my-work" scrollContainerRef={containerRef} />;
         }
 
-        if (isDesigner) {
-          return <XP_SkillsScrollSection key="designer" scrollContainerRef={containerRef} />;
+        if (isSkills) {
+          return <XP_SkillsScrollSection key="skills" scrollContainerRef={containerRef} />;
         }
 
         if (isPhotography) {

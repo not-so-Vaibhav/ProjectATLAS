@@ -12,28 +12,41 @@ import { identityChapters } from "@/data/identity-chapters";
 
 gsap.registerPlugin(ScrollTrigger);
 
-const roomImages: Record<string, string> = {
-  engineering: "/Engineering.png",
-  founder:     "/Founder.png",
-  designer:    "/Designer.png",
+const roomImagesDark: Record<string, string> = {
+  engineering: "/About/EngineerDark.png",
+  founder:     "/About/FounderDark.png",
+  designer:    "/About/DesignerDark.png",
+  skills:      "/About/DesignerDark.png",
+  "my-work":   "/About/EngineerDark.png",
   ai:          "/AI Lab.png",
-  photography: "/Photography.png",
+  photography: "/About/PhotographerDark.png",
   journal:     "/photography_mist.png",
   lab:         "/photography_street.png",
   future:      "/room_workshop.png",
   contact:     "/room_mission.png",
 };
 
-const roomMascots: Record<string, string> = {
-  engineering: "/mascot_engineer.png",
-  founder:     "/mascot_founder.png",
-  designer:    "/mascot_designer.png",
-  ai:          "/mascot_ai.png",
-  photography: "/mascot_photographer.png",
-  journal:     "/mascot_founder.png",
-  lab:         "/mascot_engineer.png",
-  future:      "/mascot.png",
-  contact:     "/mascot.png",
+const roomImagesLight: Record<string, string> = {
+  engineering: "/About/EngineerLight.png",
+  founder:     "/About/FounderLight.png",
+  designer:    "/About/DesignerLight.png",
+  skills:      "/About/DesignerLight.png",
+  "my-work":   "/About/EngineerLight.png",
+  ai:          "/AI Lab.png",
+  photography: "/About/PhotographerLight.png",
+  journal:     "/photography_mist.png",
+  lab:         "/photography_street.png",
+  future:      "/room_workshop.png",
+  contact:     "/room_mission.png",
+};
+
+const roomImageClasses: Record<string, string> = {
+  engineering: "about-img-engineering",
+  founder:     "about-img-founder",
+  designer:    "about-img-designer",
+  skills:      "about-img-designer",
+  "my-work":   "about-img-engineering",
+  photography: "about-img-photography",
 };
 
 interface RoomPageProps {
@@ -45,25 +58,23 @@ export function XP_RoomPage({ chapter, children }: RoomPageProps) {
   const nextChapter = identityChapters.find((c) => c.id === chapter.nextId);
   const heroRef = useRef<HTMLElement>(null);
   const zonesRef = useRef<HTMLElement>(null);
-  const roomImage = roomImages[chapter.id];
-  const mascotImage = roomMascots[chapter.id];
+  const darkImage = roomImagesDark[chapter.id];
+  const lightImage = roomImagesLight[chapter.id];
 
   /* Hero entrance — GSAP timeline */
   useGSAP(() => {
     if (!heroRef.current) return;
 
     const ctx = gsap.context(() => {
-      gsap.set([".rp-kicker", ".rp-title", ".rp-summary", ".rp-actions", ".rp-mascot"], {
+      gsap.set([".rp-kicker", ".rp-title", ".rp-summary", ".rp-actions"], {
         opacity: 0, y: 24,
       });
-      gsap.set(".rp-mascot", { opacity: 0, scale: 0.93, y: 16 });
 
       const tl = gsap.timeline({ defaults: { ease: "power3.out" } });
       tl.to(".rp-kicker",   { opacity: 1, y: 0, duration: 0.6, delay: 0.2 })
         .to(".rp-title",    { opacity: 1, y: 0, duration: 0.75 }, "-=0.35")
         .to(".rp-summary",  { opacity: 1, y: 0, duration: 0.6  }, "-=0.45")
-        .to(".rp-actions",  { opacity: 1, y: 0, duration: 0.55 }, "-=0.35")
-        .to(".rp-mascot",   { opacity: 1, y: 0, scale: 1, duration: 0.7 }, "-=0.55");
+        .to(".rp-actions",  { opacity: 1, y: 0, duration: 0.55 }, "-=0.35");
     }, heroRef);
 
     return () => ctx.revert();
@@ -101,12 +112,24 @@ export function XP_RoomPage({ chapter, children }: RoomPageProps) {
         aria-label={`${chapter.label} hero`}
         style={{ borderBottom: "1px solid var(--color-border)" }}
       >
-        {roomImage && (
+        {lightImage && (
           <Image
-            src={roomImage}
-            alt={`${chapter.label} room environment`}
+            src={lightImage}
+            alt={`${chapter.label} room environment light`}
             fill
-            className="object-cover object-center pointer-events-none select-none"
+            unoptimized
+            className={`object-cover ${roomImageClasses[chapter.id] || "object-center"} pointer-events-none select-none dark:hidden block`}
+            priority
+            sizes="100vw"
+          />
+        )}
+        {darkImage && (
+          <Image
+            src={darkImage}
+            alt={`${chapter.label} room environment dark`}
+            fill
+            unoptimized
+            className={`object-cover ${roomImageClasses[chapter.id] || "object-center"} pointer-events-none select-none hidden dark:block`}
             priority
             sizes="100vw"
           />
@@ -115,47 +138,32 @@ export function XP_RoomPage({ chapter, children }: RoomPageProps) {
         <div className="absolute inset-0 bg-gradient-to-t from-[var(--color-bg)] via-[var(--color-bg)]/75 to-transparent z-0" />
         <div className="absolute inset-0 bg-gradient-to-r from-[var(--color-bg)]/80 to-transparent z-0" />
 
-        <div className="relative z-10 w-full px-6 py-10 lg:px-12 lg:py-12 grid lg:grid-cols-[1fr_260px] gap-8 items-end">
-
-          <div className="max-w-2xl">
-            <p className="rp-kicker atlas-kicker mb-3">{chapter.label}</p>
-            <h1 className="rp-title text-3xl md:text-4xl lg:text-5xl font-bold text-atlas-white leading-[1.08] tracking-tight">
-              {chapter.headline}
-            </h1>
-            <p className="rp-summary mt-4 text-sm md:text-base text-atlas-ink/75 leading-relaxed max-w-xl">
-              {chapter.summary}
-            </p>
-            <div className="rp-actions mt-6 flex flex-wrap gap-3">
-              {nextChapter && (
-                <Link
-                  href={nextChapter.path}
-                  className="inline-flex items-center gap-2 px-4 py-2.5 rounded-lg text-sm font-semibold transition"
-                  style={{ background: "var(--color-gold)", color: "var(--color-bg)" }}
-                >
-                  {nextChapter.label} <ArrowRight className="w-3.5 h-3.5" />
-                </Link>
-              )}
+        <div className="relative z-10 w-full px-6 py-10 lg:px-12 lg:py-12 max-w-4xl">
+          <p className="rp-kicker atlas-kicker mb-3">{chapter.label}</p>
+          <h1 className="rp-title text-3xl md:text-4xl lg:text-5xl font-bold text-atlas-white leading-[1.08] tracking-tight">
+            {chapter.headline}
+          </h1>
+          <p className="rp-summary mt-4 text-sm md:text-base text-atlas-ink/75 leading-relaxed max-w-2xl">
+            {chapter.summary}
+          </p>
+          <div className="rp-actions mt-6 flex flex-wrap gap-3">
+            {nextChapter && (
               <Link
-                href="/"
-                className="inline-flex items-center gap-2 px-4 py-2.5 rounded-lg text-sm font-medium border transition hover:border-atlas-gold/40 hover:text-atlas-white"
-                style={{ borderColor: "var(--color-border)", color: "var(--color-text-muted)" }}
+                href={nextChapter.path}
+                className="inline-flex items-center gap-2 px-4 py-2.5 rounded-lg text-sm font-semibold transition"
+                style={{ background: "var(--color-gold)", color: "var(--color-bg)" }}
               >
-                Return to Arrival
+                {nextChapter.label} <ArrowRight className="w-3.5 h-3.5" />
               </Link>
-            </div>
+            )}
+            <Link
+              href="/"
+              className="inline-flex items-center gap-2 px-4 py-2.5 rounded-lg text-sm font-medium border transition hover:border-atlas-gold/40 hover:text-atlas-white"
+              style={{ borderColor: "var(--color-border)", color: "var(--color-text-muted)" }}
+            >
+              Return to Arrival
+            </Link>
           </div>
-
-          {mascotImage && (
-            <div className="rp-mascot hidden lg:block relative w-full h-64 flex-shrink-0">
-              <Image
-                src={mascotImage}
-                alt={`${chapter.label} mascot`}
-                fill
-                className="object-contain object-bottom pointer-events-none select-none"
-                sizes="260px"
-              />
-            </div>
-          )}
         </div>
 
         <div className="absolute top-4 left-6 z-10 flex items-center gap-1.5 text-[10px] text-atlas-muted font-mono tracking-wider">

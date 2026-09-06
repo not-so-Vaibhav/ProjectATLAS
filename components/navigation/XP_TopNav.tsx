@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useRef, useState, useEffect } from "react";
+import { motion, AnimatePresence } from "framer-motion";
 import { gsap } from "gsap";
 import { useGSAP } from "@gsap/react";
 import { Menu, X, Sun, Moon } from "lucide-react";
@@ -14,7 +15,7 @@ const navItems = [
   { label: "About",             path: "/founder",     sectionId: "about"       },
   { label: "Experience",        path: "/experience",  sectionId: "experience"  },
   { label: "My Work",           path: "/projects",    sectionId: "my-work"     },
-  { label: "Skills",            path: "/designer",    sectionId: "designer"    },
+  { label: "Skills",            path: "/skills",      sectionId: "skills"      },
   { label: "Photography",       path: "/photography", sectionId: "photography" },
   { label: "Builder's Journal", path: "/journal",     sectionId: "journal"     },
   { label: "Let's Contact",     path: "/contact",     sectionId: "contact"     },
@@ -25,6 +26,7 @@ export function XP_TopNav() {
   const { theme, toggleTheme } = useTheme();
   const [mobileOpen, setMobileOpen] = useState(false);
   const [activeSection, setActiveSection] = useState<string>("arrival");
+  const [hoveredItem, setHoveredItem] = useState<string | null>(null);
   
   const drawerRef = useRef<HTMLDivElement>(null);
   const backdropRef = useRef<HTMLDivElement>(null);
@@ -148,42 +150,100 @@ export function XP_TopNav() {
           ATLAS
         </Link>
 
-        {/* Navigation links */}
-        <nav className="flex items-center gap-1" aria-label="Main navigation">
-          {navItems.map((item) => (
-            <Link
-              key={item.path}
-              href={getHref(item.path, item.sectionId)}
-              onClick={(e) => handleNavClick(e, item.path, item.sectionId)}
-              className="relative px-3 py-1.5 text-[13px] font-medium transition-colors duration-200 whitespace-nowrap"
-              style={{
-                color: isActive(item.path, item.sectionId) ? "var(--color-text)" : "rgb(var(--atlas-ink) / 0.55)",
-              }}
-            >
-              {item.label}
-              {isActive(item.path, item.sectionId) && (
-                <span
-                  className="absolute bottom-0 left-1/2 -translate-x-1/2 rounded-full bg-atlas-gold"
-                  style={{ width: 5, height: 5 }}
-                />
-              )}
-            </Link>
-          ))}
+        {/* Navigation links with floating hover pill */}
+        <nav
+          className="flex items-center gap-1 p-1 rounded-xl"
+          aria-label="Main navigation"
+          onMouseLeave={() => setHoveredItem(null)}
+        >
+          {navItems.map((item) => {
+            const active = isActive(item.path, item.sectionId);
+            const isHovered = hoveredItem === item.path;
+
+            return (
+              <Link
+                key={item.path}
+                href={getHref(item.path, item.sectionId)}
+                onClick={(e) => handleNavClick(e, item.path, item.sectionId)}
+                onMouseEnter={() => setHoveredItem(item.path)}
+                className="relative px-3.5 py-1.5 text-[13px] font-medium transition-all duration-200 whitespace-nowrap rounded-lg group select-none"
+                style={{
+                  color: active
+                    ? "var(--color-text)"
+                    : isHovered
+                    ? "var(--color-text)"
+                    : "rgb(var(--atlas-ink) / 0.55)",
+                }}
+              >
+                {/* Floating hover capsule pill */}
+                {isHovered && (
+                  <motion.span
+                    layoutId="nav-hover-pill"
+                    className="absolute inset-0 rounded-lg pointer-events-none"
+                    style={{
+                      background: "rgb(var(--atlas-glass) / 0.08)",
+                      border: "1px solid rgb(var(--atlas-gold) / 0.2)",
+                      boxShadow: "0 2px 12px -2px rgb(var(--atlas-gold) / 0.12)",
+                      backdropFilter: "blur(8px)",
+                      WebkitBackdropFilter: "blur(8px)",
+                    }}
+                    initial={{ opacity: 0, scale: 0.94 }}
+                    animate={{ opacity: 1, scale: 1 }}
+                    exit={{ opacity: 0, scale: 0.94 }}
+                    transition={{ type: "spring", stiffness: 450, damping: 32 }}
+                  />
+                )}
+
+                {/* Text with slight hover lift */}
+                <span className="relative z-10 transition-transform duration-200 inline-block group-hover:-translate-y-[0.5px]">
+                  {item.label}
+                </span>
+
+                {/* Active gold dot with glow */}
+                {active && (
+                  <motion.span
+                    layoutId="nav-active-dot"
+                    className="absolute bottom-0 left-1/2 -translate-x-1/2 rounded-full bg-atlas-gold pointer-events-none"
+                    style={{
+                      width: 5,
+                      height: 5,
+                      boxShadow: "0 0 8px 1.5px rgb(var(--atlas-gold) / 0.8)",
+                    }}
+                    transition={{ type: "spring", stiffness: 380, damping: 28 }}
+                  />
+                )}
+
+                {/* Subtle hover micro-glow line for non-active links */}
+                {!active && (
+                  <span
+                    className="absolute bottom-0 left-1/2 -translate-x-1/2 h-[1.5px] w-0 group-hover:w-3/5 rounded-full transition-all duration-300 opacity-0 group-hover:opacity-100 pointer-events-none"
+                    style={{
+                      background: "linear-gradient(90deg, transparent, rgb(var(--atlas-gold) / 0.7), transparent)",
+                    }}
+                  />
+                )}
+              </Link>
+            );
+          })}
         </nav>
 
         {/* Theme toggle */}
         <button
           onClick={toggleTheme}
-          className="flex-shrink-0 p-2 rounded-lg text-atlas-muted hover:text-atlas-ink transition-colors"
+          className="flex-shrink-0 p-2 rounded-xl text-atlas-muted hover:text-atlas-gold hover:bg-atlas-gold/10 transition-all duration-300 hover:scale-110 active:scale-95"
           aria-label={`Switch to ${theme === "dark" ? "light" : "dark"} mode`}
         >
-          {theme === "dark" ? <Sun className="w-4 h-4" /> : <Moon className="w-4 h-4" />}
+          {theme === "dark" ? (
+            <Sun className="w-4 h-4 transition-transform duration-500 group-hover:rotate-90" />
+          ) : (
+            <Moon className="w-4 h-4 transition-transform duration-500 group-hover:-rotate-12" />
+          )}
         </button>
       </header>
 
       {/* Mobile hamburger */}
       <button
-        className="fixed top-4 left-4 z-50 lg:hidden p-2 rounded-lg"
+        className="fixed top-4 left-4 z-50 lg:hidden p-2 rounded-xl transition-all duration-300 hover:scale-105 active:scale-95"
         style={{
           background: "rgb(var(--atlas-black) / 0.8)",
           backdropFilter: "blur(12px)",
@@ -235,21 +295,27 @@ export function XP_TopNav() {
 
             <nav className="flex-grow overflow-y-auto px-6 py-6" aria-label="Mobile navigation">
               <div className="flex flex-col gap-2">
-                {navItems.map((item) => (
-                  <Link
-                    key={item.path}
-                    href={getHref(item.path, item.sectionId)}
-                    onClick={(e) => handleNavClick(e, item.path, item.sectionId)}
-                    className="block px-4 py-3 rounded-xl text-base font-semibold border transition-all mobile-nav-item"
-                    style={{
-                      color: isActive(item.path, item.sectionId) ? "var(--color-text)" : "rgb(var(--atlas-ink) / 0.55)",
-                      background: isActive(item.path, item.sectionId) ? "rgb(var(--atlas-gold) / 0.06)" : "transparent",
-                      borderColor: isActive(item.path, item.sectionId) ? "rgb(var(--atlas-gold) / 0.18)" : "transparent",
-                    }}
-                  >
-                    {item.label}
-                  </Link>
-                ))}
+                {navItems.map((item) => {
+                  const active = isActive(item.path, item.sectionId);
+                  return (
+                    <Link
+                      key={item.path}
+                      href={getHref(item.path, item.sectionId)}
+                      onClick={(e) => handleNavClick(e, item.path, item.sectionId)}
+                      className="group flex items-center justify-between px-4 py-3 rounded-xl text-base font-semibold border transition-all duration-300 mobile-nav-item hover:translate-x-1.5"
+                      style={{
+                        color: active ? "var(--color-text)" : "rgb(var(--atlas-ink) / 0.55)",
+                        background: active ? "rgb(var(--atlas-gold) / 0.08)" : "transparent",
+                        borderColor: active ? "rgb(var(--atlas-gold) / 0.22)" : "transparent",
+                      }}
+                    >
+                      <span>{item.label}</span>
+                      {active && (
+                        <span className="w-2 h-2 rounded-full bg-atlas-gold shadow-[0_0_8px_rgb(var(--atlas-gold))]" />
+                      )}
+                    </Link>
+                  );
+                })}
               </div>
             </nav>
           </div>

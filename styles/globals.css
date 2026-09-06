@@ -31,7 +31,10 @@ body {
 
 a { color: inherit; text-decoration: none; }
 
-button, input, textarea, select { font: inherit; }
+button, input, textarea, select {
+  font: inherit;
+  caret-color: rgb(var(--atlas-gold));
+}
 
 ::selection {
   background: var(--color-gold-dim);
@@ -42,6 +45,15 @@ button, input, textarea, select { font: inherit; }
   outline: 2px solid var(--color-gold);
   outline-offset: 3px;
   border-radius: var(--radius-small);
+}
+
+/* ─────────────────────────────────────────────────────────────
+   CUSTOM CURSOR REFINEMENTS (Desktop Fine Pointer Only)
+───────────────────────────────────────────────────────────── */
+@media (hover: hover) and (pointer: fine) {
+  *, *::before, *::after {
+    cursor: none !important;
+  }
 }
 
 /* ─────────────────────────────────────────────────────────────
@@ -352,6 +364,63 @@ button, input, textarea, select { font: inherit; }
   position: relative;
 }
 
+/* Responsive image framing for 4-quadrant identity cards & hero backgrounds */
+.about-img-engineering {
+  object-position: 68% 30%;
+}
+@media (min-width: 640px) {
+  .about-img-engineering {
+    object-position: 66% 38%;
+  }
+}
+@media (min-width: 1024px) {
+  .about-img-engineering {
+    object-position: 64% 42%;
+  }
+}
+
+.about-img-founder {
+  object-position: 59% 26%;
+}
+@media (min-width: 640px) {
+  .about-img-founder {
+    object-position: 58% 32%;
+  }
+}
+@media (min-width: 1024px) {
+  .about-img-founder {
+    object-position: 57% 38%;
+  }
+}
+
+.about-img-designer {
+  object-position: 55% 28%;
+}
+@media (min-width: 640px) {
+  .about-img-designer {
+    object-position: 54% 34%;
+  }
+}
+@media (min-width: 1024px) {
+  .about-img-designer {
+    object-position: 53% 40%;
+  }
+}
+
+.about-img-photography {
+  object-position: 72% 30%;
+}
+@media (min-width: 640px) {
+  .about-img-photography {
+    object-position: 70% 36%;
+  }
+}
+@media (min-width: 1024px) {
+  .about-img-photography {
+    object-position: 68% 42%;
+  }
+}
+
 /* Experience — tall scroll-driven section */
 .experience-scroll-section {
   scroll-snap-align: start;
@@ -359,4 +428,5 @@ button, input, textarea, select { font: inherit; }
   width: 100%;
   position: relative;
 }
+
 

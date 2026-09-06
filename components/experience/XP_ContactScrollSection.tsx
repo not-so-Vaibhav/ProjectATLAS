@@ -1,8 +1,9 @@
 "use client";
 
 import { useRef, useState, useEffect } from "react";
-import { Github, Linkedin, Instagram, Mail, FileText, Send, ArrowRight, Gamepad2 } from "lucide-react";
+import { Github, Linkedin, Instagram, Mail, FileText, Send, ArrowRight, Gamepad2, Loader2, CheckCircle2, AlertCircle } from "lucide-react";
 import Link from "next/link";
+import Image from "next/image";
 import { gsap } from "gsap";
 import { useGSAP } from "@gsap/react";
 import { XP_GameModal } from "../game/XP_GameModal";
@@ -34,15 +35,40 @@ export function XP_ContactScrollSection({ scrollContainerRef: _ }: Props) {
 
   const [form, setForm] = useState({ name: "", email: "", message: "" });
   const [sent, setSent] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [errorMessage, setErrorMessage] = useState("");
   const [hovered, setHovered] = useState(false);
   const [isGameModalOpen, setIsGameModalOpen] = useState(false);
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!form.name || !form.email || !form.message) return;
-    setSent(true);
-    setForm({ name: "", email: "", message: "" });
-    setTimeout(() => setSent(false), 5000);
+    if (!form.name.trim() || !form.email.trim() || !form.message.trim()) return;
+
+    setIsSubmitting(true);
+    setErrorMessage("");
+
+    try {
+      const res = await fetch("/api/contact", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(form),
+      });
+
+      const data = await res.json();
+
+      if (!res.ok) {
+        throw new Error(data.error || "Failed to send message.");
+      }
+
+      setSent(true);
+      setForm({ name: "", email: "", message: "" });
+      setTimeout(() => setSent(false), 8000);
+    } catch (err: any) {
+      console.error("Submission error:", err);
+      setErrorMessage(err.message || "Something went wrong. You can also email me directly.");
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   /* ── Entrance animations ─────────────────────────────── */
@@ -287,17 +313,21 @@ export function XP_ContactScrollSection({ scrollContainerRef: _ }: Props) {
           >
             {/* ── MASCOT ──────────────────────────────────── */}
             <div className="mascot-container absolute pointer-events-none z-20">
-              <img
+              <Image
                 src="/contact-img/resting_cropped.png"
                 alt="Mascot resting"
-                className="absolute inset-0 w-full h-full object-contain object-bottom"
-                style={{ opacity: hovered ? 0 : 1, transition: "opacity 0.45s cubic-bezier(0.4,0,0.2,1)" }}
+                fill
+                sizes="(max-width: 768px) 140px, 180px"
+                className="object-contain object-bottom transition-opacity duration-500 ease-out"
+                style={{ opacity: hovered ? 0 : 1 }}
               />
-              <img
+              <Image
                 src="/contact-img/hey_cropped.png"
                 alt="Mascot waving"
-                className="absolute inset-0 w-full h-full object-contain object-bottom"
-                style={{ opacity: hovered ? 1 : 0, transition: "opacity 0.45s cubic-bezier(0.4,0,0.2,1)" }}
+                fill
+                sizes="(max-width: 768px) 140px, 180px"
+                className="object-contain object-bottom transition-opacity duration-500 ease-out"
+                style={{ opacity: hovered ? 1 : 0 }}
               />
             </div>
 
@@ -459,16 +489,45 @@ export function XP_ContactScrollSection({ scrollContainerRef: _ }: Props) {
                     {/* Submit */}
                     <button
                       type="submit"
-                      className="w-full inline-flex items-center justify-center gap-2 px-6 py-3.5 lg:py-4 rounded-xl text-xs lg:text-sm font-bold tracking-wide transition-all hover:brightness-110 active:scale-[0.98]"
+                      disabled={isSubmitting || sent}
+                      className="w-full inline-flex items-center justify-center gap-2 px-6 py-3.5 lg:py-4 rounded-xl text-xs lg:text-sm font-bold tracking-wide transition-all hover:brightness-110 active:scale-[0.98] disabled:opacity-70 disabled:cursor-not-allowed cursor-pointer"
                       style={{ background: "var(--color-gold)", color: "var(--color-bg)" }}
                     >
-                      <Send className="w-3.5 h-3.5" /> Send Message
+                      {isSubmitting ? (
+                        <>
+                          <Loader2 className="w-4 h-4 animate-spin" /> Sending Message...
+                        </>
+                      ) : sent ? (
+                        <>
+                          <CheckCircle2 className="w-4 h-4" /> Message Received!
+                        </>
+                      ) : (
+                        <>
+                          <Send className="w-3.5 h-3.5" /> Send Message
+                        </>
+                      )}
                     </button>
 
                     {sent && (
-                      <p className="text-[11px] text-green-400 font-semibold text-center animate-pulse mt-1">
-                        ✓ Message sent. I&apos;ll be in touch soon.
-                      </p>
+                      <div className="p-3 rounded-xl bg-emerald-500/10 border border-emerald-500/25 text-emerald-400 text-[11px] lg:text-xs text-center flex items-center justify-center gap-2 animate-fade-in-up">
+                        <CheckCircle2 className="w-4 h-4 shrink-0 text-emerald-400" />
+                        <span>Message sent successfully! I&apos;ll be in touch soon.</span>
+                      </div>
+                    )}
+
+                    {errorMessage && (
+                      <div className="p-3 rounded-xl bg-red-500/10 border border-red-500/25 text-red-400 text-[11px] lg:text-xs text-center space-y-1.5 animate-fade-in-up">
+                        <div className="flex items-center justify-center gap-1.5">
+                          <AlertCircle className="w-4 h-4 shrink-0" />
+                          <span>{errorMessage}</span>
+                        </div>
+                        <a
+                          href={`mailto:bariyarvaibhav@gmail.com?subject=Project%20Inquiry&body=${encodeURIComponent(form.message)}`}
+                          className="inline-block text-[11px] underline font-semibold text-[var(--color-gold)] hover:opacity-80"
+                        >
+                          Send directly via mail app →
+                        </a>
+                      </div>
                     )}
                   </form>
                 </div>

@@ -80,7 +80,7 @@ export default function JournalPage() {
   return (
     <XP_RoomPage chapter={chapter}>
       {/* ── Section 1: Study Ambient Header ────────────────────────────────────── */}
-      <section className="relative w-full py-12 px-4 sm:px-6 lg:px-10 border-b border-white/10 overflow-hidden bg-gradient-to-b from-[#101015] to-[var(--color-bg-card)]">
+      <section className="relative w-full py-12 px-4 sm:px-6 lg:px-10 border-b border-[var(--color-border)] overflow-hidden bg-gradient-to-b from-[#101015] to-[var(--color-bg-card)]">
         {/* Subtle ambient lighting bloom */}
         <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[600px] h-[300px] bg-gradient-to-b from-[rgb(var(--atlas-gold) / 0.12)] to-transparent blur-3xl pointer-events-none" />
 
@@ -91,27 +91,27 @@ export default function JournalPage() {
                 <Feather className="w-4 h-4" />
                 <span>06 / Builder&apos;s Journal</span>
               </div>
-              <h1 className="text-3xl sm:text-4xl md:text-5xl font-extrabold text-white tracking-tight">
+              <h1 className="text-3xl sm:text-4xl md:text-5xl font-extrabold text-[var(--color-text)] tracking-tight">
                 The Written History of Becoming
               </h1>
-              <p className="text-sm sm:text-base text-white/60 leading-relaxed font-light pt-1">
+              <p className="text-sm sm:text-base text-[var(--color-text-muted)] leading-relaxed font-light pt-1">
                 The Study: a quiet notebook of verified lessons, system architecture reflections, failures, product principles, and visual notes.
               </p>
             </div>
 
             {/* Stat Counters Widget */}
-            <div className="grid grid-cols-3 gap-3 p-3.5 rounded-2xl bg-[var(--color-bg-card)]/90 border border-white/10 backdrop-blur-md self-start md:self-end min-w-[280px]">
+            <div className="grid grid-cols-3 gap-3 p-3.5 rounded-2xl bg-[var(--color-bg-card)]/90 border border-[var(--color-border)] backdrop-blur-md self-start md:self-end min-w-[280px]">
               <div className="text-center space-y-0.5">
                 <p className="text-lg font-extrabold text-[var(--color-gold)]">{JOURNAL_ENTRIES.length}</p>
-                <p className="text-[10px] font-mono uppercase text-white/45">Entries</p>
+                <p className="text-[10px] font-mono uppercase text-[var(--color-text-muted)]">Entries</p>
               </div>
-              <div className="text-center space-y-0.5 border-x border-white/10">
-                <p className="text-lg font-extrabold text-white">45k+</p>
-                <p className="text-[10px] font-mono uppercase text-white/45">Words</p>
+              <div className="text-center space-y-0.5 border-x border-[var(--color-border)]">
+                <p className="text-lg font-extrabold text-[var(--color-text)]">45k+</p>
+                <p className="text-[10px] font-mono uppercase text-[var(--color-text-muted)]">Words</p>
               </div>
               <div className="text-center space-y-0.5">
                 <p className="text-lg font-extrabold text-[var(--color-gold)]">{CATEGORIES.length - 1}</p>
-                <p className="text-[10px] font-mono uppercase text-white/45">Topics</p>
+                <p className="text-[10px] font-mono uppercase text-[var(--color-text-muted)]">Topics</p>
               </div>
             </div>
           </div>
@@ -119,7 +119,7 @@ export default function JournalPage() {
       </section>
 
       {/* ── Section 2: Search & Filter Bar ──────────────────────────────────────── */}
-      <section className="py-8 bg-[var(--color-bg-card)]/95 sticky top-[calc(var(--topbar-height))] z-30 backdrop-blur-xl border-b border-white/10">
+      <section className="py-8 bg-[var(--color-bg-card)]/95 sticky top-[calc(var(--topbar-height))] z-30 backdrop-blur-xl border-b border-[var(--color-border)]">
         <XP_JournalFilterSearch
           searchQuery={searchQuery}
           onSearchChange={setSearchQuery}
@@ -148,11 +148,11 @@ export default function JournalPage() {
           </div>
         ) : (
           <div className="flex flex-col items-center justify-center py-20 text-center space-y-4 max-w-md mx-auto">
-            <div className="w-12 h-12 rounded-2xl bg-white/5 border border-white/10 flex items-center justify-center text-white/40">
+            <div className="w-12 h-12 rounded-2xl bg-[var(--color-bg-card)] border border-[var(--color-border)] flex items-center justify-center text-[var(--color-text-muted)]">
               <FileText className="w-6 h-6" />
             </div>
-            <h3 className="text-lg font-bold text-white">No journal entries found</h3>
-            <p className="text-xs text-white/50 leading-relaxed">
+            <h3 className="text-lg font-bold text-[var(--color-text)]">No journal entries found</h3>
+            <p className="text-xs text-[var(--color-text-muted)] leading-relaxed">
               No thoughts matched your query &ldquo;{searchQuery}&rdquo;. Try clearing your search query or switching categories.
             </p>
             <button

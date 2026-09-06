@@ -125,8 +125,8 @@ export default function PhotographyPage() {
         {/* Headline — two lines */}
         <div className="overflow-hidden mb-1" style={{ perspective: "600px" }}>
           <h1
-            className="pg-line1 font-black tracking-tight leading-[0.95] text-white"
-            style={{ fontSize: "clamp(3rem, 8vw, 6rem)" }}
+            className="pg-line1 font-black tracking-tight leading-[0.95]"
+            style={{ fontSize: "clamp(3rem, 8vw, 6rem)", color: "var(--color-text)" }}
           >
             Photography
           </h1>
@@ -155,7 +155,7 @@ export default function PhotographyPage() {
         {/* Subtitle */}
         <p
           className="pg-sub text-sm md:text-base leading-relaxed max-w-xs mb-10"
-          style={{ color: "rgb(var(--atlas-ink) / 0.52)" }}
+          style={{ color: "var(--color-text-muted)" }}
         >
           Every frame, story, and observation from the Builder&apos;s lens.
           Explore the full photography world at Not-So-Graphy.
@@ -225,8 +225,8 @@ export default function PhotographyPage() {
 
         {/* URL hint */}
         <p
-          className="pg-url mt-5 text-[10px] tracking-widest uppercase"
-          style={{ color: "rgb(var(--atlas-gold) / 0.28)" }}
+          className="pg-url mt-5 text-[10px] tracking-widest uppercase font-mono font-medium"
+          style={{ color: "var(--color-gold)" }}
         >
           not-so-graphy.onrender.com
         </p>

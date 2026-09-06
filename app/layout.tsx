@@ -3,6 +3,7 @@ import "@/styles/globals.css";
 import { ThemeProvider } from "@/components/providers/ThemeProvider";
 import { XP_TopNav } from "@/components/navigation/XP_TopNav";
 import { XP_AtlasAI } from "@/components/chat/XP_AtlasAI";
+import { XP_CustomCursor } from "@/components/cursor/XP_CustomCursor";
 
 export const metadata: Metadata = {
   title: {
@@ -12,6 +13,11 @@ export const metadata: Metadata = {
   description:
     "The digital headquarters of Vaibhav Bariyar — engineer, founder, designer, photographer and lifelong builder. Explore the journey, not just the résumé.",
   metadataBase: new URL("https://atlas.vaibhavbariyar.com"),
+  icons: {
+    icon: "/AtlasLogo.png",
+    shortcut: "/AtlasLogo.png",
+    apple: "/AtlasLogo.png",
+  },
   openGraph: {
     title: "Project Atlas — Digital Headquarters of Vaibhav Bariyar",
     description:
@@ -36,6 +42,7 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
     <html lang="en" data-theme="dark" data-scroll-behavior="smooth" suppressHydrationWarning>
       <body suppressHydrationWarning>
         <ThemeProvider>
+          <XP_CustomCursor />
           <XP_TopNav />
           <main id="main-content">
             {children}

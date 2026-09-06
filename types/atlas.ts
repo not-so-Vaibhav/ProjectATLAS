@@ -2,16 +2,17 @@ import type { LucideIcon } from "lucide-react";
 
 export type BuilderIdentity =
   | "arrival"
-  | "engineering"
   | "founder"
+  | "engineering"
+  | "my-work"
+  | "skills"
   | "designer"
   | "ai"
   | "photography"
   | "journal"
   | "lab"
   | "future"
-  | "contact"
-  | "my-work";
+  | "contact";
 
 export type IdentityChapter = {
   id: BuilderIdentity;

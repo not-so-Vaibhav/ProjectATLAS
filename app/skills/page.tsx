@@ -1,10 +1,11 @@
 "use client";
 
-import { useRef, useEffect, RefObject } from "react";
+import { useRef, useEffect } from "react";
 import { gsap } from "gsap";
 import { useGSAP } from "@gsap/react";
+import Link from "next/link";
+import { ArrowLeft } from "lucide-react";
 
-/* ─── Flat skills list with official devicons logos ───────────────────── */
 const SKILLS = [
   { name: "Python",       src: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/python/python-original.svg" },
   { name: "JavaScript",   src: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/javascript/javascript-original.svg" },
@@ -40,57 +41,26 @@ const SKILLS = [
   { name: "REST APIs",    src: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/postman/postman-original.svg" },
 ];
 
-/* Diamond shape: rows with decreasing count (wide top → narrow bottom toward the hole) */
-const ROWS_DESKTOP = [8, 7, 7, 6, 4]; // total = 32
-const ROWS_MOBILE  = [6, 6, 6, 5, 5, 4]; // total = 32
-
+const ROWS_DESKTOP = [8, 7, 7, 6, 4];
+const ROWS_MOBILE  = [6, 6, 6, 5, 5, 4];
 const LETTERS = "TECH STACK".split("");
 
-interface Props {
-  scrollContainerRef: RefObject<HTMLDivElement | null>;
-}
+export default function SkillsPage() {
+  const pageRef   = useRef<HTMLDivElement>(null);
+  const charRefs  = useRef<(HTMLSpanElement | null)[]>([]);
+  const canvasRef = useRef<HTMLCanvasElement>(null);
 
-export function XP_SkillsScrollSection({ scrollContainerRef }: Props) {
-  const sectionRef = useRef<HTMLDivElement>(null);
-  const charRefs   = useRef<(HTMLSpanElement | null)[]>([]);
-  const tlRef      = useRef<gsap.core.Timeline | null>(null);
-  const canvasRef  = useRef<HTMLCanvasElement>(null);
-
-  /* ── Black-hole vortex canvas animation ─────────────────────── */
+  /* ── Black-hole vortex canvas ──────────────────────────────── */
   useEffect(() => {
     const canvas = canvasRef.current;
     if (!canvas) return;
     const ctx = canvas.getContext("2d");
     if (!ctx) return;
 
-    // Helper: read CSS variable background color for the hole
-    const getBgColor = () => {
-      const style = getComputedStyle(document.documentElement);
-      const raw = style.getPropertyValue("--atlas-black").trim();
-      if (!raw) return "8, 8, 8";
-      // tokens.css format: "R G B" (space-separated)
-      return raw.split(" ").filter(Boolean).join(", ");
-    };
-
     let animId: number;
     let frame = 0;
 
-    // Accretion-disk particles spiraling into the hole
-    const NUM_PARTICLES = 120;
-    type Particle = { angle: number; radius: number; speed: number; decay: number; size: number; alpha: number };
-    const particles: Particle[] = Array.from({ length: NUM_PARTICLES }, () => ({
-      angle:  Math.random() * Math.PI * 2,
-      radius: Math.random() * 0.45 + 0.05,   // fraction of canvas half-width
-      speed:  (Math.random() * 0.008 + 0.003) * (Math.random() > 0.5 ? 1 : -1),
-      decay:  Math.random() * 0.0012 + 0.0006,
-      size:   Math.random() * 1.5 + 0.4,
-      alpha:  Math.random() * 0.5 + 0.1,
-    }));
-
-    const resize = () => {
-      canvas.width  = canvas.offsetWidth;
-      canvas.height = canvas.offsetHeight;
-    };
+    const resize = () => { canvas.width = canvas.offsetWidth; canvas.height = canvas.offsetHeight; };
     resize();
     window.addEventListener("resize", resize);
 
@@ -98,12 +68,12 @@ export function XP_SkillsScrollSection({ scrollContainerRef }: Props) {
       frame++;
       const W = canvas.width, H = canvas.height;
       const isMobile = W < 768;
-      const cx = W / 2, cy = isMobile ? H * 0.58 : H * 0.65; // Hole center slightly higher on mobile
+      const cx = W / 2, cy = isMobile ? H * 0.58 : H * 0.65;
       const holeDepth = isMobile ? H * 0.38 : H * 0.5;
 
       ctx.clearRect(0, 0, W, H);
 
-      // 1. Deep space gold/amber glow
+      // 1. Deep space gold glow
       const bg = ctx.createRadialGradient(cx, cy, 0, cx, cy, Math.max(W, H) * (isMobile ? 0.9 : 0.8));
       bg.addColorStop(0,    "rgba(199, 169, 102, 0.12)");
       bg.addColorStop(0.3,  "rgba(170, 135, 70, 0.05)");
@@ -113,7 +83,6 @@ export function XP_SkillsScrollSection({ scrollContainerRef }: Props) {
       ctx.fillRect(0, 0, W, H);
 
       // 2. ── Large textured orb (Gold planet) ──
-      // Drawn BEFORE the funnel so the grid overlays it, placing it "inside"
       const PERIOD    = 450;
       const phase     = (frame % PERIOD) / PERIOD;
       const eased     = Math.pow(phase, 2.2); 
@@ -168,40 +137,31 @@ export function XP_SkillsScrollSection({ scrollContainerRef }: Props) {
         ctx.restore();
       }
 
-      // 3. ── Funnel Grid (The animating hole) ──
-      // Drawn AFTER the orb to trap it inside the funnel
+      // 3. ── Funnel Grid ──
       ctx.save();
       ctx.translate(cx, cy);
-      
-      const isLight = document.documentElement.getAttribute("data-theme") === "light";
-      
-      // Dynamic grid color and contrast per theme
-      const gridColor     = isLight ? "150, 115, 45" : "199, 169, 102";
-      const ringAlphaMult = isLight ? 0.65 : 0.40;
-      const spokeAlpha    = isLight ? 0.38 : 0.22;
-      const gridLineWidth = isLight ? 1.3 : 1.15;
       
       const numRings = isMobile ? 24 : 32;
       const maxRadius = isMobile ? W * 1.8 : W * 1.5;
       const tilt = 0.35;
       const flowPhase = (frame * 0.002) % 1;
       
-      ctx.lineWidth = gridLineWidth;
+      ctx.lineWidth = 1.15;
       for(let i=0; i<numRings; i++) {
          const p = (i + flowPhase) / numRings; 
          const r = maxRadius * Math.pow(p, 2.2);
          const dip = holeDepth * Math.pow(1 - p, 3);
          
          ctx.beginPath();
-         const alpha = Math.min(1, p * 4) * Math.max(0, 1 - p*0.2) * ringAlphaMult;
-         ctx.strokeStyle = `rgba(${gridColor}, ${alpha})`;
+         const alpha = Math.min(1, p * 4) * Math.max(0, 1 - p*0.2) * 0.40;
+         ctx.strokeStyle = `rgba(199, 169, 102, ${alpha})`;
          ctx.ellipse(0, dip, Math.max(0.1, r), Math.max(0.1, r * tilt), 0, 0, Math.PI * 2);
          ctx.stroke();
       }
 
       const numSpokes = isMobile ? 28 : 36;
       ctx.beginPath();
-      ctx.strokeStyle = `rgba(${gridColor}, ${spokeAlpha})`;
+      ctx.strokeStyle = "rgba(199, 169, 102, 0.22)";
       for(let i=0; i<numSpokes; i++) {
          const angle = (i / numSpokes) * Math.PI * 2 + (frame * 0.0008);
          for(let step=0; step<=25; step++) {
@@ -220,16 +180,14 @@ export function XP_SkillsScrollSection({ scrollContainerRef }: Props) {
       ctx.stroke();
       ctx.restore();
 
-      // 4. ── Event Horizon (Dark Hole) ──
-      // Uses the actual page background color so it blends seamlessly in both themes
-      const bgColor = getBgColor();
+      // 4. ── Black Hole ──
       const holeR = Math.max(25, W * (isMobile ? 0.08 : 0.05));
       const holeDip = cy + holeDepth;
       const hGrad = ctx.createRadialGradient(cx, holeDip, 0, cx, holeDip, holeR * 3);
-      hGrad.addColorStop(0,    `rgba(${bgColor}, 1)`);
-      hGrad.addColorStop(0.3,  `rgba(${bgColor}, 0.95)`);
-      hGrad.addColorStop(0.7,  `rgba(${bgColor}, 0.4)`);
-      hGrad.addColorStop(1,    `rgba(${bgColor}, 0)`);
+      hGrad.addColorStop(0,    "rgba(8,8,8,1)");
+      hGrad.addColorStop(0.3,  "rgba(8,8,8,0.95)");
+      hGrad.addColorStop(0.7,  "rgba(8,8,8,0.4)");
+      hGrad.addColorStop(1,    "rgba(8,8,8,0)");
       ctx.fillStyle = hGrad;
       ctx.beginPath();
       ctx.arc(cx, holeDip, holeR * 3, 0, Math.PI * 2);
@@ -245,45 +203,28 @@ export function XP_SkillsScrollSection({ scrollContainerRef }: Props) {
     };
   }, []);
 
-  /* ── GSAP entrance animations ────────────────────────────────── */
+  /* ── GSAP entrance ─────────────────────────────────────────── */
   useGSAP(() => {
-    const section = sectionRef.current;
-    if (!section) return;
+    gsap.set(charRefs.current.filter(Boolean), { opacity: 0, y: 60, rotateX: -55, filter: "blur(8px)" });
+    gsap.set(".sk-kicker, .sk-divider, .sk-sub", { opacity: 0, y: 20 });
+    gsap.set(".sk-card", { opacity: 0, scale: 0.8, y: 24 });
 
-    const ctx = gsap.context(() => {
-      gsap.set(charRefs.current.filter(Boolean), { opacity: 0, y: 60, rotateX: -55, filter: "blur(8px)" });
-      gsap.set(".sk-kicker, .sk-divider, .sk-sub", { opacity: 0, y: 20 });
-      gsap.set(".sk-card", { opacity: 0, scale: 0.8, y: 24 });
+    const tl = gsap.timeline({ delay: 0.2 });
 
-      const tl = gsap.timeline({ paused: true });
+    tl.to(".sk-kicker", { opacity: 1, y: 0, duration: 0.5, ease: "power3.out" }, 0);
+    tl.to(charRefs.current.filter(Boolean), {
+      opacity: 1, y: 0, rotateX: 0, filter: "blur(0px)",
+      duration: 0.9, ease: "power4.out", stagger: 0.06,
+    }, 0.1);
+    tl.to(".sk-divider", { opacity: 1, y: 0, duration: 0.45, ease: "power3.out" }, 0.4);
+    tl.to(".sk-sub",     { opacity: 1, y: 0, duration: 0.5,  ease: "power3.out" }, 0.5);
+    tl.to(".sk-card", {
+      opacity: 1, scale: 1, y: 0,
+      duration: 0.5, ease: "back.out(1.4)", stagger: 0.022,
+    }, 0.6);
+  }, { scope: pageRef });
 
-      tl.to(".sk-kicker", { opacity: 1, y: 0, duration: 0.5, ease: "power3.out" }, 0);
-      tl.to(charRefs.current.filter(Boolean), {
-        opacity: 1, y: 0, rotateX: 0, filter: "blur(0px)",
-        duration: 0.9, ease: "power4.out", stagger: 0.06,
-      }, 0.1);
-      tl.to(".sk-divider", { opacity: 1, y: 0, duration: 0.45, ease: "power3.out" }, 0.38);
-      tl.to(".sk-sub",     { opacity: 1, y: 0, duration: 0.5,  ease: "power3.out" }, 0.48);
-      tl.to(".sk-card", {
-        opacity: 1, scale: 1, y: 0,
-        duration: 0.5, ease: "back.out(1.4)", stagger: 0.022,
-      }, 0.55);
-
-      tlRef.current = tl;
-    }, sectionRef);
-
-    const observer = new IntersectionObserver((entries) => {
-      entries.forEach((entry) => {
-        if (entry.isIntersecting) tlRef.current?.restart();
-        else                      tlRef.current?.pause(0);
-      });
-    }, { threshold: 0.12 });
-
-    if (section) observer.observe(section);
-    return () => { observer.disconnect(); ctx.revert(); };
-  }, { scope: sectionRef });
-
-  /* ── Build diamond rows for desktop & mobile ─────────────────── */
+  /* ── Build diamond rows for desktop & mobile ───────────────── */
   const desktopRows: (typeof SKILLS)[] = [];
   let dOffset = 0;
   for (const count of ROWS_DESKTOP) {
@@ -299,47 +240,38 @@ export function XP_SkillsScrollSection({ scrollContainerRef }: Props) {
   }
 
   return (
-    <section
-      id="skills"
-      data-section
-      ref={sectionRef}
-      className="snap-slide relative w-full overflow-hidden flex flex-col items-center justify-start sm:justify-center"
-      aria-label="Skills Room"
-      style={{ background: "var(--color-bg)" }}
+    <div
+      ref={pageRef}
+      className="relative min-h-screen w-full overflow-x-hidden bg-[rgb(8,8,8)] text-[rgb(247,247,244)] flex flex-col items-center"
     >
-      {/* Canvas — black hole vortex */}
-      <canvas
-        ref={canvasRef}
-        className="absolute inset-0 w-full h-full pointer-events-none"
-      />
+      {/* Canvas */}
+      <canvas ref={canvasRef} className="absolute inset-0 w-full h-full pointer-events-none" />
 
-      <div className="absolute inset-0 pointer-events-none" style={{
-        background: "radial-gradient(ellipse 60% 50% at 50% 10%, rgba(199,169,102,0.07) 0%, transparent 65%)"
-      }} />
-      <div className="absolute inset-0 pointer-events-none" style={{
-        background: "radial-gradient(ellipse 55% 45% at 15% 60%, rgba(126,148,125,0.06) 0%, transparent 60%)"
-      }} />
-      <div className="absolute inset-0 pointer-events-none" style={{
-        background: "radial-gradient(ellipse 55% 45% at 85% 60%, rgba(199,169,102,0.05) 0%, transparent 60%)"
-      }} />
+      {/* Top gradient */}
+      <div className="absolute top-0 left-0 right-0 h-28 pointer-events-none z-10"
+        style={{ background: "linear-gradient(to bottom, rgba(8,8,8,0.95), transparent)" }} />
 
-      {/* ── Content ────────────────────────────────────────────── */}
-      <div
-        className="relative z-20 flex flex-col items-center w-full max-w-6xl mx-auto"
-        style={{
-          paddingTop: "calc(var(--topbar-height) + 0.4rem)",
-          paddingBottom: "1.5rem",
-        }}
-      >
+      {/* Content */}
+      <div className="relative z-20 flex flex-col items-center w-full max-w-6xl mx-auto px-4"
+        style={{ paddingTop: "calc(var(--topbar-height) + 1rem)", paddingBottom: "3rem" }}>
+
+        {/* Breadcrumb */}
+        <div className="flex items-center gap-2 mb-4 sm:mb-6 text-[10px] font-mono tracking-widest"
+          style={{ color: "rgba(255,255,255,0.22)" }}>
+          <Link href="/" className="hover:text-[rgb(199,169,102)] transition-colors">Atlas</Link>
+          <span>/</span>
+          <span style={{ color: "rgba(255,255,255,0.45)" }}>Skills</span>
+        </div>
+
         {/* Kicker */}
-        <p className="sk-kicker text-[9px] sm:text-[10px] font-bold tracking-[0.28em] uppercase mb-1 sm:mb-2"
+        <p className="sk-kicker text-[9px] sm:text-[10px] font-bold tracking-[0.28em] uppercase mb-2 sm:mb-3"
           style={{ color: "var(--color-gold)", opacity: 0 }}>
           SKILLS
         </p>
 
-        {/* Big heading */}
-        <div className="mb-1 sm:mb-2 overflow-hidden leading-none" style={{ perspective: "700px" }}>
-          <div className="flex flex-wrap justify-center gap-x-1.5 sm:gap-x-2 md:gap-x-4">
+        {/* Heading */}
+        <div className="mb-2 sm:mb-3 overflow-hidden leading-none" style={{ perspective: "800px" }}>
+          <div className="flex flex-wrap justify-center gap-x-2 sm:gap-x-3 md:gap-x-5">
             {LETTERS.map((char, i) => (
               <span
                 key={i}
@@ -347,9 +279,9 @@ export function XP_SkillsScrollSection({ scrollContainerRef }: Props) {
                 className="inline-block font-black tracking-tighter"
                 style={{
                   opacity: 0,
-                  fontSize: "clamp(1.85rem, 6.5vw, 5.2rem)",
-                  lineHeight: 0.9,
-                  color: "var(--color-text)",
+                  fontSize: "clamp(2.5rem, 9vw, 6.5rem)",
+                  lineHeight: 0.88,
+                  color: "rgb(247,247,244)",
                   willChange: "transform,opacity,filter",
                 }}
               >{char === " " ? "\u00A0" : char}</span>
@@ -357,20 +289,20 @@ export function XP_SkillsScrollSection({ scrollContainerRef }: Props) {
           </div>
         </div>
 
-        {/* Gold divider */}
-        <div className="sk-divider mx-auto mb-1.5 sm:mb-2.5 h-[2px] w-8 sm:w-10 rounded-full"
+        {/* Divider */}
+        <div className="sk-divider mx-auto mb-2 sm:mb-3.5 h-[2px] w-10 sm:w-12 rounded-full"
           style={{ background: "var(--color-gold)", opacity: 0 }} />
 
         {/* Subtitle */}
-        <p className="sk-sub text-[10px] sm:text-[11px] md:text-xs text-center max-w-xs mx-auto leading-relaxed mb-2.5 sm:mb-4 md:mb-5 px-4"
-          style={{ color: "var(--color-text-muted)", opacity: 0 }}>
-          The full stack powering every product I build.
+        <p className="sk-sub text-[11px] sm:text-xs md:text-sm leading-relaxed max-w-xs mx-auto text-center mb-5 sm:mb-7 px-4"
+          style={{ color: "rgba(224,224,218,0.42)", opacity: 0 }}>
+          The full stack of technologies powering every product I build.
         </p>
 
-        {/* ── Desktop Diamond Grid (>= md) ──────────────────── */}
-        <div className="hidden md:flex flex-col items-center gap-2 md:gap-2.5 px-4">
+        {/* Desktop Diamond grid (>= md) */}
+        <div className="hidden md:flex flex-col items-center gap-2.5 md:gap-3 px-4">
           {desktopRows.map((row, ri) => (
-            <div key={ri} className="flex gap-2 md:gap-2.5 justify-center">
+            <div key={ri} className="flex gap-2.5 md:gap-3 justify-center">
               {row.map((skill) => (
                 <SkillCard key={skill.name} skill={skill} />
               ))}
@@ -378,7 +310,7 @@ export function XP_SkillsScrollSection({ scrollContainerRef }: Props) {
           ))}
         </div>
 
-        {/* ── Mobile Diamond Grid (< md) ────────────────────── */}
+        {/* Mobile Diamond grid (< md) */}
         <div className="flex md:hidden flex-col items-center gap-1.5 sm:gap-2 px-2 sm:px-4 w-full">
           {mobileRows.map((row, ri) => (
             <div key={ri} className="flex gap-1.5 sm:gap-2 justify-center w-full">
@@ -388,28 +320,36 @@ export function XP_SkillsScrollSection({ scrollContainerRef }: Props) {
             </div>
           ))}
         </div>
+
+        {/* Back nav */}
+        <div className="mt-8 sm:mt-12">
+          <Link href="/"
+            className="sk-kicker inline-flex items-center gap-2 px-5 py-2.5 rounded-xl text-xs font-medium border transition-all hover:border-white/20 hover:text-white"
+            style={{ borderColor: "rgba(255,255,255,0.1)", color: "rgba(224,224,218,0.4)" }}>
+            <ArrowLeft className="w-3 h-3" /> Back to Atlas
+          </Link>
+        </div>
       </div>
-    </section>
+
+      {/* Bottom vignette */}
+      <div className="absolute bottom-0 left-0 right-0 h-32 pointer-events-none z-10"
+        style={{ background: "linear-gradient(to top, rgba(8,8,8,1), transparent)" }} />
+    </div>
   );
 }
 
-/* ── Individual skill card with premium hover ──────────────────── */
+/* ── Skill card ──────────────────────────────────────────────── */
 function SkillCard({ skill }: { skill: (typeof SKILLS)[0] }) {
   const cardRef = useRef<HTMLDivElement>(null);
   const glowRef = useRef<HTMLDivElement>(null);
+  const imgRef  = useRef<HTMLImageElement>(null);
 
   const handleEnter = () => {
     const el = cardRef.current;
     if (!el) return;
-    gsap.to(el, {
-      scale: 1.18,
-      y: -6,
-      duration: 0.32,
-      ease: "power2.out",
-    });
-    if (glowRef.current) {
-      gsap.to(glowRef.current, { opacity: 1, scale: 1.3, duration: 0.35, ease: "power2.out" });
-    }
+    gsap.to(el, { scale: 1.15, y: -4, duration: 0.28, ease: "power2.out" });
+    if (glowRef.current) gsap.to(glowRef.current, { opacity: 1, scale: 1.3, duration: 0.35, ease: "power2.out" });
+    if (imgRef.current) imgRef.current.style.filter = "brightness(1.1) saturate(1.3)";
     el.style.borderColor = "rgba(199,169,102,0.55)";
     el.style.boxShadow   = "0 0 22px 6px rgba(199,169,102,0.28), 0 0 55px 15px rgba(199,169,102,0.1)";
     el.style.background  = "rgba(199,169,102,0.1)";
@@ -418,77 +358,68 @@ function SkillCard({ skill }: { skill: (typeof SKILLS)[0] }) {
   const handleLeave = () => {
     const el = cardRef.current;
     if (!el) return;
-    gsap.to(el, { scale: 1, y: 0, duration: 0.38, ease: "power2.out" });
-    if (glowRef.current) {
-      gsap.to(glowRef.current, { opacity: 0, scale: 1, duration: 0.3, ease: "power2.out" });
-    }
-    el.style.borderColor = "rgb(var(--atlas-glass) / 0.1)";
+    gsap.to(el, { scale: 1, y: 0, duration: 0.35, ease: "power2.out" });
+    if (glowRef.current) gsap.to(glowRef.current, { opacity: 0, scale: 1, duration: 0.3 });
+    if (imgRef.current) imgRef.current.style.filter = "brightness(0.75) saturate(0.6)";
+    el.style.borderColor = "rgba(255,255,255,0.08)";
     el.style.boxShadow   = "none";
-    el.style.background  = "rgb(var(--atlas-glass) / 0.05)";
+    el.style.background  = "rgba(255,255,255,0.03)";
   };
 
   return (
     <div
       ref={cardRef}
-      className="sk-card relative flex flex-col items-center justify-center gap-0.5 sm:gap-1 rounded-xl cursor-default transition-colors duration-200"
+      className="sk-card relative flex flex-col items-center justify-center gap-0.5 sm:gap-1.5 rounded-xl sm:rounded-2xl cursor-default transition-colors duration-200"
       style={{
         opacity: 0,
-        width: "clamp(46px, 13vw, 76px)",
-        height: "clamp(52px, 14.5vw, 86px)",
-        maxWidth: "76px",
-        maxHeight: "86px",
-        background: "rgb(var(--atlas-glass) / 0.05)",
-        border: "1px solid rgb(var(--atlas-glass) / 0.1)",
-        backdropFilter: "blur(6px)",
-        WebkitBackdropFilter: "blur(6px)",
+        width: "clamp(46px, 13vw, 78px)",
+        height: "clamp(52px, 14.5vw, 88px)",
+        maxWidth: "78px",
+        maxHeight: "88px",
+        background: "rgba(255,255,255,0.03)",
+        border: "1px solid rgba(255,255,255,0.08)",
+        backdropFilter: "blur(8px)",
+        WebkitBackdropFilter: "blur(8px)",
         willChange: "transform",
       }}
       onMouseEnter={handleEnter}
       onMouseLeave={handleLeave}
     >
-      {/* Glow bloom */}
+      {/* Bloom glow */}
       <div
         ref={glowRef}
-        className="absolute inset-[-6px] rounded-2xl pointer-events-none"
+        className="absolute inset-[-6px] sm:inset-[-10px] rounded-2xl sm:rounded-3xl pointer-events-none"
         style={{
           opacity: 0,
-          background: "radial-gradient(circle at 50% 50%, rgba(199,169,102,0.3) 0%, transparent 70%)",
-          filter: "blur(8px)",
+          background: "radial-gradient(circle, rgba(199,169,102,0.35) 0%, transparent 70%)",
+          filter: "blur(10px)",
         }}
       />
 
       {/* Logo */}
       {/* eslint-disable-next-line @next/next/no-img-element */}
       <img
+        ref={imgRef}
         src={skill.src}
         alt={skill.name}
         width={26}
         height={26}
-        className="object-contain"
         style={{
-          width: "clamp(18px, 4.8vw, 28px)",
-          height: "clamp(18px, 4.8vw, 28px)",
-          filter: "var(--sk-icon-filter, brightness(0.78) saturate(0.65))",
+          width: "clamp(18px, 4.8vw, 30px)",
+          height: "clamp(18px, 4.8vw, 30px)",
+          objectFit: "contain",
+          filter: "brightness(0.75) saturate(0.6)",
           transition: "filter 0.25s ease",
         }}
-        onError={(e) => {
-          // Fallback: hide broken img gracefully
-          (e.target as HTMLImageElement).style.display = "none";
-        }}
-        onMouseEnter={(e) => {
-          (e.target as HTMLImageElement).style.filter = "brightness(1) saturate(1.2)";
-        }}
-        onMouseLeave={(e) => {
-          (e.target as HTMLImageElement).style.filter = "var(--sk-icon-filter, brightness(0.78) saturate(0.65))";
-        }}
+        onError={(e) => { (e.target as HTMLImageElement).style.display = "none"; }}
       />
 
-      {/* Label */}
+      {/* Name */}
       <span
         className="font-semibold text-center leading-tight px-0.5 tracking-tight"
         style={{
           fontSize: "clamp(7px, 1.9vw, 9.5px)",
-          color: "var(--color-text-muted)",
+          color: "rgba(224,224,218,0.5)",
           maxWidth: "100%",
           overflow: "hidden",
           textOverflow: "ellipsis",

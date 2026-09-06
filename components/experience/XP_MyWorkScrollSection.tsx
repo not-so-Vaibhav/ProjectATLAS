@@ -1,9 +1,10 @@
 "use client";
 
-import { useRef, useEffect, RefObject } from "react";
-import { BrainCircuit, LineChart, Activity, ShieldAlert, Camera, Github, ExternalLink } from "lucide-react";
+import { useRef, useEffect, useState, RefObject } from "react";
+import { BrainCircuit, Activity, HeartHandshake, Bot, Camera, Github, ExternalLink, Maximize2 } from "lucide-react";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { XP_VideoPreviewModal, VideoProjectData } from "./XP_VideoPreviewModal";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -23,6 +24,7 @@ const projectsData = [
     status: "active",
     githubUrl: "https://github.com/asg492607/Folio-AI-Powered-recruitment",
     liveUrl: "https://folio-aipoweredrecruitment.onrender.com/",
+    videoSrc: "/videos/folio-space.mp4",
   },
   {
     id: "stress2health",
@@ -39,10 +41,45 @@ const projectsData = [
     status: "completed",
     githubUrl: "https://github.com/not-so-Vaibhav/Stress2Health",
     liveUrl: "https://stress2health.onrender.com/",
+    videoSrc: "/videos/stress2health.mp4",
+  },
+  {
+    id: "solace",
+    number: "03",
+    role: "Solace",
+    company: "Peer Support Platform",
+    period: "2025 — Present",
+    description:
+      "Built an emotionally safe peer-support web platform connecting students with trained listeners for non-judgmental wellness conversations. Architected confidential chat schemas, session scheduling, and secure user reflection workflows.",
+    stack: ["JavaScript", "HTML", "CSS", "PostgreSQL", "Supabase"],
+    Icon: HeartHandshake,
+    accentRgb: "214,142,105",
+    dotColor: "#D68E69",
+    status: "active",
+    githubUrl: "https://github.com/not-so-Vaibhav/Solace",
+    liveUrl: "https://solace-eta-six.vercel.app/",
+    videoSrc: "/videos/solace.mp4",
+  },
+  {
+    id: "jarvis-ai",
+    number: "04",
+    role: "Jarvis AI",
+    company: "AI Voice & Task Assistant",
+    period: "2025",
+    description:
+      "Developed an intelligent voice-activated AI assistant capable of speech recognition, automated system tasks, and contextual conversational responses. Powered by OpenAI APIs and a Python backend with an interactive web interface.",
+    stack: ["Python", "JavaScript", "OpenAI API", "HTML", "CSS"],
+    Icon: Bot,
+    accentRgb: "102,199,180",
+    dotColor: "#66C7B4",
+    status: "completed",
+    githubUrl: "https://github.com/not-so-Vaibhav/jarvis-ai",
+    liveUrl: "https://jarvis-my-ai.netlify.app/",
+    videoSrc: "/videos/jarvis-ai.mp4",
   },
   {
     id: "notsography",
-    number: "03",
+    number: "05",
     role: "NotSoGraphy",
     company: "Photography Portfolio",
     period: "2024",
@@ -55,38 +92,7 @@ const projectsData = [
     status: "completed",
     githubUrl: "https://github.com/not-so-Vaibhav/photographer-portfolio",
     liveUrl: "https://not-so-graphy.onrender.com/",
-  },
-  {
-    id: "fintech-edu",
-    number: "04",
-    role: "Personal Finance Simulation",
-    company: "Fintech Education Platform",
-    period: "2025 — Present",
-    description:
-      "Built a student-focused fintech education platform featuring budgeting, SIP, credit, and emergency financial simulations. Integrated Firebase authentication with protected routes and designed modular user flows to simplify complex financial concepts.",
-    stack: ["Next.js", "Firebase", "Tailwind CSS"],
-    Icon: LineChart,
-    accentRgb: "126,148,125",
-    dotColor: "#7E947D",
-    status: "active",
-    githubUrl: "https://github.com/not-so-Vaibhav/indian-finance-game",
-    liveUrl: "https://finance-for-everyone.netlify.app/",
-  },
-  {
-    id: "emergency-response",
-    number: "05",
-    role: "Emergency Response System",
-    company: "Incident Management",
-    period: "2024",
-    description:
-      "Built a web-based platform to coordinate emergency response operations and centralize incident information management. Designed a structured data architecture supporting emergency workflows, reporting, and real-time status updates.",
-    stack: ["HTML", "CSS", "JavaScript"],
-    Icon: ShieldAlert,
-    accentRgb: "199,102,102",
-    dotColor: "#C76666",
-    status: "completed",
-    githubUrl: "https://github.com/not-so-Vaibhav/Emergency-Response-Management-System",
-    liveUrl: "https://not-so-vaibhav.github.io/DSA-Project/",
+    videoSrc: "/videos/notsography.mp4",
   },
 ];
 
@@ -102,6 +108,9 @@ export function XP_MyWorkScrollSection({ scrollContainerRef }: Props) {
   // Mobile track (< lg)
   const mobileTrackRef = useRef<HTMLDivElement>(null);
   const mobileDotRef = useRef<HTMLDivElement>(null);
+
+  // Video preview modal state
+  const [activeVideoProject, setActiveVideoProject] = useState<VideoProjectData | null>(null);
 
   useEffect(() => {
     const section = sectionRef.current;
@@ -401,15 +410,61 @@ export function XP_MyWorkScrollSection({ scrollContainerRef }: Props) {
                           boxShadow: `inset 0 0 30px rgba(${project.accentRgb}, 0.06)`,
                         }}
                       >
-                        <div className="absolute inset-0 pointer-events-none" style={{ background: `radial-gradient(circle at 50% 50%, rgba(${project.accentRgb}, 0.2) 0%, transparent 70%)`, filter: "blur(14px)" }} />
-                        <div className="w-11 h-11 rounded-xl flex items-center justify-center relative z-10" style={{ background: `rgba(${project.accentRgb}, 0.12)`, border: `1px solid rgba(${project.accentRgb}, 0.3)`, boxShadow: `0 0 25px rgba(${project.accentRgb}, 0.25)` }}>
-                          <project.Icon style={{ width: 22, height: 22, color: project.dotColor }} />
-                        </div>
-                        {project.status === "active" && (
-                          <div className="absolute bottom-2 right-2.5 flex items-center gap-1 px-1.5 py-0.5 rounded-md" style={{ background: "rgba(0,0,0,0.6)", border: `0.5px solid rgba(${project.accentRgb}, 0.3)` }}>
-                            <span className="w-1.5 h-1.5 rounded-full" style={{ background: project.dotColor, boxShadow: `0 0 6px ${project.dotColor}` }} />
-                            <span className="text-[8px] font-bold tracking-wider uppercase" style={{ color: project.dotColor }}>Active</span>
+                        {"videoSrc" in project && project.videoSrc ? (
+                          <div
+                            onClick={() => setActiveVideoProject(project as any)}
+                            className="w-full h-full relative aspect-video overflow-hidden rounded-xl bg-black cursor-pointer group/preview"
+                            title="Click to open full video preview"
+                          >
+                            <video
+                              autoPlay
+                              loop
+                              muted
+                              playsInline
+                              preload="auto"
+                              className="w-full h-full object-cover select-none pointer-events-none transition-transform duration-500 group-hover/preview:scale-105"
+                            >
+                              <source src={project.videoSrc} type="video/mp4" />
+                              <source src={project.videoSrc.replace(".mp4", ".webm")} type="video/webm" />
+                            </video>
+                            {/* Ambient overlay & active badge */}
+                            <div
+                              className="absolute inset-0 pointer-events-none"
+                              style={{
+                                boxShadow: `inset 0 0 20px rgba(${project.accentRgb}, 0.25)`,
+                                background: `linear-gradient(180deg, transparent 60%, rgba(0,0,0,0.6) 100%)`,
+                              }}
+                            />
+                            {/* Hover overlay with expand badge */}
+                            <div className="absolute inset-0 bg-black/40 opacity-0 group-hover/preview:opacity-100 transition-opacity duration-200 flex items-center justify-center pointer-events-none z-10">
+                              <div
+                                className="flex items-center gap-1.5 px-3 py-1 rounded-full backdrop-blur-md shadow-lg scale-90 group-hover/preview:scale-100 transition-transform duration-200"
+                                style={{ background: "rgba(0,0,0,0.75)", border: `1px solid rgba(${project.accentRgb}, 0.5)` }}
+                              >
+                                <Maximize2 className="w-3 h-3" style={{ color: project.dotColor }} />
+                                <span className="text-[9px] font-bold tracking-wider uppercase text-white">Full Preview</span>
+                              </div>
+                            </div>
+                            {project.status === "active" && (
+                              <div className="absolute bottom-2 right-2 flex items-center gap-1 px-1.5 py-0.5 rounded-md backdrop-blur-md z-10" style={{ background: "rgba(0,0,0,0.75)", border: `0.5px solid rgba(${project.accentRgb}, 0.35)` }}>
+                                <span className="w-1.5 h-1.5 rounded-full" style={{ background: project.dotColor, boxShadow: `0 0 6px ${project.dotColor}` }} />
+                                <span className="text-[8px] font-bold tracking-wider uppercase" style={{ color: project.dotColor }}>Active</span>
+                              </div>
+                            )}
                           </div>
+                        ) : (
+                          <>
+                            <div className="absolute inset-0 pointer-events-none" style={{ background: `radial-gradient(circle at 50% 50%, rgba(${project.accentRgb}, 0.2) 0%, transparent 70%)`, filter: "blur(14px)" }} />
+                            <div className="w-11 h-11 rounded-xl flex items-center justify-center relative z-10" style={{ background: `rgba(${project.accentRgb}, 0.12)`, border: `1px solid rgba(${project.accentRgb}, 0.3)`, boxShadow: `0 0 25px rgba(${project.accentRgb}, 0.25)` }}>
+                              <project.Icon style={{ width: 22, height: 22, color: project.dotColor }} />
+                            </div>
+                            {project.status === "active" && (
+                              <div className="absolute bottom-2 right-2.5 flex items-center gap-1 px-1.5 py-0.5 rounded-md" style={{ background: "rgba(0,0,0,0.6)", border: `0.5px solid rgba(${project.accentRgb}, 0.3)` }}>
+                                <span className="w-1.5 h-1.5 rounded-full" style={{ background: project.dotColor, boxShadow: `0 0 6px ${project.dotColor}` }} />
+                                <span className="text-[8px] font-bold tracking-wider uppercase" style={{ color: project.dotColor }}>Active</span>
+                              </div>
+                            )}
+                          </>
                         )}
                       </div>
                     </div>
@@ -580,21 +635,67 @@ export function XP_MyWorkScrollSection({ scrollContainerRef }: Props) {
 
                   {/* Visual card */}
                   <div
-                    className="flex-1 min-h-[160px] rounded-2xl overflow-hidden relative"
+                    className="flex-1 min-h-[160px] rounded-2xl overflow-hidden relative flex items-center justify-center"
                     style={{ background: "var(--color-bg-card)", border: `1px solid rgba(${project.accentRgb}, 0.22)`, boxShadow: "var(--shadow-card)" }}
                   >
-                    <div className="absolute inset-0" style={{ background: `radial-gradient(circle at 50% 40%, rgba(${project.accentRgb}, 0.22) 0%, transparent 60%)`, filter: "blur(20px)" }} />
-                    <div className="absolute top-0 left-0 right-0 h-[1px]" style={{ background: `linear-gradient(90deg, rgba(${project.accentRgb},0.6), transparent 60%)` }} />
-                    <div className="absolute inset-0 flex items-center justify-center">
-                      <div className="w-14 h-14 rounded-xl flex items-center justify-center" style={{ background: `rgba(${project.accentRgb}, 0.1)`, border: `1px solid rgba(${project.accentRgb}, 0.25)`, boxShadow: `0 0 40px rgba(${project.accentRgb}, 0.2)` }}>
-                        <project.Icon style={{ width: 28, height: 28, color: project.dotColor }} />
+                    {"videoSrc" in project && project.videoSrc ? (
+                      <div
+                        onClick={() => setActiveVideoProject(project as any)}
+                        className="w-full h-full relative aspect-video overflow-hidden rounded-2xl bg-black cursor-pointer group/preview"
+                        title="Click to open full video preview"
+                      >
+                        <video
+                          autoPlay
+                          loop
+                          muted
+                          playsInline
+                          preload="auto"
+                          className="w-full h-full object-cover select-none pointer-events-none transition-transform duration-500 group-hover/preview:scale-105"
+                        >
+                          <source src={project.videoSrc} type="video/mp4" />
+                          <source src={project.videoSrc.replace(".mp4", ".webm")} type="video/webm" />
+                        </video>
+                        {/* Ambient overlay & active badge */}
+                        <div
+                          className="absolute inset-0 pointer-events-none"
+                          style={{
+                            boxShadow: `inset 0 0 35px rgba(${project.accentRgb}, 0.25)`,
+                            background: `linear-gradient(180deg, transparent 60%, rgba(0,0,0,0.6) 100%)`,
+                          }}
+                        />
+                        {/* Hover overlay with expand badge */}
+                        <div className="absolute inset-0 bg-black/40 opacity-0 group-hover/preview:opacity-100 transition-opacity duration-200 flex items-center justify-center pointer-events-none z-10">
+                          <div
+                            className="flex items-center gap-2 px-3.5 py-1.5 rounded-full backdrop-blur-md shadow-xl scale-90 group-hover/preview:scale-100 transition-transform duration-200"
+                            style={{ background: "rgba(0,0,0,0.75)", border: `1px solid rgba(${project.accentRgb}, 0.5)` }}
+                          >
+                            <Maximize2 className="w-3.5 h-3.5" style={{ color: project.dotColor }} />
+                            <span className="text-[10px] font-bold tracking-wider uppercase text-white">Full Preview</span>
+                          </div>
+                        </div>
+                        {project.status === "active" && (
+                          <div className="absolute bottom-3 right-3 flex items-center gap-1.5 px-2.5 py-1 rounded-md backdrop-blur-md z-10" style={{ background: "rgba(0,0,0,0.75)", border: `0.5px solid rgba(${project.accentRgb}, 0.35)` }}>
+                            <span className="w-1.5 h-1.5 rounded-full" style={{ background: project.dotColor, boxShadow: `0 0 6px ${project.dotColor}` }} />
+                            <span className="text-[9px] font-bold tracking-widest uppercase" style={{ color: project.dotColor }}>Active</span>
+                          </div>
+                        )}
                       </div>
-                    </div>
-                    {project.status === "active" && (
-                      <div className="absolute bottom-3 right-3 flex items-center gap-1.5">
-                        <span className="w-1.5 h-1.5 rounded-full" style={{ background: project.dotColor, boxShadow: `0 0 6px ${project.dotColor}` }} />
-                        <span className="text-[9px] font-bold tracking-widest uppercase" style={{ color: project.dotColor }}>Active</span>
-                      </div>
+                    ) : (
+                      <>
+                        <div className="absolute inset-0" style={{ background: `radial-gradient(circle at 50% 40%, rgba(${project.accentRgb}, 0.22) 0%, transparent 60%)`, filter: "blur(20px)" }} />
+                        <div className="absolute top-0 left-0 right-0 h-[1px]" style={{ background: `linear-gradient(90deg, rgba(${project.accentRgb},0.6), transparent 60%)` }} />
+                        <div className="absolute inset-0 flex items-center justify-center">
+                          <div className="w-14 h-14 rounded-xl flex items-center justify-center" style={{ background: `rgba(${project.accentRgb}, 0.1)`, border: `1px solid rgba(${project.accentRgb}, 0.25)`, boxShadow: `0 0 40px rgba(${project.accentRgb}, 0.2)` }}>
+                            <project.Icon style={{ width: 28, height: 28, color: project.dotColor }} />
+                          </div>
+                        </div>
+                        {project.status === "active" && (
+                          <div className="absolute bottom-3 right-3 flex items-center gap-1.5">
+                            <span className="w-1.5 h-1.5 rounded-full" style={{ background: project.dotColor, boxShadow: `0 0 6px ${project.dotColor}` }} />
+                            <span className="text-[9px] font-bold tracking-widest uppercase" style={{ color: project.dotColor }}>Active</span>
+                          </div>
+                        )}
+                      </>
                     )}
                   </div>
                 </div>
@@ -647,6 +748,13 @@ export function XP_MyWorkScrollSection({ scrollContainerRef }: Props) {
           </svg>
         </div>
       </div>
+
+      {/* Video Preview Modal */}
+      <XP_VideoPreviewModal
+        isOpen={!!activeVideoProject}
+        onClose={() => setActiveVideoProject(null)}
+        project={activeVideoProject}
+      />
     </section>
   );
 }
