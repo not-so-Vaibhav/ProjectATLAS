@@ -132,7 +132,7 @@ export function XP_ContactScrollSection({ scrollContainerRef: _ }: Props) {
       ref={sectionRef}
       id="contact"
       data-section
-      className="snap-slide relative w-full bg-[var(--color-bg)] overflow-hidden"
+      className="snap-slide relative w-full h-[100dvh] bg-[var(--color-bg)] overflow-hidden flex flex-col"
       aria-label="Contact Room"
     >
       {/* Ambient background glow */}
@@ -149,16 +149,16 @@ export function XP_ContactScrollSection({ scrollContainerRef: _ }: Props) {
         }}
       />
 
-      {/* ── SPLIT LAYOUT — same as Experience ── */}
+      {/* ── SPLIT LAYOUT — bounded cleanly above the footer bar ── */}
       <div
-        className="h-full w-full flex flex-col lg:grid lg:grid-cols-[1fr_1.15fr]"
-        style={{ paddingTop: "var(--topbar-height)" }}
+        className="flex-1 w-full flex flex-col lg:grid lg:grid-cols-[1fr_1.15fr] overflow-y-auto lg:overflow-hidden"
+        style={{ paddingTop: "var(--topbar-height)", paddingBottom: "42px" }}
       >
 
         {/* ── LEFT PANEL ─────────────────────────────── */}
         <div
           ref={leftRef}
-          className="relative flex flex-col justify-center pl-6 pr-12 py-5 md:py-10 lg:px-14 lg:py-12 overflow-hidden shrink-0"
+          className="relative flex flex-col justify-center px-6 py-4 md:py-6 lg:pl-12 lg:pr-8 xl:pl-16 xl:pr-12 overflow-hidden shrink-0"
           style={{ borderRight: "1px solid rgb(var(--atlas-line) / 0.07)" }}
         >
           {/* Left ambient glow */}
@@ -169,19 +169,19 @@ export function XP_ContactScrollSection({ scrollContainerRef: _ }: Props) {
 
           {/* Kicker */}
           <p
-            className="ctc-kicker text-[9px] lg:text-[10px] font-bold tracking-[0.24em] uppercase mb-1.5 lg:mb-6"
+            className="ctc-kicker text-[9px] lg:text-[10px] font-bold tracking-[0.24em] uppercase mb-1 lg:mb-2.5"
             style={{ opacity: 0, color: "var(--color-gold)" }}
           >
             07 / Contact
           </p>
 
           {/* Heading */}
-          <div className="mb-1.5 lg:mb-5 overflow-hidden" aria-label="Let's Contact">
+          <div className="mb-1.5 lg:mb-3 overflow-hidden" aria-label="Let's Contact">
             <h2
               className="ctc-title font-black tracking-tight leading-[0.92] text-atlas-white"
               style={{
                 opacity: 0,
-                fontSize: "clamp(1.8rem, 8vw, 5rem)",
+                fontSize: "clamp(1.75rem, 3.8vw, 3.8rem)",
               }}
             >
               Let&apos;s build<br />
@@ -192,45 +192,45 @@ export function XP_ContactScrollSection({ scrollContainerRef: _ }: Props) {
 
           {/* Gold divider */}
           <div
-            className="ctc-divider mb-2 lg:mb-6 h-[2px] w-10 lg:w-14 rounded-full"
+            className="ctc-divider mb-1.5 lg:mb-3 h-[2px] w-10 lg:w-12 rounded-full"
             style={{ opacity: 0, background: "var(--color-gold)" }}
           />
 
           {/* Subtitle */}
           <p
-            className="ctc-sub text-[10px] md:text-sm lg:text-[0.95rem] leading-relaxed max-w-[280px] lg:max-w-[300px] mb-4 lg:mb-10"
+            className="ctc-sub text-[11px] md:text-xs lg:text-[0.875rem] leading-relaxed max-w-[280px] lg:max-w-[320px] mb-2.5 lg:mb-4"
             style={{ opacity: 0, color: "rgb(var(--atlas-ink) / 0.55)" }}
           >
             Collaboration, opportunities, or simply swapping stories about building in public — my inbox is always open.
           </p>
 
           {/* CTAs */}
-          <div className="ctc-actions flex flex-col items-start gap-2.5 mb-0 lg:mb-12" style={{ opacity: 0 }}>
-            <div className="flex flex-wrap gap-2 lg:gap-3">
+          <div className="ctc-actions flex flex-col items-start gap-2 mb-2.5 lg:mb-4" style={{ opacity: 0 }}>
+            <div className="flex flex-wrap gap-2">
               <Link
                 href="/contact"
-                className="inline-flex items-center gap-2 px-3.5 py-1.5 lg:px-5 lg:py-2.5 rounded-xl text-[10px] lg:text-xs font-bold transition-all hover:scale-[1.03] active:scale-[0.98]"
+                className="inline-flex items-center gap-1.5 px-3.5 py-1.5 lg:px-4 lg:py-2 rounded-xl text-[10px] lg:text-[11px] font-bold transition-all hover:scale-[1.03] active:scale-[0.98]"
                 style={{ background: "var(--color-gold)", color: "var(--color-bg)" }}
               >
-                Enter Room <ArrowRight className="w-3 h-3 lg:w-3.5 lg:h-3.5" />
+                Enter Room <ArrowRight className="w-3 h-3" />
               </Link>
               <a
                 href="/resume.pdf"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center gap-2 px-3.5 py-1.5 lg:px-5 lg:py-2.5 rounded-xl text-[10px] lg:text-xs font-semibold border transition-all hover:border-atlas-white/30 hover:text-atlas-white"
+                className="inline-flex items-center gap-1.5 px-3.5 py-1.5 lg:px-4 lg:py-2 rounded-xl text-[10px] lg:text-[11px] font-semibold border transition-all hover:border-atlas-white/30 hover:text-atlas-white"
                 style={{ border: "1px solid rgb(var(--atlas-line) / 0.12)", color: "rgb(var(--atlas-ink) / 0.6)" }}
               >
-                <FileText className="w-3 h-3 lg:w-3.5 lg:h-3.5" /> Download Resume
+                <FileText className="w-3 h-3" /> Download Resume
               </a>
             </div>
 
             {/* Game Button */}
             <button
               onClick={() => setIsGameModalOpen(true)}
-              className="inline-flex items-center justify-center gap-2 px-4 py-2 lg:px-5 lg:py-2 rounded-xl text-[10px] lg:text-xs font-bold transition-all border border-[rgb(var(--atlas-gold) / 0.4)] bg-[rgb(var(--atlas-gold) / 0.08)] hover:bg-[rgb(var(--atlas-gold) / 0.18)] hover:border-[var(--color-gold)] text-[var(--color-gold)] shadow-[0_0_15px_rgb(var(--atlas-gold) / 0.1)] hover:scale-[1.02] active:scale-[0.98] cursor-pointer"
+              className="inline-flex items-center justify-center gap-1.5 px-3.5 py-1.5 lg:px-4 lg:py-1.5 rounded-xl text-[10px] lg:text-[11px] font-bold transition-all border border-[rgb(var(--atlas-gold) / 0.4)] bg-[rgb(var(--atlas-gold) / 0.08)] hover:bg-[rgb(var(--atlas-gold) / 0.18)] hover:border-[var(--color-gold)] text-[var(--color-gold)] shadow-[0_0_12px_rgb(var(--atlas-gold) / 0.1)] hover:scale-[1.02] active:scale-[0.98] cursor-pointer"
             >
-              <Gamepad2 className="w-3.5 h-3.5 lg:w-4 lg:h-4 text-[var(--color-gold)] animate-pulse" />
+              <Gamepad2 className="w-3.5 h-3.5 text-[var(--color-gold)] animate-pulse" />
               <span>Let&apos;s Have a Game</span>
             </button>
           </div>
@@ -242,16 +242,16 @@ export function XP_ContactScrollSection({ scrollContainerRef: _ }: Props) {
 
           {/* Social links */}
           <div 
-            className="ctc-bottom absolute right-4 top-1/2 -translate-y-1/2 flex flex-col items-center gap-4 lg:static lg:translate-y-0 lg:block lg:mt-auto" 
+            className="ctc-bottom mt-1 lg:mt-2 flex flex-col items-start gap-1" 
             style={{ opacity: 0 }}
           >
             <p
-              className="hidden lg:block text-[8px] lg:text-[9px] font-bold tracking-[0.22em] uppercase mb-2 lg:mb-3"
+              className="text-[8px] lg:text-[9px] font-bold tracking-[0.22em] uppercase mb-1"
               style={{ color: "rgb(var(--atlas-gold) / 0.8)" }}
             >
               Find me elsewhere
             </p>
-            <div className="flex flex-col lg:flex-row items-center gap-4 lg:gap-5">
+            <div className="flex flex-row items-center gap-3.5 lg:gap-4">
               {SOCIAL_LINKS.map(({ icon: Icon, label, href }) => (
                 <a
                   key={label}
@@ -262,16 +262,16 @@ export function XP_ContactScrollSection({ scrollContainerRef: _ }: Props) {
                   className="group text-[var(--color-text-muted)] hover:text-[var(--color-text)] transition-colors duration-200"
                 >
                   <Icon
-                    className="w-3.5 h-3.5 lg:w-[18px] lg:h-[18px] group-hover:text-[var(--color-gold)] transition-colors duration-200"
+                    className="w-3.5 h-3.5 lg:w-4 lg:h-4 group-hover:text-[var(--color-gold)] transition-colors duration-200"
                   />
                 </a>
               ))}
             </div>
           </div>
 
-          {/* Ticker tape — same style as Experience */}
+          {/* Ticker tape — at bottom of left panel */}
           <div
-            className="hidden lg:block absolute bottom-0 left-0 right-0 overflow-hidden py-2.5"
+            className="hidden lg:block absolute bottom-0 left-0 right-0 overflow-hidden py-1.5"
             style={{ borderTop: "1px solid rgb(var(--atlas-line) / 0.06)" }}
           >
             <div
@@ -279,7 +279,7 @@ export function XP_ContactScrollSection({ scrollContainerRef: _ }: Props) {
               style={{ width: "200%", color: "rgb(var(--atlas-gold) / 0.32)", animation: "ctc-scroll 28s linear infinite" }}
             >
               {Array.from({ length: 12 }).map((_, i) => (
-                <span key={i} className="flex items-center gap-8 flex-shrink-0 text-[9px] font-bold tracking-[0.22em] uppercase">
+                <span key={i} className="flex items-center gap-8 flex-shrink-0 text-[8.5px] font-bold tracking-[0.22em] uppercase">
                   <span>Collaborate</span><span style={{ color: "rgb(var(--atlas-gold) / 0.15)" }}>·</span>
                   <span>Build</span><span style={{ color: "rgb(var(--atlas-gold) / 0.15)" }}>·</span>
                   <span>Create</span><span style={{ color: "rgb(var(--atlas-gold) / 0.15)" }}>·</span>
@@ -292,17 +292,9 @@ export function XP_ContactScrollSection({ scrollContainerRef: _ }: Props) {
 
         {/* ── RIGHT PANEL ─────────────────────────────── */}
         <div
-          className="flex-1 flex flex-col justify-start lg:justify-center px-6 py-8 lg:px-8 lg:py-10 overflow-y-auto lg:overflow-visible"
+          className="flex-1 flex flex-col justify-center px-4 py-4 sm:px-6 sm:py-6 lg:px-8 lg:py-4 xl:px-12 overflow-y-auto lg:overflow-visible"
           style={{ background: "var(--color-bg-raised)" }}
         >
-          {/*
-           * MASCOT MATH (cropped 424×934px, aspect ≈ 0.454):
-           * Display: 210×462px. Sitting point = 462×0.5214 ≈ 241px from top.
-           * Notch ledge = 155px from card top.
-           * Mascot top  = 155 − 241 = −86px (head above card)
-           * Mascot left = −18px (slight overhang left)
-           */}
-
           {/* Outer Wrapper — GSAP target + hover detection */}
           <div
             ref={formWrapperRef}
@@ -317,7 +309,7 @@ export function XP_ContactScrollSection({ scrollContainerRef: _ }: Props) {
                 src="/contact-img/resting_cropped.png"
                 alt="Mascot resting"
                 fill
-                sizes="(max-width: 768px) 140px, 180px"
+                sizes="(max-width: 768px) 110px, 175px"
                 className="object-contain object-bottom transition-opacity duration-500 ease-out"
                 style={{ opacity: hovered ? 0 : 1 }}
               />
@@ -325,7 +317,7 @@ export function XP_ContactScrollSection({ scrollContainerRef: _ }: Props) {
                 src="/contact-img/hey_cropped.png"
                 alt="Mascot waving"
                 fill
-                sizes="(max-width: 768px) 140px, 180px"
+                sizes="(max-width: 768px) 110px, 175px"
                 className="object-contain object-bottom transition-opacity duration-500 ease-out"
                 style={{ opacity: hovered ? 1 : 0 }}
               />
@@ -381,7 +373,7 @@ export function XP_ContactScrollSection({ scrollContainerRef: _ }: Props) {
                   className="ctc-glow absolute pointer-events-none"
                   style={{
                     top: "-15%", right: "-5%",
-                    width: "300px", height: "300px",
+                    width: "280px", height: "280px",
                     borderRadius: "50%",
                     background: "radial-gradient(circle, rgb(var(--atlas-gold) / 0.12) 0%, transparent 65%)",
                     opacity: 0, filter: "blur(28px)",
@@ -391,26 +383,26 @@ export function XP_ContactScrollSection({ scrollContainerRef: _ }: Props) {
                 {/* ZONE A */}
                 <div className="zone-a relative z-10">
                   <p
-                    className="text-[9px] lg:text-[10px] font-bold tracking-[0.26em] uppercase mb-1.5 lg:mb-3 text-center lg:text-left"
+                    className="text-[8.5px] lg:text-[9.5px] font-bold tracking-[0.26em] uppercase mb-1 text-center lg:text-left"
                     style={{ color: "rgb(var(--atlas-gold) / 0.8)" }}
                   >
                     Send a message
                   </p>
-                  <div className="h-[1px] w-10 mx-auto lg:mx-0" style={{ background: "rgb(var(--atlas-gold) / 0.5)" }} />
+                  <div className="h-[1px] w-8 mx-auto lg:mx-0" style={{ background: "rgb(var(--atlas-gold) / 0.5)" }} />
                 </div>
 
                 {/* ZONE B */}
                 <div className="zone-b relative z-10">
-                  <form onSubmit={handleSubmit} className="flex flex-col gap-2 lg:gap-4">
+                  <form onSubmit={handleSubmit} className="flex flex-col gap-2 lg:gap-2.5">
                     
-                    {/* Name & Email Row (Side-by-side on mobile) */}
-                    <div className="flex flex-row gap-3 lg:flex-col lg:gap-4 w-full">
+                    {/* Name & Email Row (Side-by-side on mobile, compact on desktop) */}
+                    <div className="flex flex-row gap-2.5 lg:flex-col lg:gap-2 xl:gap-2.5 w-full">
                       {/* Name */}
                       <div className="flex-1">
                         <label
                           htmlFor="ctc-name"
-                          className="block text-[9px] lg:text-[10px] font-bold tracking-[0.18em] uppercase mb-1.5 lg:mb-2"
-                          style={{ color: "rgb(var(--atlas-ink) / 0.4)" }}
+                          className="block text-[8px] lg:text-[8.5px] font-bold tracking-[0.18em] uppercase mb-1"
+                          style={{ color: "rgb(var(--atlas-ink) / 0.45)" }}
                         >
                           Name
                         </label>
@@ -421,7 +413,7 @@ export function XP_ContactScrollSection({ scrollContainerRef: _ }: Props) {
                           value={form.name}
                           onChange={(e) => setForm({ ...form, name: e.target.value })}
                           placeholder="Your name"
-                          className="w-full rounded-xl px-3.5 py-3 lg:px-4 lg:py-3.5 text-xs lg:text-sm transition-all focus:outline-none"
+                          className="w-full rounded-xl px-3 py-2 lg:px-3.5 lg:py-2 text-xs lg:text-[13px] transition-all focus:outline-none"
                           style={{
                             background: "rgb(var(--atlas-line) / 0.03)",
                             border: "1px solid rgb(var(--atlas-line) / 0.08)",
@@ -436,8 +428,8 @@ export function XP_ContactScrollSection({ scrollContainerRef: _ }: Props) {
                       <div className="flex-1">
                         <label
                           htmlFor="ctc-email"
-                          className="block text-[9px] lg:text-[10px] font-bold tracking-[0.18em] uppercase mb-1.5 lg:mb-2"
-                          style={{ color: "rgb(var(--atlas-ink) / 0.4)" }}
+                          className="block text-[8px] lg:text-[8.5px] font-bold tracking-[0.18em] uppercase mb-1"
+                          style={{ color: "rgb(var(--atlas-ink) / 0.45)" }}
                         >
                           Email
                         </label>
@@ -448,7 +440,7 @@ export function XP_ContactScrollSection({ scrollContainerRef: _ }: Props) {
                           value={form.email}
                           onChange={(e) => setForm({ ...form, email: e.target.value })}
                           placeholder="you@email.com"
-                          className="w-full rounded-xl px-3.5 py-3 lg:px-4 lg:py-3.5 text-xs lg:text-sm transition-all focus:outline-none"
+                          className="w-full rounded-xl px-3 py-2 lg:px-3.5 lg:py-2 text-xs lg:text-[13px] transition-all focus:outline-none"
                           style={{
                             background: "rgb(var(--atlas-line) / 0.03)",
                             border: "1px solid rgb(var(--atlas-line) / 0.08)",
@@ -464,8 +456,8 @@ export function XP_ContactScrollSection({ scrollContainerRef: _ }: Props) {
                     <div>
                       <label
                         htmlFor="ctc-message"
-                        className="block text-[9px] lg:text-[10px] font-bold tracking-[0.18em] uppercase mb-1.5 lg:mb-2"
-                        style={{ color: "rgb(var(--atlas-ink) / 0.4)" }}
+                        className="block text-[8px] lg:text-[8.5px] font-bold tracking-[0.18em] uppercase mb-1"
+                        style={{ color: "rgb(var(--atlas-ink) / 0.45)" }}
                       >
                         Message
                       </label>
@@ -475,7 +467,7 @@ export function XP_ContactScrollSection({ scrollContainerRef: _ }: Props) {
                         value={form.message}
                         onChange={(e) => setForm({ ...form, message: e.target.value })}
                         placeholder="What would you like to build?"
-                        className="w-full rounded-xl px-3.5 py-3 lg:px-4 lg:py-3.5 text-xs lg:text-sm transition-all focus:outline-none resize-none min-h-[70px] lg:min-h-[120px]"
+                        className="w-full rounded-xl px-3 py-2 lg:px-3.5 lg:py-2 text-xs lg:text-[13px] transition-all focus:outline-none resize-none min-h-[55px] lg:min-h-[65px] xl:min-h-[80px] max-h-[110px]"
                         style={{
                           background: "rgb(var(--atlas-line) / 0.03)",
                           border: "1px solid rgb(var(--atlas-line) / 0.08)",
@@ -490,16 +482,16 @@ export function XP_ContactScrollSection({ scrollContainerRef: _ }: Props) {
                     <button
                       type="submit"
                       disabled={isSubmitting || sent}
-                      className="w-full inline-flex items-center justify-center gap-2 px-6 py-3.5 lg:py-4 rounded-xl text-xs lg:text-sm font-bold tracking-wide transition-all hover:brightness-110 active:scale-[0.98] disabled:opacity-70 disabled:cursor-not-allowed cursor-pointer"
+                      className="w-full inline-flex items-center justify-center gap-2 px-5 py-2.5 lg:py-2.5 rounded-xl text-xs lg:text-[13px] font-bold tracking-wide transition-all hover:brightness-110 active:scale-[0.98] disabled:opacity-70 disabled:cursor-not-allowed cursor-pointer"
                       style={{ background: "var(--color-gold)", color: "var(--color-bg)" }}
                     >
                       {isSubmitting ? (
                         <>
-                          <Loader2 className="w-4 h-4 animate-spin" /> Sending Message...
+                          <Loader2 className="w-3.5 h-3.5 animate-spin" /> Sending Message...
                         </>
                       ) : sent ? (
                         <>
-                          <CheckCircle2 className="w-4 h-4" /> Message Received!
+                          <CheckCircle2 className="w-3.5 h-3.5" /> Message Received!
                         </>
                       ) : (
                         <>
@@ -509,21 +501,21 @@ export function XP_ContactScrollSection({ scrollContainerRef: _ }: Props) {
                     </button>
 
                     {sent && (
-                      <div className="p-3 rounded-xl bg-emerald-500/10 border border-emerald-500/25 text-emerald-400 text-[11px] lg:text-xs text-center flex items-center justify-center gap-2 animate-fade-in-up">
-                        <CheckCircle2 className="w-4 h-4 shrink-0 text-emerald-400" />
+                      <div className="p-2.5 rounded-xl bg-emerald-500/10 border border-emerald-500/25 text-emerald-400 text-[11px] text-center flex items-center justify-center gap-2 animate-fade-in-up">
+                        <CheckCircle2 className="w-3.5 h-3.5 shrink-0 text-emerald-400" />
                         <span>Message sent successfully! I&apos;ll be in touch soon.</span>
                       </div>
                     )}
 
                     {errorMessage && (
-                      <div className="p-3 rounded-xl bg-red-500/10 border border-red-500/25 text-red-400 text-[11px] lg:text-xs text-center space-y-1.5 animate-fade-in-up">
+                      <div className="p-2.5 rounded-xl bg-red-500/10 border border-red-500/25 text-red-400 text-[11px] text-center space-y-1 animate-fade-in-up">
                         <div className="flex items-center justify-center gap-1.5">
-                          <AlertCircle className="w-4 h-4 shrink-0" />
+                          <AlertCircle className="w-3.5 h-3.5 shrink-0" />
                           <span>{errorMessage}</span>
                         </div>
                         <a
                           href={`mailto:bariyarvaibhav@gmail.com?subject=Project%20Inquiry&body=${encodeURIComponent(form.message)}`}
-                          className="inline-block text-[11px] underline font-semibold text-[var(--color-gold)] hover:opacity-80"
+                          className="inline-block text-[10.5px] underline font-semibold text-[var(--color-gold)] hover:opacity-80"
                         >
                           Send directly via mail app →
                         </a>
@@ -538,7 +530,7 @@ export function XP_ContactScrollSection({ scrollContainerRef: _ }: Props) {
 
           {/* "Let's Build" neon sign (hidden on mobile to save space) */}
           <div
-            className="mt-5 w-full hidden lg:flex items-center justify-center rounded-2xl py-5"
+            className="mt-2.5 lg:mt-3 w-full hidden lg:flex items-center justify-center rounded-xl py-2 lg:py-2.5"
             style={{
               border: "1px solid rgb(var(--atlas-gold) / 0.35)",
               background: "rgb(var(--atlas-gold) / 0.06)",
@@ -546,10 +538,10 @@ export function XP_ContactScrollSection({ scrollContainerRef: _ }: Props) {
             }}
           >
             <span
-              className="font-caveat text-2xl lg:text-3xl select-none animate-float-gentle"
+              className="font-caveat text-xl lg:text-2xl select-none animate-float-gentle"
               style={{
                 color: "var(--color-gold)",
-                textShadow: "0 0 20px rgb(var(--atlas-gold) / 0.4), 0 0 60px rgb(var(--atlas-gold) / 0.12)",
+                textShadow: "0 0 16px rgb(var(--atlas-gold) / 0.4), 0 0 40px rgb(var(--atlas-gold) / 0.12)",
               }}
             >
               Let&apos;s Build
@@ -561,8 +553,8 @@ export function XP_ContactScrollSection({ scrollContainerRef: _ }: Props) {
 
       {/* Footer bar */}
       <div
-        className="absolute bottom-0 left-0 right-0 z-20 py-3.5 px-6 lg:px-14 flex items-center justify-between"
-        style={{ borderTop: "1px solid rgb(var(--atlas-line) / 0.05)", background: "rgb(var(--atlas-black) / 0.8)", backdropFilter: "blur(8px)" }}
+        className="absolute bottom-0 left-0 right-0 z-20 py-2.5 px-6 lg:px-14 flex items-center justify-between"
+        style={{ borderTop: "1px solid rgb(var(--atlas-line) / 0.05)", background: "rgb(var(--atlas-black) / 0.85)", backdropFilter: "blur(8px)" }}
       >
         <span className="text-[9px] tracking-[0.22em] uppercase font-bold" style={{ color: "var(--color-gold)" }}>
           ATLAS
@@ -581,41 +573,41 @@ export function XP_ContactScrollSection({ scrollContainerRef: _ }: Props) {
 
         /* Responsive Form Layout */
         .form-outer-wrapper {
-          margin-top: 140px;
+          margin-top: 110px;
         }
         .mascot-container {
-          top: -126px; 
+          top: -105px; 
           left: 50%; 
           transform: translateX(-50%);
-          width: 110px; 
-          height: 242px;
+          width: 95px; 
+          height: 210px;
         }
         .notched-card {
           clip-path: none;
         }
         .accent-top { left: 0; }
         .accent-left { top: 0; }
-        .zone-a { padding: 120px 20px 0 20px; }
-        .zone-b { padding: 16px 20px 24px 20px; }
+        .zone-a { padding: 95px 16px 0 16px; }
+        .zone-b { padding: 10px 16px 18px 16px; }
 
         @media (min-width: 1024px) {
           .form-outer-wrapper {
             margin-top: 0;
           }
           .mascot-container {
-            top: -86px; 
-            left: -18px; 
+            top: -66px; 
+            left: -10px; 
             transform: none;
-            width: 210px; 
-            height: 462px;
+            width: 175px; 
+            height: 385px;
           }
           .notched-card {
-            clip-path: polygon(205px 0, 100% 0, 100% 100%, 0 100%, 0 155px, 205px 155px);
+            clip-path: polygon(175px 0, 100% 0, 100% 100%, 0 100%, 0 135px, 175px 135px);
           }
-          .accent-top { left: 205px; }
-          .accent-left { top: 155px; }
-          .zone-a { padding: 28px 28px 0 220px; text-align: left; }
-          .zone-b { padding: 20px 28px 36px 220px; }
+          .accent-top { left: 175px; }
+          .accent-left { top: 135px; }
+          .zone-a { padding: 18px 24px 0 185px; text-align: left; }
+          .zone-b { padding: 10px 24px 20px 185px; }
         }
       `}</style>
     </section>
