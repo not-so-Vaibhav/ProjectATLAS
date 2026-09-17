@@ -35,6 +35,7 @@ export function XP_ContactScrollSection({ scrollContainerRef: _ }: Props) {
 
   const [form, setForm] = useState({ name: "", email: "", message: "" });
   const [sent, setSent] = useState(false);
+  const [successMessage, setSuccessMessage] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
   const [hovered, setHovered] = useState(false);
@@ -61,8 +62,9 @@ export function XP_ContactScrollSection({ scrollContainerRef: _ }: Props) {
       }
 
       setSent(true);
+      setSuccessMessage(data.message || "Message sent successfully! I'll be in touch soon.");
       setForm({ name: "", email: "", message: "" });
-      setTimeout(() => setSent(false), 8000);
+      setTimeout(() => setSent(false), 12000);
     } catch (err: any) {
       console.error("Submission error:", err);
       setErrorMessage(err.message || "Something went wrong. You can also email me directly.");
@@ -503,7 +505,7 @@ export function XP_ContactScrollSection({ scrollContainerRef: _ }: Props) {
                     {sent && (
                       <div className="p-2.5 rounded-xl bg-emerald-500/10 border border-emerald-500/25 text-emerald-400 text-[11px] text-center flex items-center justify-center gap-2 animate-fade-in-up">
                         <CheckCircle2 className="w-3.5 h-3.5 shrink-0 text-emerald-400" />
-                        <span>Message sent successfully! I&apos;ll be in touch soon.</span>
+                        <span>{successMessage || "Message sent successfully! I'll be in touch soon."}</span>
                       </div>
                     )}
 
