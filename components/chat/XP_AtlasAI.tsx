@@ -191,11 +191,19 @@ export function XP_AtlasAI() {
     const userMessage = queryText.trim();
     setInput("");
 
-    // Build history for backend
-    const currentHistory = messages.map((m) => ({
-      role: m.role === "user" ? "user" : "assistant",
-      content: m.content
-    }));
+    // Build clean history for backend (skip initial greeting and any previous error banners)
+    const currentHistory = messages
+      .filter(
+        (m) =>
+          !m.content.includes("having a moment connecting") &&
+          !m.content.includes("I am **Atlas'AI**") &&
+          !m.content.includes("I am Vaibhav Bariyar's portfolio assistant")
+      )
+      .map((m) => ({
+        role: m.role === "user" ? "user" : "assistant",
+        content: m.content
+      }))
+      .slice(-8);
 
     setMessages((prev) => [...prev, { role: "user", content: userMessage }]);
     setIsLoading(true);
