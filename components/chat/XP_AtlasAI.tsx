@@ -214,7 +214,7 @@ export function XP_AtlasAI() {
       setLoadingNotice("Connecting to Atlas server...");
     }, 3000);
 
-    try {
+    const callApi = async () => {
       const res = await fetch("https://vaibhav-ai-fswn.onrender.com/v1/chat", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -223,21 +223,35 @@ export function XP_AtlasAI() {
           history: currentHistory
         })
       });
-
-      clearTimeout(warmupTimer);
-      setLoadingNotice(null);
-
       if (!res.ok) {
         const errorData = await res.json().catch(() => ({}));
         throw new Error(errorData.error || `Server responded with status ${res.status}`);
       }
+      return await res.json();
+    };
 
-      const data = await res.json();
-      const botReply = data.answer || data.reply || "I received your message, but had trouble generating a complete answer.";
+    try {
+      let data;
+      try {
+        data = await callApi();
+      } catch (firstAttemptErr) {
+        // Auto-retry once after 800ms for temporary 503/network spikes
+        console.warn("First attempt failed, retrying in 800ms...", firstAttemptErr);
+        await new Promise((r) => setTimeout(r, 800));
+        data = await callApi();
+      }
+
+      clearTimeout(warmupTimer);
+      setLoadingNotice(null);
+
+      const botReply =
+        data.answer ||
+        data.reply ||
+        "I received your message, but had trouble generating a complete answer.";
 
       setMessages((prev) => [...prev, { role: "bot", content: botReply }]);
     } catch (error) {
-      console.error("Chat error:", error);
+      console.error("Chat error after retries:", error);
       clearTimeout(warmupTimer);
       setLoadingNotice(null);
       setMessages((prev) => [
@@ -245,7 +259,7 @@ export function XP_AtlasAI() {
         {
           role: "bot",
           content:
-            "I am having a moment connecting to the Atlas intelligence server. Please ensure the backend is running and try again in a few seconds."
+            "I am having a moment connecting to the Atlas intelligence server. The AI service is currently experiencing high demand. Please try asking again in a few seconds."
         }
       ]);
     } finally {
